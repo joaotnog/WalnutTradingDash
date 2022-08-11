@@ -1,0 +1,9 @@
+ffn==0.3.6
+investpy==1.0.7
+numpy==1.18.5
+pandas==1.2.5
+pandas_ta==0.2.45b0
+PerformanceAnalytics==0.14
+Pillow==8.4.0
+scipy==1.6.0
+streamlit==0.87.0
