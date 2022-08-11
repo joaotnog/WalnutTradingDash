@@ -1,7 +1,7 @@
 import unittest
 from Functions import *
 import streamlit as st
-from BacktestZone import *
+from app import *
 
  
 class TestRun(unittest.TestCase):
@@ -9,7 +9,7 @@ class TestRun(unittest.TestCase):
     def setUpClass(self):
         a = 1
         self.data = data
-        # from BacktestZone import data, st
+        # from app import data, st
         # self.st, self.data, self.start_date, self.end_date = st, data, start_date, end_date       
         
     def data_loaded(self):
