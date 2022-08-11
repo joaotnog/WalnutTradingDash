@@ -13,6 +13,7 @@ import matplotlib.pyplot as plt
 from artifacts.mapping import *
 from artifacts.plan_settings import *
 from datetime import timedelta
+import sys
 
 
 logo = Image.open('walnuttradingdash_logo2.png')
@@ -27,7 +28,10 @@ st.sidebar.title('WalnutTradingDash')
 st.sidebar.markdown('Backtest cryptocurrency trading strategies')
 st.sidebar.markdown('')
 
-free_plan = True
+if sys.argv[1]=='PRO':
+    free_plan = False
+if sys.argv[1]=='FREE':
+    free_plan = True    
 
 scripts = list(map_crypto2code.keys())
 indicators = import_indicators()
