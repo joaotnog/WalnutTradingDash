@@ -182,7 +182,7 @@ def implement_supertrend(num_stream, data, start_date, end_date):
     if entry_input_1 == 'SuperTrend':
         period, multiplier = entry_condition_inputs.columns(2)
         period = int(period.text_input('(X-DAYS)', value = 7, key = 'st_entry_period1'))
-        multiplier = int(multiplier.text_input('SuperTrend Multiplier', value = 3, key = 'st_entry_multiplier1'))
+        multiplier=3 #multiplier = int(multiplier.text_input('SuperTrend Multiplier', value = 3, key = 'st_entry_multiplier1'))
         entry_data1 = get_supertrend(data['High'], data['Low'], data['Close'], period, multiplier)
         entry_data1.index = entry_data1.index.astype(str)
         entry_data1 = entry_data1[entry_data1.index >= str(start_date)]
@@ -196,18 +196,18 @@ def implement_supertrend(num_stream, data, start_date, end_date):
     
     # 3. ST ENTRY DATA 2
     
-    entry_input_2 = entry_condition_inputs.selectbox('INDICATOR', inputs2, key = 'st_entry_input2')
+    entry_input_2 = 'Number' if inputs2[0]=='Number' else entry_condition_inputs.selectbox('INDICATOR', inputs2, key = 'st_entry_input2')
     
     if entry_input_2 == 'SuperTrend':
         period, multiplier = entry_condition_inputs.columns(2)
         period = int(period.text_input('(X-DAYS)', value = 7, key = 'st_entry_period2'))
-        multiplier = int(multiplier.text_input('SuperTrend Multiplier', value = 3, key = 'st_entry_multiplier2'))
+        multiplier=3 #multiplier = int(multiplier.text_input('SuperTrend Multiplier', value = 3, key = 'st_entry_multiplier2'))
         entry_data2 = get_supertrend(data['High'], data['Low'], data['Close'], period, multiplier)
         entry_data2.index = entry_data2.index.astype(str)
         entry_data2 = entry_data2[entry_data2.index >= str(start_date)]
         entry_data2.index = pd.to_datetime(entry_data2.index)
     elif entry_input_2 == 'Number':
-        entry_data2 = entry_condition_inputs.number_input('Specify Input Value', min_value = 0, value = 0, key = 'number1')
+        entry_data2 = entry_condition_inputs.number_input('', min_value = 0, value = 0, key = 'number1')
     else:
         entry_data2 = data[f'{entry_input_2}']
         entry_data2.index = entry_data2.index.astype(str)
@@ -226,7 +226,7 @@ def implement_supertrend(num_stream, data, start_date, end_date):
     if exit_input_1 == 'SuperTrend':
         period, multiplier = exit_condition_inputs.columns(2)
         period = int(period.text_input('(X-DAYS)', value = 7, key = 'st_exit_period1'))
-        multiplier = int(multiplier.text_input('SuperTrend Multiplier', value = 3, key = 'st_exit_multiplier1'))
+        multiplier=3 #multiplier = int(multiplier.text_input('SuperTrend Multiplier', value = 3, key = 'st_exit_multiplier1'))
         exit_data1 = get_supertrend(data['High'], data['Low'], data['Close'], period, multiplier)
         exit_data1.index = exit_data1.index.astype(str)
         exit_data1 = exit_data1[exit_data1.index >= str(start_date)]
@@ -240,18 +240,18 @@ def implement_supertrend(num_stream, data, start_date, end_date):
     
     # 3. ST EXIT DATA 2
     
-    exit_input_2 = exit_condition_inputs.selectbox('INDICATOR', inputs2, key = 'st_exit_input2')
+    exit_input_2 = 'Number' if inputs2[0]=='Number' else exit_condition_inputs.selectbox('INDICATOR', inputs2, key = 'st_exit_input2')
     
     if exit_input_2 == 'SuperTrend':
         period, multiplier = exit_condition_inputs.columns(2)
         period = int(period.text_input('(X-DAYS)', value = 7, key = 'st_exit_period2'))
-        multiplier = int(multiplier.text_input('SuperTrend Multiplier', value = 3, key = 'st_exit_multiplier2'))
+        multiplier=3 #multiplier = int(multiplier.text_input('SuperTrend Multiplier', value = 3, key = 'st_exit_multiplier2'))
         exit_data2 = get_supertrend(data['High'], data['Low'], data['Close'], period, multiplier)
         exit_data2.index = exit_data2.index.astype(str)
         exit_data2 = entry_data2[exit_data2.index >= str(start_date)]
         exit_data2.index = pd.to_datetime(exit_data2.index)
     elif exit_input_2 == 'Number':
-        exit_data2 = entry_condition_inputs.number_input('Specify Input Value', min_value = 0, value = 0, key = 'number2')
+        exit_data2 = entry_condition_inputs.number_input('', min_value = 0, value = 0, key = 'number2')
     else:
         exit_data2 = data[f'{exit_input_2}']
         exit_data2.index = exit_data2.index.astype(str)
@@ -293,7 +293,7 @@ def implement_negative_directional_index(num_stream, data, start_date, end_date)
 
         # 3. -DI ENTRY DATA 2
 
-        entry_input_2 = entry_condition_inputs.selectbox('INDICATOR', inputs2, key = '-di_entry_input2')
+        entry_input_2 = 'Number' if inputs2[0]=='Number' else entry_condition_inputs.selectbox('INDICATOR', inputs2, key = '-di_entry_input2')
 
         if entry_input_2 == '+DI, Positive Directional Index':
             period, offset = entry_condition_inputs.columns(2) 
@@ -323,7 +323,7 @@ def implement_negative_directional_index(num_stream, data, start_date, end_date)
             entry_data2 = entry_data2[entry_data2.index >= str(start_date)]
             entry_data2.index = pd.to_datetime(entry_data1.index)
         elif entry_input_2 == 'Number':
-            entry_data2 = entry_condition_inputs.number_input('Specify Input Value', min_value = 0, value = 0, key = 'number1')
+            entry_data2 = entry_condition_inputs.number_input('', min_value = 0, value = 0, key = 'number1')
         else:
             pass
 
@@ -354,7 +354,7 @@ def implement_negative_directional_index(num_stream, data, start_date, end_date)
 
         # 3. -DI EXIT DATA 2
 
-        exit_input_2 = exit_condition_inputs.selectbox('INDICATOR', inputs2, key = '-di_exit_input2')
+        exit_input_2 = 'Number' if inputs2[0]=='Number' else exit_condition_inputs.selectbox('INDICATOR', inputs2, key = '-di_exit_input2')
 
         if exit_input_2 == '+DI, Positive Directional Index':
             period, offset = exit_condition_inputs.columns(2) 
@@ -384,7 +384,7 @@ def implement_negative_directional_index(num_stream, data, start_date, end_date)
             exit_data2 = exit_data2[exit_data2.index >= str(start_date)]
             exit_data2.index = pd.to_datetime(exit_data1.index)
         elif exit_input_2 == 'Number':
-            exit_data2 = exit_condition_inputs.number_input('Specify Input Value', min_value = 0, value = 0, key = 'number2')
+            exit_data2 = exit_condition_inputs.number_input('', min_value = 0, value = 0, key = 'number2')
         else:
             pass
         
@@ -423,7 +423,7 @@ def implement_normalized_average_true_range(num_stream, data, start_date, end_da
 
         # 3. NATR ENTRY DATA 2
 
-        entry_input_2 = entry_condition_inputs.selectbox('INDICATOR', inputs2, key = 'natr_entry_input2')
+        entry_input_2 = 'Number' if inputs2[0]=='Number' else entry_condition_inputs.selectbox('INDICATOR', inputs2, key = 'natr_entry_input2')
 
         if entry_input_2 == 'Normalized Average True Range (NATR)':
             period, offset = entry_condition_inputs.columns(2)
@@ -449,7 +449,7 @@ def implement_normalized_average_true_range(num_stream, data, start_date, end_da
             entry_data2 = entry_data2[entry_data2.index >= str(start_date)]
             entry_data2.index = pd.to_datetime(entry_data2.index)
         elif entry_input_2 == 'Number':
-            entry_data2 = entry_condition_inputs.number_input('Specify Input Value', min_value = 0, value = 0, key = 'number1')
+            entry_data2 = entry_condition_inputs.number_input('', min_value = 0, value = 0, key = 'number1')
         else:
             pass
 
@@ -479,7 +479,7 @@ def implement_normalized_average_true_range(num_stream, data, start_date, end_da
 
         # 3. NATR EXIT DATA 2
 
-        exit_input_2 = exit_condition_inputs.selectbox('INDICATOR', inputs2, key = 'natr_exit_input2')
+        exit_input_2 = 'Number' if inputs2[0]=='Number' else exit_condition_inputs.selectbox('INDICATOR', inputs2, key = 'natr_exit_input2')
 
         if exit_input_2 == 'Normalized Average True Range (NATR)':
             period, offset = exit_condition_inputs.columns(2)
@@ -505,7 +505,7 @@ def implement_normalized_average_true_range(num_stream, data, start_date, end_da
             exit_data2 = exit_data2[exit_data2.index >= str(start_date)]
             exit_data2.index = pd.to_datetime(exit_data2.index)
         elif exit_input_2 == 'Number':
-            exit_data2 = exit_condition_inputs.number_input('Specify Input Value', min_value = 0, value = 0, key = 'number2')
+            exit_data2 = exit_condition_inputs.number_input('', min_value = 0, value = 0, key = 'number2')
         else:
             pass
         
@@ -545,7 +545,7 @@ def implement_average_directional_index(num_stream, data, start_date, end_date):
 
         # 3. ADX ENTRY DATA 2
 
-        entry_input_2 = entry_condition_inputs.selectbox('INDICATOR', inputs2, key = 'adx_entry_input2')
+        entry_input_2 = 'Number' if inputs2[0]=='Number' else entry_condition_inputs.selectbox('INDICATOR', inputs2, key = 'adx_entry_input2')
 
         if entry_input_2 == '+DI, Positive Directional Index':
             period, offset = entry_condition_inputs.columns(2) 
@@ -575,7 +575,7 @@ def implement_average_directional_index(num_stream, data, start_date, end_date):
             entry_data2 = entry_data2[entry_data2.index >= str(start_date)]
             entry_data2.index = pd.to_datetime(entry_data1.index)
         elif entry_input_2 == 'Number':
-            entry_data2 = entry_condition_inputs.number_input('Specify Input Value', min_value = 0, value = 0, key = 'number1')
+            entry_data2 = entry_condition_inputs.number_input('', min_value = 0, value = 0, key = 'number1')
         else:
             pass
 
@@ -606,7 +606,7 @@ def implement_average_directional_index(num_stream, data, start_date, end_date):
 
         # 3. ADX EXIT DATA 2
 
-        exit_input_2 = exit_condition_inputs.selectbox('INDICATOR', inputs2, key = 'adx_exit_input2')
+        exit_input_2 = 'Number' if inputs2[0]=='Number' else exit_condition_inputs.selectbox('INDICATOR', inputs2, key = 'adx_exit_input2')
 
         if exit_input_2 == '+DI, Positive Directional Index':
             period, offset = exit_condition_inputs.columns(2) 
@@ -636,7 +636,7 @@ def implement_average_directional_index(num_stream, data, start_date, end_date):
             exit_data2 = exit_data2[exit_data2.index >= str(start_date)]
             exit_data2.index = pd.to_datetime(exit_data1.index)
         elif exit_input_2 == 'Number':
-            exit_data2 = exit_condition_inputs.number_input('Specify Input Value', min_value = 0, value = 0, key = 'number2')
+            exit_data2 = exit_condition_inputs.number_input('', min_value = 0, value = 0, key = 'number2')
         else:
             pass
         
@@ -675,10 +675,10 @@ def implement_stochastic_oscillator_fast(num_stream, data, start_date, end_date)
 
         # 3. SOF ENTRY DATA 2
 
-        entry_input_2 = entry_condition_inputs.selectbox('INDICATOR', inputs2, key = 'sof_entry_input2')
+        entry_input_2 = 'Number' if inputs2[0]=='Number' else entry_condition_inputs.selectbox('INDICATOR', inputs2, key = 'sof_entry_input2')
 
         if entry_input_2 == 'Number':
-            entry_data2 = entry_condition_inputs.number_input('Specify Input Value', min_value = 0, value = 30, key = 'number1')
+            entry_data2 = entry_condition_inputs.number_input('', min_value = 0, value = 30, key = 'number1')
         else:
             pass
 
@@ -708,10 +708,10 @@ def implement_stochastic_oscillator_fast(num_stream, data, start_date, end_date)
 
         # 3. SOF EXIT DATA 2
 
-        exit_input_2 = exit_condition_inputs.selectbox('INDICATOR', inputs2, key = 'sof_exit_input2')
+        exit_input_2 = 'Number' if inputs2[0]=='Number' else exit_condition_inputs.selectbox('INDICATOR', inputs2, key = 'sof_exit_input2')
 
         if exit_input_2 == 'Number':
-            exit_data2 = exit_condition_inputs.number_input('Specify Input Value', min_value = 0, value = 80, key = 'number2')
+            exit_data2 = exit_condition_inputs.number_input('', min_value = 0, value = 80, key = 'number2')
         else:
             pass
         
@@ -750,10 +750,10 @@ def implement_stochastic_oscillator_slow(num_stream, data, start_date, end_date)
 
         # 3. SOS ENTRY DATA 2
 
-        entry_input_2 = entry_condition_inputs.selectbox('INDICATOR', inputs2, key = 'sos_entry_input2')
+        entry_input_2 = 'Number' if inputs2[0]=='Number' else entry_condition_inputs.selectbox('INDICATOR', inputs2, key = 'sos_entry_input2')
 
         if entry_input_2 == 'Number':
-            entry_data2 = entry_condition_inputs.number_input('Specify Input Value', min_value = 0, value = 30, key = 'number1')
+            entry_data2 = entry_condition_inputs.number_input('', min_value = 0, value = 30, key = 'number1')
         else:
             pass
 
@@ -783,10 +783,10 @@ def implement_stochastic_oscillator_slow(num_stream, data, start_date, end_date)
 
         # 3. SOS EXIT DATA 2
 
-        exit_input_2 = exit_condition_inputs.selectbox('INDICATOR', inputs2, key = 'sos_exit_input2')
+        exit_input_2 = 'Number' if inputs2[0]=='Number' else exit_condition_inputs.selectbox('INDICATOR', inputs2, key = 'sos_exit_input2')
 
         if exit_input_2 == 'Number':
-            exit_data2 = exit_condition_inputs.number_input('Specify Input Value', min_value = 0, value = 80, key = 'number2')
+            exit_data2 = exit_condition_inputs.number_input('', min_value = 0, value = 80, key = 'number2')
         else:
             pass
         
@@ -825,7 +825,7 @@ def implement_weighted_moving_average(num_stream, data, start_date, end_date):
 
         # 3. WMA ENTRY DATA 2
 
-        entry_input_2 = entry_condition_inputs.selectbox('INDICATOR', inputs2, key = 'wma_entry_input2')
+        entry_input_2 = 'Number' if inputs2[0]=='Number' else entry_condition_inputs.selectbox('INDICATOR', inputs2, key = 'wma_entry_input2')
 
         if entry_input_2 == 'Weighted Moving Average (WMA)':
             period, offset = entry_condition_inputs.columns(2)
@@ -876,7 +876,7 @@ def implement_weighted_moving_average(num_stream, data, start_date, end_date):
             entry_data2 = entry_data2[entry_data2.index >= str(start_date)]
             entry_data2.index = pd.to_datetime(entry_data2.index)
         elif entry_input_2 == 'Number':
-            entry_data2 = entry_condition_inputs.number_input('Specify Input Value', min_value = 0, value = 0, key = 'number1')
+            entry_data2 = entry_condition_inputs.number_input('', min_value = 0, value = 0, key = 'number1')
         else:
             entry_data2 = data[f'{entry_input_2}']
             entry_data2.index = entry_data2.index.astype(str)
@@ -909,7 +909,7 @@ def implement_weighted_moving_average(num_stream, data, start_date, end_date):
 
         # 3. WMA EXIT DATA 2
 
-        exit_input_2 = exit_condition_inputs.selectbox('INDICATOR', inputs2, key = 'wma_exit_input2')
+        exit_input_2 = 'Number' if inputs2[0]=='Number' else exit_condition_inputs.selectbox('INDICATOR', inputs2, key = 'wma_exit_input2')
 
         if exit_input_2 == 'Weighted Moving Average (WMA)':
             period, offset = exit_condition_inputs.columns(2)
@@ -960,7 +960,7 @@ def implement_weighted_moving_average(num_stream, data, start_date, end_date):
             exit_data2 = exit_data2[exit_data2.index >= str(start_date)]
             exit_data2.index = pd.to_datetime(exit_data2.index)
         elif exit_input_2 == 'Number':
-            exit_data2 = exit_condition_inputs.number_input('Specify Input Value', min_value = 0, value = 0, key = 'number2')
+            exit_data2 = exit_condition_inputs.number_input('', min_value = 0, value = 0, key = 'number2')
         else:
             exit_data2 = data[f'{exit_input_2}']
             exit_data2.index = exit_data2.index.astype(str)
@@ -1002,7 +1002,7 @@ def implement_momentum_indicator(num_stream, data, start_date, end_date):
 
         # 3. MOM ENTRY DATA 2
 
-        entry_input_2 = entry_condition_inputs.selectbox('INDICATOR', inputs2, key = 'mom_entry_input2')
+        entry_input_2 = 'Number' if inputs2[0]=='Number' else entry_condition_inputs.selectbox('INDICATOR', inputs2, key = 'mom_entry_input2')
 
         if entry_input_2 == 'Momentum Indicator (MOM)':
             period, offset = entry_condition_inputs.columns(2)
@@ -1013,7 +1013,7 @@ def implement_momentum_indicator(num_stream, data, start_date, end_date):
             entry_data2 = entry_data2[entry_data2.index >= str(start_date)]
             entry_data2.index = pd.to_datetime(entry_data2.index)
         elif entry_input_2 == 'Number':
-            entry_data2 = entry_condition_inputs.number_input('Specify Input Value', min_value = 0, value = 0, key = 'mom_number1')
+            entry_data2 = entry_condition_inputs.number_input('', min_value = 0, value = 0, key = 'mom_number1')
         else:
             pass
 
@@ -1043,7 +1043,7 @@ def implement_momentum_indicator(num_stream, data, start_date, end_date):
 
         # 3. MOM EXIT DATA 2
 
-        exit_input_2 = exit_condition_inputs.selectbox('INDICATOR', inputs2, key = 'mom_exit_input2')
+        exit_input_2 = 'Number' if inputs2[0]=='Number' else exit_condition_inputs.selectbox('INDICATOR', inputs2, key = 'mom_exit_input2')
 
         if exit_input_2 == 'Momentum Indicator (MOM)':
             period, offset = exit_condition_inputs.columns(2)
@@ -1054,7 +1054,7 @@ def implement_momentum_indicator(num_stream, data, start_date, end_date):
             exit_data2 = exit_data2[exit_data2.index >= str(start_date)]
             exit_data2.index = pd.to_datetime(exit_data2.index)
         elif exit_input_2 == 'Number':
-            exit_data2 = exit_condition_inputs.number_input('Specify Input Value', min_value = 0, value = 0, key = 'mom_number2')
+            exit_data2 = exit_condition_inputs.number_input('', min_value = 0, value = 0, key = 'mom_number2')
         else:
             pass
         
@@ -1086,7 +1086,7 @@ def implement_vortex_indicator(num_stream, data, start_date, end_date):
             entry_data1.index = pd.to_datetime(entry_data1.index)
         elif entry_input_1 == '-VI':
             period, offset = entry_condition_inputs.columns(2) 
-            period = int(period.text_input('-VI Period', value = 14, key = '-vi_entry_period1'))
+            period=14 #period = int(period.text_input('-VI Period', value = 14, key = '-vi_entry_period1'))
             offset=0 #offset = int(offset.text_input('Offset (Optional)', value = 0, key = '-vi_entry_offset1'))
             entry_data1 = ta.vortex(data.High, data.Low, data.Close, length = period, offset = offset).iloc[:,1]
             entry_data1.index = entry_data1.index.astype(str)
@@ -1101,11 +1101,11 @@ def implement_vortex_indicator(num_stream, data, start_date, end_date):
 
         # 3. VI ENTRY DATA 2
 
-        entry_input_2 = entry_condition_inputs.selectbox('INDICATOR', inputs2, key = 'vi_entry_input2')
+        entry_input_2 = 'Number' if inputs2[0]=='Number' else entry_condition_inputs.selectbox('INDICATOR', inputs2, key = 'vi_entry_input2')
 
         if entry_input_2 == '-VI':
             period, offset = entry_condition_inputs.columns(2) 
-            period = int(period.text_input('-VI Period', value = 14, key = '-vi_entry_period2'))
+            period=14 #period = int(period.text_input('-VI Period', value = 14, key = '-vi_entry_period2'))
             offset=0 #offset = int(offset.text_input('Offset (Optional)', value = 0, key = '-vi_entry_offset2'))
             entry_data2 = ta.vortex(data.High, data.Low, data.Close, length = period, offset = offset).iloc[:,1]
             entry_data2.index = entry_data2.index.astype(str)
@@ -1120,7 +1120,7 @@ def implement_vortex_indicator(num_stream, data, start_date, end_date):
             entry_data2 = entry_data2[entry_data2.index >= str(start_date)]
             entry_data2.index = pd.to_datetime(entry_data1.index)
         elif entry_input_2 == 'Number':
-            entry_data2 = entry_condition_inputs.number_input('Specify Input Value', min_value = 0, value = 0, key = 'number1')
+            entry_data2 = entry_condition_inputs.number_input('', min_value = 0, value = 0, key = 'number1')
         else:
             pass
 
@@ -1143,7 +1143,7 @@ def implement_vortex_indicator(num_stream, data, start_date, end_date):
             exit_data1.index = pd.to_datetime(exit_data1.index)
         elif exit_input_1 == '-VI':
             period, offset = exit_condition_inputs.columns(2) 
-            period = int(period.text_input('-VI Period', value = 14, key = '-vi_exit_period1'))
+            period=14 #period = int(period.text_input('-VI Period', value = 14, key = '-vi_exit_period1'))
             offset=0 #offset = int(offset.text_input('Offset (Optional)', value = 0, key = '-vi_exit_offset1'))
             exit_data1 = ta.vortex(data.High, data.Low, data.Close, length = period, offset = offset).iloc[:,1]
             exit_data1.index = exit_data1.index.astype(str)
@@ -1158,11 +1158,11 @@ def implement_vortex_indicator(num_stream, data, start_date, end_date):
 
         # 3. VI EXIT DATA 2
 
-        exit_input_2 = exit_condition_inputs.selectbox('INDICATOR', inputs2, key = 'vi_exit_input2')
+        exit_input_2 = 'Number' if inputs2[0]=='Number' else exit_condition_inputs.selectbox('INDICATOR', inputs2, key = 'vi_exit_input2')
 
         if exit_input_2 == '-VI':
             period, offset = exit_condition_inputs.columns(2) 
-            period = int(period.text_input('-VI Period', value = 14, key = '-vi_exit_period2'))
+            period=14 #period = int(period.text_input('-VI Period', value = 14, key = '-vi_exit_period2'))
             offset=0 #offset = int(offset.text_input('Offset (Optional)', value = 0, key = '-vi_exit_offset2'))
             exit_data2 = ta.vortex(data.High, data.Low, data.Close, length = period, offset = offset).iloc[:,1]
             exit_data2.index = exit_data2.index.astype(str)
@@ -1177,7 +1177,7 @@ def implement_vortex_indicator(num_stream, data, start_date, end_date):
             exit_data2 = exit_data2[exit_data2.index >= str(start_date)]
             exit_data2.index = pd.to_datetime(exit_data1.index)
         elif exit_input_2 == 'Number':
-            exit_data2 = exit_condition_inputs.number_input('Specify Input Value', min_value = 0, value = 0, key = 'number2')
+            exit_data2 = exit_condition_inputs.number_input('', min_value = 0, value = 0, key = 'number2')
         else:
             pass
         
@@ -1216,7 +1216,7 @@ def implement_chande_momentum_oscillator(num_stream, data, start_date, end_date)
 
         # 3. CMO ENTRY DATA 2
 
-        entry_input_2 = entry_condition_inputs.selectbox('INDICATOR', inputs2, key = 'cmo_entry_input2')
+        entry_input_2 = 'Number' if inputs2[0]=='Number' else entry_condition_inputs.selectbox('INDICATOR', inputs2, key = 'cmo_entry_input2')
 
         if entry_input_2 == 'Chande Momentum Oscillator (CMO)':
             period, offset = entry_condition_inputs.columns(2)
@@ -1227,7 +1227,7 @@ def implement_chande_momentum_oscillator(num_stream, data, start_date, end_date)
             entry_data2 = entry_data2[entry_data2.index >= str(start_date)]
             entry_data2.index = pd.to_datetime(entry_data2.index)
         elif entry_input_2 == 'Number':
-            entry_data2 = entry_condition_inputs.number_input('Specify Input Value', min_value = 0, value = 0, key = 'cmo_number1')
+            entry_data2 = entry_condition_inputs.number_input('', min_value = 0, value = 0, key = 'cmo_number1')
         else:
             pass
 
@@ -1257,7 +1257,7 @@ def implement_chande_momentum_oscillator(num_stream, data, start_date, end_date)
 
         # 3. CMO EXIT DATA 2
 
-        exit_input_2 = exit_condition_inputs.selectbox('INDICATOR', inputs2, key = 'cmo_exit_input2')
+        exit_input_2 = 'Number' if inputs2[0]=='Number' else exit_condition_inputs.selectbox('INDICATOR', inputs2, key = 'cmo_exit_input2')
 
         if exit_input_2 == 'Chande Momentum Oscillator (CMO)':
             period, offset = exit_condition_inputs.columns(2)
@@ -1268,7 +1268,7 @@ def implement_chande_momentum_oscillator(num_stream, data, start_date, end_date)
             exit_data2 = exit_data2[exit_data2.index >= str(start_date)]
             exit_data2.index = pd.to_datetime(exit_data2.index)
         elif exit_input_2 == 'Number':
-            exit_data2 = exit_condition_inputs.number_input('Specify Input Value', min_value = 0, value = 0, key = 'cmo_number2')
+            exit_data2 = exit_condition_inputs.number_input('', min_value = 0, value = 0, key = 'cmo_number2')
         else:
             pass
         
@@ -1307,7 +1307,7 @@ def implement_exponential_moving_average(num_stream, data, start_date, end_date)
 
         # 3. EMA ENTRY DATA 2
 
-        entry_input_2 = entry_condition_inputs.selectbox('INDICATOR', inputs2, key = 'ema_entry_input2')
+        entry_input_2 = 'Number' if inputs2[0]=='Number' else entry_condition_inputs.selectbox('INDICATOR', inputs2, key = 'ema_entry_input2')
 
         if entry_input_2 == 'Exponential Moving Average (EMA)':
             period, offset = entry_condition_inputs.columns(2)
@@ -1358,7 +1358,7 @@ def implement_exponential_moving_average(num_stream, data, start_date, end_date)
             entry_data2 = entry_data2[entry_data2.index >= str(start_date)]
             entry_data2.index = pd.to_datetime(entry_data2.index)
         elif entry_input_2 == 'Number':
-            entry_data2 = entry_condition_inputs.number_input('Specify Input Value', min_value = 0, value = 0, key = 'number1')
+            entry_data2 = entry_condition_inputs.number_input('', min_value = 0, value = 0, key = 'number1')
         else:
             entry_data2 = data[f'{entry_input_2}']
             entry_data2.index = entry_data2.index.astype(str)
@@ -1391,7 +1391,7 @@ def implement_exponential_moving_average(num_stream, data, start_date, end_date)
 
         # 3. EMA EXIT DATA 2
 
-        exit_input_2 = exit_condition_inputs.selectbox('INDICATOR', inputs2, key = 'ema_exit_input2')
+        exit_input_2 = 'Number' if inputs2[0]=='Number' else exit_condition_inputs.selectbox('INDICATOR', inputs2, key = 'ema_exit_input2')
 
         if exit_input_2 == 'Exponential Moving Average (EMA)':
             period, offset = exit_condition_inputs.columns(2)
@@ -1442,7 +1442,7 @@ def implement_exponential_moving_average(num_stream, data, start_date, end_date)
             exit_data2 = exit_data2[exit_data2.index >= str(start_date)]
             exit_data2.index = pd.to_datetime(exit_data2.index)
         elif exit_input_2 == 'Number':
-            exit_data2 = exit_condition_inputs.number_input('Specify Input Value', min_value = 0, value = 0, key = 'number2')
+            exit_data2 = exit_condition_inputs.number_input('', min_value = 0, value = 0, key = 'number2')
         else:
             exit_data2 = data[f'{exit_input_2}']
             exit_data2.index = exit_data2.index.astype(str)
@@ -1469,7 +1469,7 @@ def implement_triple_exponential_moving_average(num_stream, data, start_date, en
 
         if entry_input_1 == 'Triple Exponential Moving Average (TEMA)':
             period, offset = entry_condition_inputs.columns(2)
-            period = int(period.text_input('tema Period', value = 20, key = 'tema_entry_period1'))
+            period=20 #period = int(period.text_input('tema Period', value = 20, key = 'tema_entry_period1'))
             offset=0 #offset = int(offset.text_input('Offset (Optional)', value = 0, key = 'offset0'))
             entry_data1 = ta.tema(data.Close, length = period, offset = offset)
             entry_data1.index = entry_data1.index.astype(str)
@@ -1484,7 +1484,7 @@ def implement_triple_exponential_moving_average(num_stream, data, start_date, en
 
         # 3. TEMA ENTRY DATA 2
 
-        entry_input_2 = entry_condition_inputs.selectbox('INDICATOR', inputs2, key = 'tema_entry_input2')
+        entry_input_2 = 'Number' if inputs2[0]=='Number' else entry_condition_inputs.selectbox('INDICATOR', inputs2, key = 'tema_entry_input2')
 
         if entry_input_2 == 'Triple Exponential Moving Average (TEMA)':
             period, offset = entry_condition_inputs.columns(2)
@@ -1535,7 +1535,7 @@ def implement_triple_exponential_moving_average(num_stream, data, start_date, en
             entry_data2 = entry_data2[entry_data2.index >= str(start_date)]
             entry_data2.index = pd.to_datetime(entry_data2.index)
         elif entry_input_2 == 'Number':
-            entry_data2 = entry_condition_inputs.number_input('Specify Input Value', min_value = 0, value = 0, key = 'number1')
+            entry_data2 = entry_condition_inputs.number_input('', min_value = 0, value = 0, key = 'number1')
         else:
             entry_data2 = data[f'{entry_input_2}']
             entry_data2.index = entry_data2.index.astype(str)
@@ -1553,7 +1553,7 @@ def implement_triple_exponential_moving_average(num_stream, data, start_date, en
 
         if exit_input_1 == 'Triple Exponential Moving Average (TEMA)':
             period, offset = exit_condition_inputs.columns(2)
-            period = int(period.text_input('tema Period', value = 20, key = 'tema_exit_period1'))
+            period=20 #period = int(period.text_input('tema Period', value = 20, key = 'tema_exit_period1'))
             offset=0 #offset = int(offset.text_input('Offset (Optional)', value = 0, key = 'exit_offset'))
             exit_data1 = ta.tema(data.Close, length = period, offset = offset)
             exit_data1.index = exit_data1.index.astype(str)
@@ -1568,7 +1568,7 @@ def implement_triple_exponential_moving_average(num_stream, data, start_date, en
 
         # 3. TEMA EXIT DATA 2
 
-        exit_input_2 = exit_condition_inputs.selectbox('INDICATOR', inputs2, key = 'tema_exit_input2')
+        exit_input_2 = 'Number' if inputs2[0]=='Number' else exit_condition_inputs.selectbox('INDICATOR', inputs2, key = 'tema_exit_input2')
 
         if exit_input_2 == 'Triple Exponential Moving Average (TEMA)':
             period, offset = exit_condition_inputs.columns(2)
@@ -1619,7 +1619,7 @@ def implement_triple_exponential_moving_average(num_stream, data, start_date, en
             exit_data2 = exit_data2[exit_data2.index >= str(start_date)]
             exit_data2.index = pd.to_datetime(exit_data2.index)
         elif exit_input_2 == 'Number':
-            exit_data2 = exit_condition_inputs.number_input('Specify Input Value', min_value = 0, value = 0, key = 'number2')
+            exit_data2 = exit_condition_inputs.number_input('', min_value = 0, value = 0, key = 'number2')
         else:
             exit_data2 = data[f'{exit_input_2}']
             exit_data2.index = exit_data2.index.astype(str)
@@ -1661,7 +1661,7 @@ def implement_double_exponential_moving_average(num_stream, data, start_date, en
 
         # 3. DEMA ENTRY DATA 2
 
-        entry_input_2 = entry_condition_inputs.selectbox('INDICATOR', inputs2, key = 'dema_entry_input2')
+        entry_input_2 = 'Number' if inputs2[0]=='Number' else entry_condition_inputs.selectbox('INDICATOR', inputs2, key = 'dema_entry_input2')
 
         if entry_input_2 == 'Double Exponential Moving Average (DEMA)':
             period, offset = entry_condition_inputs.columns(2)
@@ -1712,7 +1712,7 @@ def implement_double_exponential_moving_average(num_stream, data, start_date, en
             entry_data2 = entry_data2[entry_data2.index >= str(start_date)]
             entry_data2.index = pd.to_datetime(entry_data2.index)
         elif entry_input_2 == 'Number':
-            entry_data2 = entry_condition_inputs.number_input('Specify Input Value', min_value = 0, value = 0, key = 'number1')
+            entry_data2 = entry_condition_inputs.number_input('', min_value = 0, value = 0, key = 'number1')
         else:
             entry_data2 = data[f'{entry_input_2}']
             entry_data2.index = entry_data2.index.astype(str)
@@ -1745,7 +1745,7 @@ def implement_double_exponential_moving_average(num_stream, data, start_date, en
 
         # 3. DEMA EXIT DATA 2
 
-        exit_input_2 = exit_condition_inputs.selectbox('INDICATOR', inputs2, key = 'dema_exit_input2')
+        exit_input_2 = 'Number' if inputs2[0]=='Number' else exit_condition_inputs.selectbox('INDICATOR', inputs2, key = 'dema_exit_input2')
 
         if exit_input_2 == 'Double Exponential Moving Average (DEMA)':
             period, offset = exit_condition_inputs.columns(2)
@@ -1796,7 +1796,7 @@ def implement_double_exponential_moving_average(num_stream, data, start_date, en
             exit_data2 = exit_data2[exit_data2.index >= str(start_date)]
             exit_data2.index = pd.to_datetime(exit_data2.index)
         elif exit_input_2 == 'Number':
-            exit_data2 = exit_condition_inputs.number_input('Specify Input Value', min_value = 0, value = 0, key = 'number2')
+            exit_data2 = exit_condition_inputs.number_input('', min_value = 0, value = 0, key = 'number2')
         else:
             exit_data2 = data[f'{exit_input_2}']
             exit_data2.index = exit_data2.index.astype(str)
@@ -1838,7 +1838,7 @@ def implement_simple_moving_average(num_stream, data, start_date, end_date):
 
         # 3. SMA ENTRY DATA 2
 
-        entry_input_2 = entry_condition_inputs.selectbox('INDICATOR', inputs2, key = 'sma_entry_input2')
+        entry_input_2 = 'Number' if inputs2[0]=='Number' else entry_condition_inputs.selectbox('INDICATOR', inputs2, key = 'sma_entry_input2')
 
         if entry_input_2 == 'Simple Moving Average (SMA)':
             period, offset = entry_condition_inputs.columns(2)
@@ -1889,7 +1889,7 @@ def implement_simple_moving_average(num_stream, data, start_date, end_date):
             entry_data2 = entry_data2[entry_data2.index >= str(start_date)]
             entry_data2.index = pd.to_datetime(entry_data2.index)
         elif entry_input_2 == 'Number':
-            entry_data2 = entry_condition_inputs.number_input('Specify Input Value', min_value = 0, value = 0, key = 'number1')
+            entry_data2 = entry_condition_inputs.number_input('', min_value = 0, value = 0, key = 'number1')
         else:
             entry_data2 = data[f'{entry_input_2}']
             entry_data2.index = entry_data2.index.astype(str)
@@ -1922,7 +1922,7 @@ def implement_simple_moving_average(num_stream, data, start_date, end_date):
 
         # 3. SMA EXIT DATA 2
 
-        exit_input_2 = exit_condition_inputs.selectbox('INDICATOR', inputs2, key = 'sma_exit_input2')
+        exit_input_2 = 'Number' if inputs2[0]=='Number' else exit_condition_inputs.selectbox('INDICATOR', inputs2, key = 'sma_exit_input2')
 
         if exit_input_2 == 'Simple Moving Average (SMA)':
             period, offset = exit_condition_inputs.columns(2)
@@ -1973,7 +1973,7 @@ def implement_simple_moving_average(num_stream, data, start_date, end_date):
             exit_data2 = exit_data2[exit_data2.index >= str(start_date)]
             exit_data2.index = pd.to_datetime(exit_data2.index)
         elif exit_input_2 == 'Number':
-            exit_data2 = exit_condition_inputs.number_input('Specify Input Value', min_value = 0, value = 0, key = 'number2')
+            exit_data2 = exit_condition_inputs.number_input('', min_value = 0, value = 0, key = 'number2')
         else:
             exit_data2 = data[f'{exit_input_2}']
             exit_data2.index = exit_data2.index.astype(str)
@@ -2015,7 +2015,7 @@ def implement_triangular_moving_average(num_stream, data, start_date, end_date):
 
         # 3. TRIMA ENTRY DATA 2
 
-        entry_input_2 = entry_condition_inputs.selectbox('INDICATOR', inputs2, key = 'trima_entry_input2')
+        entry_input_2 = 'Number' if inputs2[0]=='Number' else entry_condition_inputs.selectbox('INDICATOR', inputs2, key = 'trima_entry_input2')
 
         if entry_input_2 == 'Triangular Moving Average (TRIMA)':
             period, offset = entry_condition_inputs.columns(2)
@@ -2066,7 +2066,7 @@ def implement_triangular_moving_average(num_stream, data, start_date, end_date):
             entry_data2 = entry_data2[entry_data2.index >= str(start_date)]
             entry_data2.index = pd.to_datetime(entry_data2.index)
         elif entry_input_2 == 'Number':
-            entry_data2 = entry_condition_inputs.number_input('Specify Input Value', min_value = 0, value = 0, key = 'number1')
+            entry_data2 = entry_condition_inputs.number_input('', min_value = 0, value = 0, key = 'number1')
         else:
             entry_data2 = data[f'{entry_input_2}']
             entry_data2.index = entry_data2.index.astype(str)
@@ -2099,7 +2099,7 @@ def implement_triangular_moving_average(num_stream, data, start_date, end_date):
 
         # 3. TRIMA EXIT DATA 2
 
-        exit_input_2 = exit_condition_inputs.selectbox('INDICATOR', inputs2, key = 'trima_exit_input2')
+        exit_input_2 = 'Number' if inputs2[0]=='Number' else exit_condition_inputs.selectbox('INDICATOR', inputs2, key = 'trima_exit_input2')
 
         if exit_input_2 == 'Triangular Moving Average (TRIMA)':
             period, offset = exit_condition_inputs.columns(2)
@@ -2150,7 +2150,7 @@ def implement_triangular_moving_average(num_stream, data, start_date, end_date):
             exit_data2 = exit_data2[exit_data2.index >= str(start_date)]
             exit_data2.index = pd.to_datetime(exit_data2.index)
         elif exit_input_2 == 'Number':
-            exit_data2 = exit_condition_inputs.number_input('Specify Input Value', min_value = 0, value = 0, key = 'number2')
+            exit_data2 = exit_condition_inputs.number_input('', min_value = 0, value = 0, key = 'number2')
         else:
             exit_data2 = data[f'{exit_input_2}']
             exit_data2.index = exit_data2.index.astype(str)
@@ -2192,13 +2192,13 @@ def implement_chande_forecast_oscillator(num_stream, data, start_date, end_date)
 
         # 3. CFO ENTRY DATA 2
 
-        entry_input_2 = entry_condition_inputs.selectbox('INDICATOR', inputs2, key = 'cfo_entry_input2')
+        entry_input_2 = 'Number' if inputs2[0]=='Number' else entry_condition_inputs.selectbox('INDICATOR', inputs2, key = 'cfo_entry_input2')
         
         if entry_input_2 == 'Number':
-            entry_data2 = entry_condition_inputs.number_input('Specify Input Value', min_value = 0, value = 0, key = 'number1')
+            entry_data2 = entry_condition_inputs.number_input('', min_value = 0, value = 0, key = 'number1')
         elif entry_input_2 == 'Chande Forecast Oscillator (CFO)':
             period, offset = entry_condition_inputs.columns(2)
-            period = int(period.text_input('cfo Period', value = 25, key = 'cfo_entry_period2'))
+            period=25 #period = int(period.text_input('cfo Period', value = 25, key = 'cfo_entry_period2'))
             offset=0 #offset = int(offset.text_input('Offset (Optional)', value = 0, key = 'cfo_entry_offset2'))
             entry_data2 = ta.cfo(data.Close, length = period, offset = offset)
             entry_data2.index = entry_data2.index.astype(str)
@@ -2233,10 +2233,10 @@ def implement_chande_forecast_oscillator(num_stream, data, start_date, end_date)
 
         # 3. CFO EXIT DATA 2
 
-        exit_input_2 = exit_condition_inputs.selectbox('INDICATOR', inputs2, key = 'cfo_exit_input2')
+        exit_input_2 = 'Number' if inputs2[0]=='Number' else exit_condition_inputs.selectbox('INDICATOR', inputs2, key = 'cfo_exit_input2')
 
         if exit_input_2 == 'Number':
-            exit_data2 = exit_condition_inputs.number_input('Specify Input Value', min_value = 0, value = 0, key = 'number2')
+            exit_data2 = exit_condition_inputs.number_input('', min_value = 0, value = 0, key = 'number2')
         elif exit_input_2 == 'Chande Forecast Oscillator (CFO)':
             period, offset = exit_condition_inputs.columns(2)
             period = int(period.text_input('(X-DAYS)', value = 25, key = 'cfo_exit_period2'))
@@ -2268,7 +2268,7 @@ def implement_choppiness_index(num_stream, data, start_date, end_date):
 
         if entry_input_1 == 'Choppiness Index':
             period, offset = entry_condition_inputs.columns(2)
-            period = int(period.text_input('CI Period', value = 14, key = 'ci_entry_period1'))
+            period=14 #period = int(period.text_input('CI Period', value = 14, key = 'ci_entry_period1'))
             offset=0 #offset = int(offset.text_input('Offset (Optional)', value = 0, key = 'ci_entry_offset1'))
             entry_data1 = ta.chop(data.High, data.Low, data.Close, length = period, offset = offset)
             entry_data1.index = entry_data1.index.astype(str)
@@ -2283,13 +2283,13 @@ def implement_choppiness_index(num_stream, data, start_date, end_date):
 
         # 3. CHOP ENTRY DATA 2
 
-        entry_input_2 = entry_condition_inputs.selectbox('INDICATOR', inputs2, key = 'ci_entry_input2')
+        entry_input_2 = 'Number' if inputs2[0]=='Number' else entry_condition_inputs.selectbox('INDICATOR', inputs2, key = 'ci_entry_input2')
         
         if entry_input_2 == 'Number':
-            entry_data2 = entry_condition_inputs.number_input('Specify Input Value', min_value = 0, value = 40, key = 'number1')
+            entry_data2 = entry_condition_inputs.number_input('', min_value = 0, value = 40, key = 'number1')
         elif entry_input_2 == 'Choppiness Index':
             period, offset = entry_condition_inputs.columns(2)
-            period = int(period.text_input('ci Period', value = 50, key = 'ci_entry_period2'))
+            period=50 #period = int(period.text_input('ci Period', value = 50, key = 'ci_entry_period2'))
             offset=0 #offset = int(offset.text_input('Offset (Optional)', value = 0, key = 'ci_entry_offset2'))
             entry_data2 = ta.chop(data.High, data.Low, data.Close, length = period, offset = offset)
             entry_data2.index = entry_data2.index.astype(str)
@@ -2309,7 +2309,7 @@ def implement_choppiness_index(num_stream, data, start_date, end_date):
 
         if exit_input_1 == 'Choppiness Index':
             period, offset = exit_condition_inputs.columns(2)
-            period = int(period.text_input('CI Period', value = 14, key = 'ci_exit_period1'))
+            period=14 #period = int(period.text_input('CI Period', value = 14, key = 'ci_exit_period1'))
             offset=0 #offset = int(offset.text_input('Offset (Optional)', value = 0, key = 'ci_exit_offset1'))
             exit_data1 = ta.chop(data.High, data.Low, data.Close, length = period, offset = offset)
             exit_data1.index = exit_data1.index.astype(str)
@@ -2324,13 +2324,13 @@ def implement_choppiness_index(num_stream, data, start_date, end_date):
 
         # 3. CHOP EXIT DATA 2
 
-        exit_input_2 = exit_condition_inputs.selectbox('INDICATOR', inputs2, key = 'ci_exit_input2')
+        exit_input_2 = 'Number' if inputs2[0]=='Number' else exit_condition_inputs.selectbox('INDICATOR', inputs2, key = 'ci_exit_input2')
 
         if exit_input_2 == 'Number':
-            exit_data2 = exit_condition_inputs.number_input('Specify Input Value', min_value = 0, value = 60, key = 'number2')
+            exit_data2 = exit_condition_inputs.number_input('', min_value = 0, value = 60, key = 'number2')
         elif exit_input_2 == 'Choppiness Index':
             period, offset = exit_condition_inputs.columns(2)
-            period = int(period.text_input('CI Period', value = 50, key = 'ci_exit_period2'))
+            period=50 #period = int(period.text_input('CI Period', value = 50, key = 'ci_exit_period2'))
             offset=0 #offset = int(offset.text_input('Offset (Optional)', value = 0, key = 'ci_exit_offset2'))
             exit_data2 = ta.chop(data.High, data.Low, data.Close, length = period, offset = offset)
             exit_data2.index = exit_data2.index.astype(str)
@@ -2374,10 +2374,10 @@ def implement_aroon_down(num_stream, data, start_date, end_date):
 
         # 3. AROOND ENTRY DATA 2
 
-        entry_input_2 = entry_condition_inputs.selectbox('INDICATOR', inputs2, key = 'aroond_entry_input2')
+        entry_input_2 = 'Number' if inputs2[0]=='Number' else entry_condition_inputs.selectbox('INDICATOR', inputs2, key = 'aroond_entry_input2')
         
         if entry_input_2 == 'Number':
-            entry_data2 = entry_condition_inputs.number_input('Specify Input Value', min_value = 0, value = 0, key = 'number1')
+            entry_data2 = entry_condition_inputs.number_input('', min_value = 0, value = 0, key = 'number1')
         elif entry_input_2 == 'Aroon Up':
             period, offset = entry_condition_inputs.columns(2)
             period = int(period.text_input('(X-DAYS)', value = 40, key = 'aroond_entry_period2'))
@@ -2423,10 +2423,10 @@ def implement_aroon_down(num_stream, data, start_date, end_date):
 
         # 3. AROOND EXIT DATA 2
 
-        exit_input_2 = exit_condition_inputs.selectbox('INDICATOR', inputs2, key = 'aroond_exit_input2')
+        exit_input_2 = 'Number' if inputs2[0]=='Number' else exit_condition_inputs.selectbox('INDICATOR', inputs2, key = 'aroond_exit_input2')
 
         if exit_input_2 == 'Number':
-            exit_data2 = exit_condition_inputs.number_input('Specify Input Value', min_value = 0, value = 0, key = 'number2')
+            exit_data2 = exit_condition_inputs.number_input('', min_value = 0, value = 0, key = 'number2')
         elif exit_input_2 == 'Aroon Up':
             period, offset = exit_condition_inputs.columns(2)
             period = int(period.text_input('(X-DAYS)', value = 40, key = 'aroond_exit_period2'))
@@ -2481,7 +2481,7 @@ def implement_average_true_range(num_stream, data, start_date, end_date):
 
         # 3. ATR ENTRY DATA 2
 
-        entry_input_2 = entry_condition_inputs.selectbox('INDICATOR', inputs2, key = 'atr_entry_input2')
+        entry_input_2 = 'Number' if inputs2[0]=='Number' else entry_condition_inputs.selectbox('INDICATOR', inputs2, key = 'atr_entry_input2')
 
         if entry_input_2 == 'Average True Range (ATR)':
             period, offset = entry_condition_inputs.columns(2)
@@ -2507,7 +2507,7 @@ def implement_average_true_range(num_stream, data, start_date, end_date):
             entry_data2 = entry_data2[entry_data2.index >= str(start_date)]
             entry_data2.index = pd.to_datetime(entry_data2.index)
         elif entry_input_2 == 'Number':
-            entry_data2 = entry_condition_inputs.number_input('Specify Input Value', min_value = 0, value = 0, key = 'number1')
+            entry_data2 = entry_condition_inputs.number_input('', min_value = 0, value = 0, key = 'number1')
         else:
             pass
 
@@ -2537,7 +2537,7 @@ def implement_average_true_range(num_stream, data, start_date, end_date):
 
         # 3. ATR EXIT DATA 2
 
-        exit_input_2 = exit_condition_inputs.selectbox('INDICATOR', inputs2, key = 'atr_exit_input2')
+        exit_input_2 = 'Number' if inputs2[0]=='Number' else exit_condition_inputs.selectbox('INDICATOR', inputs2, key = 'atr_exit_input2')
 
         if exit_input_2 == 'Average True Range (ATR)':
             period, offset = exit_condition_inputs.columns(2)
@@ -2563,7 +2563,7 @@ def implement_average_true_range(num_stream, data, start_date, end_date):
             exit_data2 = exit_data2[exit_data2.index >= str(start_date)]
             exit_data2.index = pd.to_datetime(exit_data2.index)
         elif exit_input_2 == 'Number':
-            exit_data2 = exit_condition_inputs.number_input('Specify Input Value', min_value = 0, value = 0, key = 'number2')
+            exit_data2 = exit_condition_inputs.number_input('', min_value = 0, value = 0, key = 'number2')
         else:
             pass
         
@@ -2587,7 +2587,7 @@ def implement_williamsr(num_stream, data, start_date, end_date):
 
         if entry_input_1 == 'Williams %R':
             period, offset = entry_condition_inputs.columns(2)
-            period = int(period.text_input('W%R Period', value = 14, key = 'wr_entry_period1'))
+            period=14 #period = int(period.text_input('W%R Period', value = 14, key = 'wr_entry_period1'))
             offset=0 #offset = int(offset.text_input('Offset (Optional)', value = 0, key = 'wr_entry_offset1'))
             entry_data1 = ta.willr(high = data.High, low = data.Low, close = data.Close, length = period, offset = offset)
             entry_data1.index = entry_data1.index.astype(str)
@@ -2602,10 +2602,10 @@ def implement_williamsr(num_stream, data, start_date, end_date):
 
         # 3. WR ENTRY DATA 2
 
-        entry_input_2 = entry_condition_inputs.selectbox('INDICATOR', inputs2, key = 'wr_entry_input2')
+        entry_input_2 = 'Number' if inputs2[0]=='Number' else entry_condition_inputs.selectbox('INDICATOR', inputs2, key = 'wr_entry_input2')
 
         if entry_input_2 == 'Number':
-            entry_data2 = entry_condition_inputs.number_input('Specify Input Value', value = -80, min_value = -100, 
+            entry_data2 = entry_condition_inputs.number_input('', value = -80, min_value = -100, 
                                                               max_value = 0, key = 'number1')
         else:
             pass
@@ -2621,7 +2621,7 @@ def implement_williamsr(num_stream, data, start_date, end_date):
 
         if exit_input_1 == 'Williams %R':
             period, offset = exit_condition_inputs.columns(2)
-            period = int(period.text_input('W%R Period', value = 14, key = 'wr_exit_period1'))
+            period=14 #period = int(period.text_input('W%R Period', value = 14, key = 'wr_exit_period1'))
             offset=0 #offset = int(offset.text_input('Offset (Optional)', value = 0, key = 'wr_exit_offset1'))
             exit_data1 = ta.willr(high = data.High, low = data.Low, close = data.Close, length = period, offset = offset)
             exit_data1.index = exit_data1.index.astype(str)
@@ -2636,10 +2636,10 @@ def implement_williamsr(num_stream, data, start_date, end_date):
 
         # 3. WR EXIT DATA 2
 
-        exit_input_2 = exit_condition_inputs.selectbox('INDICATOR', inputs2, key = 'wr_exit_input2')
+        exit_input_2 = 'Number' if inputs2[0]=='Number' else exit_condition_inputs.selectbox('INDICATOR', inputs2, key = 'wr_exit_input2')
 
         if exit_input_2 == 'Number':
-            exit_data2 = exit_condition_inputs.number_input('Specify Input Value', min_value = -100, value = -20, 
+            exit_data2 = exit_condition_inputs.number_input('', min_value = -100, value = -20, 
                                                             max_value = 0, key = 'number2')
         else:
             pass
@@ -2664,8 +2664,8 @@ def implement_parabolic_sar(num_stream, data, start_date, end_date):
 
         if entry_input_1 == 'Parabolic SAR':
             min_af, max_af = entry_condition_inputs.columns(2)
-            min_af = float(min_af.text_input('Min AF', value = 0.02, key = 'psar_entry_af1'))
-            max_af = float(max_af.text_input('Max AF', value = 0.2, key = 'psar_entry_maxaf1'))
+            min_af=0.02 #min_af = float(min_af.text_input('Min AF', value = 0.02, key = 'psar_entry_af1'))
+            max_af=0.2 #max_af = float(max_af.text_input('Max AF', value = 0.2, key = 'psar_entry_maxaf1'))
             entry_data1 = get_psar(high = data.High, low = data.Low, close = data.Close, af = min_af, max_af = max_af)
             entry_data1.index = entry_data1.index.astype(str)
             entry_data1 = entry_data1[entry_data1.index >= str(start_date)]
@@ -2679,18 +2679,18 @@ def implement_parabolic_sar(num_stream, data, start_date, end_date):
 
         # 3. PSAR ENTRY DATA 2
 
-        entry_input_2 = entry_condition_inputs.selectbox('INDICATOR', inputs2, key = 'psar_entry_input2')
+        entry_input_2 = 'Number' if inputs2[0]=='Number' else entry_condition_inputs.selectbox('INDICATOR', inputs2, key = 'psar_entry_input2')
 
         if entry_input_2 == 'Parabolic SAR':
             min_af, max_af = entry_condition_inputs.columns(2)
-            min_af = float(min_af.text_input('Min AF', value = '0.02', key = 'psar_entry_af2'))
-            max_af = float(max_af.text_input('Max AF', value = '0.2', key = 'psar_entry_maxaf2'))
+            min_af='0.02' #min_af = float(min_af.text_input('Min AF', value = '0.02', key = 'psar_entry_af2'))
+            max_af='0.2' #max_af = float(max_af.text_input('Max AF', value = '0.2', key = 'psar_entry_maxaf2'))
             entry_data2 = get_psar(high = data.High, low = data.Low, close = data.Close, af = min_af, max_af = max_af)
             entry_data2.index = entry_data2.index.astype(str)
             entry_data2 = entry_data2[entry_data2.index >= str(start_date)]
             entry_data2.index = pd.to_datetime(entry_data2.index)
         elif entry_input_2 == 'Number':
-            entry_data2 = entry_condition_inputs.number_input('Specify Input Value', min_value = 0, value = 0, key = 'number1')
+            entry_data2 = entry_condition_inputs.number_input('', min_value = 0, value = 0, key = 'number1')
         else:
             entry_data2 = data[f'{entry_input_2}']
             entry_data2.index = entry_data2.index.astype(str)
@@ -2708,8 +2708,8 @@ def implement_parabolic_sar(num_stream, data, start_date, end_date):
 
         if exit_input_1 == 'Parabolic SAR':
             min_af, max_af = exit_condition_inputs.columns(2)
-            min_af = float(min_af.text_input('Min AF', value = 0.02, key = 'psar_exit_af1'))
-            max_af = float(max_af.text_input('Max AF', value = 0.2, key = 'psar_exit_maxaf1'))
+            min_af=0.02 #min_af = float(min_af.text_input('Min AF', value = 0.02, key = 'psar_exit_af1'))
+            max_af=0.2 #max_af = float(max_af.text_input('Max AF', value = 0.2, key = 'psar_exit_maxaf1'))
             exit_data1 = get_psar(high = data.High, low = data.Low, close = data.Close, af = min_af, max_af = max_af)
             exit_data1.index = exit_data1.index.astype(str)
             exit_data1 = exit_data1[exit_data1.index >= str(start_date)]
@@ -2723,18 +2723,18 @@ def implement_parabolic_sar(num_stream, data, start_date, end_date):
 
         # 3. PSAR EXIT DATA 2
 
-        exit_input_2 = exit_condition_inputs.selectbox('INDICATOR', inputs2, key = 'psar_exit_input2')
+        exit_input_2 = 'Number' if inputs2[0]=='Number' else exit_condition_inputs.selectbox('INDICATOR', inputs2, key = 'psar_exit_input2')
 
         if exit_input_2 == 'Parabolic SAR':
             min_af, max_af = exit_condition_inputs.columns(2)
-            min_af = float(min_af.text_input('Min AF', value = 0.02, key = 'psar_exit_af2'))
-            max_af = float(max_af.text_input('Max AF', value = 0.2, key = 'psar_exit_maxaf2'))
+            min_af=0.02 #min_af = float(min_af.text_input('Min AF', value = 0.02, key = 'psar_exit_af2'))
+            max_af=0.2 #max_af = float(max_af.text_input('Max AF', value = 0.2, key = 'psar_exit_maxaf2'))
             exit_data2 = get_psar(high = data.High, low = data.Low, close = data.Close, af = min_af, max_af = max_af)
             exit_data2.index = exit_data2.index.astype(str)
             exit_data2 = exit_data2[exit_data2.index >= str(start_date)]
             exit_data2.index = pd.to_datetime(exit_data2.index)
         elif exit_input_2 == 'Number':
-            exit_data2 = exit_condition_inputs.number_input('Specify Input Value', min_value = 0, value = 0, key = 'number2')
+            exit_data2 = exit_condition_inputs.number_input('', min_value = 0, value = 0, key = 'number2')
         else:
             exit_data2 = data[f'{exit_input_2}']
             exit_data2.index = exit_data2.index.astype(str)
@@ -2763,7 +2763,7 @@ def implement_coppock_curve(num_stream, data, start_date, end_date):
             fast, slow = entry_condition_inputs.columns(2)
             period, offset = entry_condition_inputs.columns(2)
             fast = int(period.text_input('Short ROC', value = 11, key = 'coppock_curve_entry_fast1'))
-            slow = int(offset.text_input('Long ROC', value = 14, key = 'coppock_curve_entry_slow1'))
+            slow=14 #slow = int(offset.text_input('Long ROC', value = 14, key = 'coppock_curve_entry_slow1'))
             period = int(period.text_input('(X-DAYS)', value = 10, key = 'coppock_curve_entry_period1'))
             offset=0 #offset = int(offset.text_input('Offset (Optional)', value = 0, key = 'coppock_curve_entry_offset1'))
             entry_data1 = ta.coppock(data.Close, fast = fast, slow = slow, length = period, offset = offset)
@@ -2785,7 +2785,7 @@ def implement_coppock_curve(num_stream, data, start_date, end_date):
             fast, slow = entry_condition_inputs.columns(2)
             period, offset = entry_condition_inputs.columns(2)
             fast = int(period.text_input('Short ROC', value = 11, key = 'coppock_curve_entry_fast1'))
-            slow = int(offset.text_input('Long ROC', value = 14, key = 'coppock_curve_entry_slow1'))
+            slow=14 #slow = int(offset.text_input('Long ROC', value = 14, key = 'coppock_curve_entry_slow1'))
             period = int(period.text_input('(X-DAYS)', value = 21, key = 'coppock_curve_entry_period1'))
             offset=0 #offset = int(offset.text_input('Offset (Optional)', value = 0, key = 'coppock_curve_entry_offset1'))
             entry_data2 = ta.coppock(data.Close, fast = fast, slow = slow, length = period, offset = offset)
@@ -2793,7 +2793,7 @@ def implement_coppock_curve(num_stream, data, start_date, end_date):
             entry_data2 = entry_data2[entry_data2.index >= str(start_date)]
             entry_data2.index = pd.to_datetime(entry_data2.index)
         elif entry_input_2 == 'Number':
-            entry_data2 = entry_condition_inputs.number_input('Specify Input Value', min_value = 0, value = 0, key = 'number1')
+            entry_data2 = entry_condition_inputs.number_input('', min_value = 0, value = 0, key = 'number1')
         else:
             pass
         
@@ -2810,7 +2810,7 @@ def implement_coppock_curve(num_stream, data, start_date, end_date):
             fast, slow = exit_condition_inputs.columns(2)
             period, offset = exit_condition_inputs.columns(2)
             fast = int(period.text_input('Short ROC', value = 11, key = 'coppock_curve_exit_fast1'))
-            slow = int(offset.text_input('Long ROC', value = 14, key = 'coppock_curve_exit_slow1'))
+            slow=14 #slow = int(offset.text_input('Long ROC', value = 14, key = 'coppock_curve_exit_slow1'))
             period = int(period.text_input('(X-DAYS)', value = 10, key = 'coppock_curve_exit_period1'))
             offset=0 #offset = int(offset.text_input('Offset (Optional)', value = 0, key = 'coppock_curve_exit_offset1'))
             exit_data1 = ta.coppock(data.Close, fast = fast, slow = slow, length = period, offset = offset)
@@ -2832,7 +2832,7 @@ def implement_coppock_curve(num_stream, data, start_date, end_date):
             fast, slow = exit_condition_inputs.columns(2)
             period, offset = exit_condition_inputs.columns(2)
             fast = int(period.text_input('Short ROC', value = 11, key = 'coppock_curve_exit_fast1'))
-            slow = int(offset.text_input('Long ROC', value = 14, key = 'coppock_curve_exit_slow1'))
+            slow=14 #slow = int(offset.text_input('Long ROC', value = 14, key = 'coppock_curve_exit_slow1'))
             period = int(period.text_input('(X-DAYS)', value = 21, key = 'coppock_curve_exit_period2'))
             offset=0 #offset = int(offset.text_input('Offset (Optional)', value = 0, key = 'coppock_curve_exit_offset2'))
             exit_data2 = ta.coppock(data.Close, fast = fast, slow = slow, length = period, offset = offset)
@@ -2840,7 +2840,7 @@ def implement_coppock_curve(num_stream, data, start_date, end_date):
             exit_data2 = exit_data2[exit_data2.index >= str(start_date)]
             exit_data2.index = pd.to_datetime(exit_data2.index)
         elif exit_input_2 == 'Number':
-            exit_data2 = exit_condition_inputs.number_input('Specify Input Value', min_value = 0, value = 0, key = 'number2')
+            exit_data2 = exit_condition_inputs.number_input('', min_value = 0, value = 0, key = 'number2')
         else:
             pass
         
@@ -2879,7 +2879,7 @@ def implement_positive_directional_index(num_stream, data, start_date, end_date)
 
         # 3. +DI ENTRY DATA 2
 
-        entry_input_2 = entry_condition_inputs.selectbox('INDICATOR', inputs2, key = '+di_entry_input2')
+        entry_input_2 = 'Number' if inputs2[0]=='Number' else entry_condition_inputs.selectbox('INDICATOR', inputs2, key = '+di_entry_input2')
 
         if entry_input_2 == '+DI, Positive Directional Index':
             period, offset = entry_condition_inputs.columns(2) 
@@ -2908,7 +2908,7 @@ def implement_positive_directional_index(num_stream, data, start_date, end_date)
             entry_data2 = entry_data2[entry_data2.index >= str(start_date)]
             entry_data2.index = pd.to_datetime(entry_data1.index)
         elif entry_input_2 == 'Number':
-            entry_data2 = entry_condition_inputs.number_input('Specify Input Value', min_value = 0, value = 0, key = 'number1')
+            entry_data2 = entry_condition_inputs.number_input('', min_value = 0, value = 0, key = 'number1')
         else:
             pass
         
@@ -2938,7 +2938,7 @@ def implement_positive_directional_index(num_stream, data, start_date, end_date)
 
         # 3. +DI EXIT DATA 2
 
-        exit_input_2 = exit_condition_inputs.selectbox('INDICATOR', inputs2, key = '+di_exit_input2')
+        exit_input_2 = 'Number' if inputs2[0]=='Number' else exit_condition_inputs.selectbox('INDICATOR', inputs2, key = '+di_exit_input2')
 
         if exit_input_2 == '+DI, Positive Directional Index':
             period, offset = exit_condition_inputs.columns(2) 
@@ -2967,7 +2967,7 @@ def implement_positive_directional_index(num_stream, data, start_date, end_date)
             exit_data2 = exit_data2[exit_data2.index >= str(start_date)]
             exit_data2.index = pd.to_datetime(exit_data1.index)
         elif exit_input_2 == 'Number':
-            exit_data2 = exit_condition_inputs.number_input('Specify Input Value', min_value = 0, value = 0, key = 'number1')
+            exit_data2 = exit_condition_inputs.number_input('', min_value = 0, value = 0, key = 'number1')
         else:
             pass
         
@@ -3006,10 +3006,10 @@ def implement_rsi(num_stream, data, start_date, end_date):
 
         # 3. RSI ENTRY DATA 2
 
-        entry_input_2 = entry_condition_inputs.selectbox('INDICATOR', inputs2, key = 'rsi_entry_input2')
+        entry_input_2 = 'Number' if inputs2[0]=='Number' else entry_condition_inputs.selectbox('INDICATOR', inputs2, key = 'rsi_entry_input2')
 
         if entry_input_2 == 'Number':
-            entry_data2 = entry_condition_inputs.number_input('Specify Input Value', value = 30, min_value = 0, 
+            entry_data2 = entry_condition_inputs.number_input('', value = 30, min_value = 0, 
                                                               max_value = 100, key = 'number1')
         else:
             pass
@@ -3040,10 +3040,10 @@ def implement_rsi(num_stream, data, start_date, end_date):
 
         # 3. RSI EXIT DATA 2
 
-        exit_input_2 = exit_condition_inputs.selectbox('INDICATOR', inputs2, key = 'rsi_exit_input2')
+        exit_input_2 = 'Number' if inputs2[0]=='Number' else exit_condition_inputs.selectbox('INDICATOR', inputs2, key = 'rsi_exit_input2')
 
         if exit_input_2 == 'Number':
-            exit_data2 = exit_condition_inputs.number_input('Specify Input Value', value = 70, min_value = 0, 
+            exit_data2 = exit_condition_inputs.number_input('', value = 70, min_value = 0, 
                                                               max_value = 100, key = 'number2')
         else:
             pass
@@ -3069,9 +3069,9 @@ def implement_macd_signal(num_stream, data, start_date, end_date):
         if entry_input_1 == 'MACD Signal':
             fast_ma, slow_ma = entry_condition_inputs.columns(2)
             signal_period, offset = entry_condition_inputs.columns(2)
-            fast_ma = int(fast_ma.text_input('Fast MA', value = 12, key = 'macdsignal_entry_fast1'))
-            slow_ma = int(slow_ma.text_input('Slow MA', value = 26, key = 'macdsignal_entry_slow1'))
-            signal_period = int(signal_period.text_input('Signal Period', value = 9, key = 'macdsignal_entry_signal1'))
+            fast_ma=12 #fast_ma = int(fast_ma.text_input('Fast MA', value = 12, key = 'macdsignal_entry_fast1'))
+            slow_ma=26 #slow_ma = int(slow_ma.text_input('Slow MA', value = 26, key = 'macdsignal_entry_slow1'))
+            signal_period=9 #signal_period = int(signal_period.text_input('Signal Period', value = 9, key = 'macdsignal_entry_signal1'))
             offset=0 #offset = int(offset.text_input('Offset', value = 0, key = 'macdsignal_entry_offset1'))
             entry_data1 = ta.macd(high = data.High, low = data.Low, close = data.Close, fast = fast_ma, slow = slow_ma, 
                                   signal = signal_period, offset = offset).iloc[:,2]
@@ -3087,14 +3087,14 @@ def implement_macd_signal(num_stream, data, start_date, end_date):
         
         # 3. MACD SIGNAL ENTRY DATA 2
 
-        entry_input_2 = entry_condition_inputs.selectbox('INDICATOR', inputs2, key = 'macdsignal_entry_input2')
+        entry_input_2 = 'Number' if inputs2[0]=='Number' else entry_condition_inputs.selectbox('INDICATOR', inputs2, key = 'macdsignal_entry_input2')
 
         if entry_input_2 == 'MACD':
             fast_ma, slow_ma = entry_condition_inputs.columns(2)
             signal_period, offset = entry_condition_inputs.columns(2)
-            fast_ma = int(fast_ma.text_input('Fast MA', value = 12, key = 'macdsignal_entry_fast2'))
-            slow_ma = int(slow_ma.text_input('Slow MA', value = 26, key = 'macdsignal_entry_slow2'))
-            signal_period = int(signal_period.text_input('Signal Period', value = 9, key = 'macdsignal_entry_signal2'))
+            fast_ma=12 #fast_ma = int(fast_ma.text_input('Fast MA', value = 12, key = 'macdsignal_entry_fast2'))
+            slow_ma=26 #slow_ma = int(slow_ma.text_input('Slow MA', value = 26, key = 'macdsignal_entry_slow2'))
+            signal_period=9 #signal_period = int(signal_period.text_input('Signal Period', value = 9, key = 'macdsignal_entry_signal2'))
             offset=0 #offset = int(offset.text_input('Offset (Optional)', value = 0, key = 'macdsignal_entry_offset2'))
             entry_data2 = ta.macd(high = data.High, low = data.Low, close = data.Close, fast = fast_ma, slow = slow_ma, 
                                   signal = signal_period, offset = offset).iloc[:,0]
@@ -3104,9 +3104,9 @@ def implement_macd_signal(num_stream, data, start_date, end_date):
         elif entry_input_2 == 'MACD Histogram':
             fast_ma, slow_ma = entry_condition_inputs.columns(2)
             signal_period, offset = entry_condition_inputs.columns(2)
-            fast_ma = int(fast_ma.text_input('Fast MA', value = 12, key = 'macdsignal_entry_fast2'))
-            slow_ma = int(slow_ma.text_input('Slow MA', value = 26, key = 'macdsignal_entry_slow2'))
-            signal_period = int(signal_period.text_input('Signal Period', value = 9, key = 'macdsignal_entry_signal2'))
+            fast_ma=12 #fast_ma = int(fast_ma.text_input('Fast MA', value = 12, key = 'macdsignal_entry_fast2'))
+            slow_ma=26 #slow_ma = int(slow_ma.text_input('Slow MA', value = 26, key = 'macdsignal_entry_slow2'))
+            signal_period=9 #signal_period = int(signal_period.text_input('Signal Period', value = 9, key = 'macdsignal_entry_signal2'))
             offset=0 #offset = int(offset.text_input('Offset (Optional)', value = 0, key = 'macdsignal_entry_offset2'))
             entry_data2 = ta.macd(high = data.High, low = data.Low, close = data.Close, fast = fast_ma, slow = slow_ma, 
                                   signal = signal_period, offset = offset).iloc[:,1]
@@ -3114,7 +3114,7 @@ def implement_macd_signal(num_stream, data, start_date, end_date):
             entry_data2 = entry_data2[entry_data2.index >= str(start_date)]
             entry_data2.index = pd.to_datetime(entry_data2.index)
         elif entry_input_2 == 'Number':
-            entry_data2 = entry_condition_inputs.number_input('Specify Input Value', value = 0, min_value = 0, key = 'number1')
+            entry_data2 = entry_condition_inputs.number_input('', value = 0, min_value = 0, key = 'number1')
         else:
             pass
         
@@ -3130,9 +3130,9 @@ def implement_macd_signal(num_stream, data, start_date, end_date):
         if exit_input_1 == 'MACD Signal':
             fast_ma, slow_ma = exit_condition_inputs.columns(2)
             signal_period, offset = exit_condition_inputs.columns(2)
-            fast_ma = int(fast_ma.text_input('Fast MA', value = 12, key = 'macdsignal_exit_fast1'))
-            slow_ma = int(slow_ma.text_input('Slow MA', value = 26, key = 'macdsignal_exit_slow1'))
-            signal_period = int(signal_period.text_input('Signal Period', value = 9, key = 'macdsignal_exit_signal1'))
+            fast_ma=12 #fast_ma = int(fast_ma.text_input('Fast MA', value = 12, key = 'macdsignal_exit_fast1'))
+            slow_ma=26 #slow_ma = int(slow_ma.text_input('Slow MA', value = 26, key = 'macdsignal_exit_slow1'))
+            signal_period=9 #signal_period = int(signal_period.text_input('Signal Period', value = 9, key = 'macdsignal_exit_signal1'))
             offset=0 #offset = int(offset.text_input('Offset (Optional)', value = 0, key = 'macdsignal_exit_offset1'))
             exit_data1 = ta.macd(high = data.High, low = data.Low, close = data.Close, fast = fast_ma, slow = slow_ma, 
                                   signal = signal_period, offset = offset).iloc[:,2]
@@ -3148,14 +3148,14 @@ def implement_macd_signal(num_stream, data, start_date, end_date):
         
         # 3. MACD SIGNAL EXIT DATA 2
 
-        exit_input_2 = exit_condition_inputs.selectbox('INDICATOR', inputs2, key = 'macdsignal_exit_input2')
+        exit_input_2 = 'Number' if inputs2[0]=='Number' else exit_condition_inputs.selectbox('INDICATOR', inputs2, key = 'macdsignal_exit_input2')
 
         if exit_input_2 == 'MACD':
             fast_ma, slow_ma = exit_condition_inputs.columns(2)
             signal_period, offset = exit_condition_inputs.columns(2)
-            fast_ma = int(fast_ma.text_input('Fast MA', value = 12, key = 'macdsignal_exit_fast2'))
-            slow_ma = int(slow_ma.text_input('Slow MA', value = 26, key = 'macdsignal_exit_slow2'))
-            signal_period = int(signal_period.text_input('Signal Period', value = 9, key = 'macdsignal_exit_signal2'))
+            fast_ma=12 #fast_ma = int(fast_ma.text_input('Fast MA', value = 12, key = 'macdsignal_exit_fast2'))
+            slow_ma=26 #slow_ma = int(slow_ma.text_input('Slow MA', value = 26, key = 'macdsignal_exit_slow2'))
+            signal_period=9 #signal_period = int(signal_period.text_input('Signal Period', value = 9, key = 'macdsignal_exit_signal2'))
             offset=0 #offset = int(offset.text_input('Offset', value = 0, key = 'macdsignal_exit_offset2'))
             exit_data2 = ta.macd(high = data.High, low = data.Low, close = data.Close, fast = fast_ma, slow = slow_ma, 
                                   signal = signal_period, offset = offset).iloc[:,0]
@@ -3165,9 +3165,9 @@ def implement_macd_signal(num_stream, data, start_date, end_date):
         elif exit_input_2 == 'MACD Histogram':
             fast_ma, slow_ma = exit_condition_inputs.columns(2)
             signal_period, offset = exit_condition_inputs.columns(2)
-            fast_ma = int(fast_ma.text_input('Fast MA', value = 12, key = 'macdsignal_exit_fast2'))
-            slow_ma = int(slow_ma.text_input('Slow MA', value = 26, key = 'macdsignal_exit_slow2'))
-            signal_period = int(signal_period.text_input('Signal Period', value = 9, key = 'macdsignal_exit_signal2'))
+            fast_ma=12 #fast_ma = int(fast_ma.text_input('Fast MA', value = 12, key = 'macdsignal_exit_fast2'))
+            slow_ma=26 #slow_ma = int(slow_ma.text_input('Slow MA', value = 26, key = 'macdsignal_exit_slow2'))
+            signal_period=9 #signal_period = int(signal_period.text_input('Signal Period', value = 9, key = 'macdsignal_exit_signal2'))
             offset=0 #offset = int(offset.text_input('Offset (Optional)', value = 0, key = 'macdsignal_exit_offset2'))
             exit_data2 = ta.macd(high = data.High, low = data.Low, close = data.Close, fast = fast_ma, slow = slow_ma, 
                                   signal = signal_period, offset = offset).iloc[:,1]
@@ -3175,7 +3175,7 @@ def implement_macd_signal(num_stream, data, start_date, end_date):
             exit_data2 = exit_data2[exit_data2.index >= str(start_date)]
             exit_data2.index = pd.to_datetime(exit_data2.index)
         elif exit_input_2 == 'Number':
-            exit_data2 = exit_condition_inputs.number_input('Specify Input Value', value = 0, min_value = 0, key = 'number2')
+            exit_data2 = exit_condition_inputs.number_input('', value = 0, min_value = 0, key = 'number2')
         else:
             pass
         
@@ -3214,10 +3214,10 @@ def implement_aroon_oscillator(num_stream, data, start_date, end_date):
 
         # 3. AROON OSC ENTRY DATA 2
 
-        entry_input_2 = entry_condition_inputs.selectbox('INDICATOR', inputs2, key = 'aroonosc_entry_input2')
+        entry_input_2 = 'Number' if inputs2[0]=='Number' else entry_condition_inputs.selectbox('INDICATOR', inputs2, key = 'aroonosc_entry_input2')
         
         if entry_input_2 == 'Number':
-            entry_data2 = entry_condition_inputs.number_input('Specify Input Value', min_value = 0, value = 0, key = 'number1')
+            entry_data2 = entry_condition_inputs.number_input('', min_value = 0, value = 0, key = 'number1')
         elif entry_input_2 == 'Aroon Up':
             period, offset = entry_condition_inputs.columns(2)
             period = int(period.text_input('(X-DAYS)', value = 40, key = 'aroonosc_entry_period2'))
@@ -3263,10 +3263,10 @@ def implement_aroon_oscillator(num_stream, data, start_date, end_date):
 
         # 3. AROON OSC EXIT DATA 2
 
-        exit_input_2 = exit_condition_inputs.selectbox('INDICATOR', inputs2, key = 'aroonosc_exit_input2')
+        exit_input_2 = 'Number' if inputs2[0]=='Number' else exit_condition_inputs.selectbox('INDICATOR', inputs2, key = 'aroonosc_exit_input2')
         
         if exit_input_2 == 'Number':
-            exit_data2 = exit_condition_inputs.number_input('Specify Input Value', min_value = 0, value = 0, key = 'number2')
+            exit_data2 = exit_condition_inputs.number_input('', min_value = 0, value = 0, key = 'number2')
         elif exit_input_2 == 'Aroon Up':
             period, offset = exit_condition_inputs.columns(2)
             period = int(period.text_input('(X-DAYS)', value = 40, key = 'aroonosc_exit_period2'))
@@ -3310,8 +3310,8 @@ def implement_stochrsi_fastk(num_stream, data, start_date, end_date):
             rsi_period, k_period = entry_condition_inputs.columns(2)
             matype, offset = entry_condition_inputs.columns(2)
             rsi_period = int(rsi_period.text_input('(X-DAYS)', value = 14, key = 'stochrsifk_entry_rp1'))
-            k_period = int(k_period.text_input('K Period', value = 3, key = 'stochrsifk_entry_kp1'))
-            matype = matype.selectbox('MA Type', mas, key = 'stochrsifk_entry_matype1')
+            k_period=3 #k_period = int(k_period.text_input('K Period', value = 3, key = 'stochrsifk_entry_kp1'))
+            matype='sma' #matype = matype.selectbox('MA Type', mas, key = 'stochrsifk_entry_matype1')
             offset=0 #offset = int(offset.text_input('Offset (Optional)', value = 0, key = 'stochrsifk_entry_offset1'))
             entry_data1 = ta.stochrsi(data.Close, rsi_length = rsi_period, k = k_period, mamode = matype, offset = offset).iloc[:,0]
             entry_data1.index = entry_data1.index.astype(str)
@@ -3326,10 +3326,10 @@ def implement_stochrsi_fastk(num_stream, data, start_date, end_date):
         
         # 3. STOCH RSI FASTK ENTRY DATA 2
 
-        entry_input_2 = entry_condition_inputs.selectbox('INDICATOR', inputs2, key = 'stochrsifk_entry_input2') if inputs2[0]!='Number' else 'Number'
+        entry_input_2 = 'Number' if inputs2[0]=='Number' else entry_condition_inputs.selectbox('INDICATOR', inputs2, key = 'stochrsifk_entry_input2')
 
         if entry_input_2 == 'Number':
-            entry_data2 = entry_condition_inputs.number_input('Specify Input Value', value = 30, min_value = 0, 
+            entry_data2 = entry_condition_inputs.number_input('', value = 30, min_value = 0, 
                                                               max_value = 100, key = 'number1')
         else:
             pass
@@ -3347,8 +3347,8 @@ def implement_stochrsi_fastk(num_stream, data, start_date, end_date):
             rsi_period, k_period = exit_condition_inputs.columns(2)
             matype, offset = exit_condition_inputs.columns(2)
             rsi_period = int(rsi_period.text_input('(X-DAYS)', value = 14, key = 'stochrsifk_exit_rp1'))
-            k_period = int(k_period.text_input('K Period', value = 3, key = 'stochrsifk_exit_kp1'))
-            matype = matype.selectbox('MA Type', mas, key = 'stochrsifk_exit_matype1')
+            k_period=3 #k_period = int(k_period.text_input('K Period', value = 3, key = 'stochrsifk_exit_kp1'))
+            matype='sma' #matype = matype.selectbox('MA Type', mas, key = 'stochrsifk_exit_matype1')
             offset=0 #offset = int(offset.text_input('Offset (Optional)', value = 0, key = 'stochrsifk_exit_offset1'))
             exit_data1 = ta.stochrsi(data.Close, rsi_length = rsi_period, k = k_period, mamode = matype, offset = offset).iloc[:,0]
             exit_data1.index = exit_data1.index.astype(str)
@@ -3363,10 +3363,10 @@ def implement_stochrsi_fastk(num_stream, data, start_date, end_date):
         
         # 3. STOCH RSI FASTK EXIT DATA 2
 
-        exit_input_2 = exit_condition_inputs.selectbox('INDICATOR', inputs2, key = 'stochrsifk_exit_input2')
+        exit_input_2 = 'Number' if inputs2[0]=='Number' else exit_condition_inputs.selectbox('INDICATOR', inputs2, key = 'stochrsifk_exit_input2')
 
         if exit_input_2 == 'Number':
-            exit_data2 = exit_condition_inputs.number_input('Specify Input Value', value = 70, min_value = 0, 
+            exit_data2 = exit_condition_inputs.number_input('', value = 70, min_value = 0, 
                                                               max_value = 100, key = 'number2')
         else:
             pass
@@ -3395,8 +3395,8 @@ def implement_stochrsi_fastd(num_stream, data, start_date, end_date):
             rsi_period, d_period = entry_condition_inputs.columns(2)
             matype, offset = entry_condition_inputs.columns(2)
             rsi_period = int(rsi_period.text_input('(X-DAYS)', value = 14, key = 'stochrsifd_entry_rp1'))
-            d_period = int(d_period.text_input('D Period', value = 3, key = 'stochrsifd_entry_dp1'))
-            matype = matype.selectbox('MA Type', mas, key = 'stochrsifd_entry_matype1')
+            d_period=3 #d_period = int(d_period.text_input('D Period', value = 3, key = 'stochrsifd_entry_dp1'))
+            matype='sma' #matype = matype.selectbox('MA Type', mas, key = 'stochrsifd_entry_matype1')
             offset=0 #offset = int(offset.text_input('Offset (Optional)', value = 0, key = 'stochrsifd_entry_offset1'))
             entry_data1 = ta.stochrsi(data.Close, rsi_length = rsi_period, d = d_period, mamode = matype, offset = offset).iloc[:,1]
             entry_data1.index = entry_data1.index.astype(str)
@@ -3411,10 +3411,10 @@ def implement_stochrsi_fastd(num_stream, data, start_date, end_date):
         
         # 3. STOCH RSI FASTD ENTRY DATA 2
 
-        entry_input_2 = entry_condition_inputs.selectbox('INDICATOR', inputs2, key = 'stochrsifd_entry_input2')
+        entry_input_2 = 'Number' if inputs2[0]=='Number' else entry_condition_inputs.selectbox('INDICATOR', inputs2, key = 'stochrsifd_entry_input2')
 
         if entry_input_2 == 'Number':
-            entry_data2 = entry_condition_inputs.number_input('Specify Input Value', value = 30, min_value = 0, 
+            entry_data2 = entry_condition_inputs.number_input('', value = 30, min_value = 0, 
                                                               max_value = 100, key = 'number1')
         else:
             pass
@@ -3432,8 +3432,8 @@ def implement_stochrsi_fastd(num_stream, data, start_date, end_date):
             rsi_period, d_period = exit_condition_inputs.columns(2)
             matype, offset = exit_condition_inputs.columns(2)
             rsi_period = int(rsi_period.text_input('(X-DAYS)', value = 14, key = 'stochrsifd_exit_rp1'))
-            d_period = int(d_period.text_input('D Period', value = 3, key = 'stochrsifd_exit_dp1'))
-            matype = matype.selectbox('MA Type', mas, key = 'stochrsifd_exit_matype1')
+            d_period=3 #d_period = int(d_period.text_input('D Period', value = 3, key = 'stochrsifd_exit_dp1'))
+            matype='sma' #matype = matype.selectbox('MA Type', mas, key = 'stochrsifd_exit_matype1')
             offset=0 #offset = int(offset.text_input('Offset (Optional)', value = 0, key = 'stochrsifd_exit_offset1'))
             exit_data1 = ta.stochrsi(data.Close, rsi_length = rsi_period, d = d_period, mamode = matype, offset = offset).iloc[:,1]
             exit_data1.index = exit_data1.index.astype(str)
@@ -3448,10 +3448,10 @@ def implement_stochrsi_fastd(num_stream, data, start_date, end_date):
         
         # 3. STOCH RSI FASTD EXIT DATA 2
 
-        exit_input_2 = exit_condition_inputs.selectbox('INDICATOR', inputs2, key = 'stochrsifd_exit_input2')
+        exit_input_2 = 'Number' if inputs2[0]=='Number' else exit_condition_inputs.selectbox('INDICATOR', inputs2, key = 'stochrsifd_exit_input2')
 
         if exit_input_2 == 'Number':
-            exit_data2 = exit_condition_inputs.number_input('Specify Input Value', value = 70, min_value = 0, 
+            exit_data2 = exit_condition_inputs.number_input('', value = 70, min_value = 0, 
                                                               max_value = 100, key = 'number2')
         else:
             pass
@@ -3477,9 +3477,9 @@ def implement_ultimate_oscillator(num_stream, data, start_date, end_date):
         if entry_input_1 == 'Ultimate Oscillator':
             slow, fast = entry_condition_inputs.columns(2)
             medium, offset = entry_condition_inputs.columns(2)
-            slow = int(slow.text_input('Slow', value = 28, key = 'uo_entry_fast1'))
-            fast = int(fast.text_input('Fast', value = 7, key = 'uo_entry_slow1'))
-            medium = int(medium.text_input('Medium', value = 14, key = 'uo_entry_signal1'))
+            slow=28 #slow = int(slow.text_input('Slow', value = 28, key = 'uo_entry_fast1'))
+            fast=7 #fast = int(fast.text_input('Fast', value = 7, key = 'uo_entry_slow1'))
+            medium=14 #medium = int(medium.text_input('Medium', value = 14, key = 'uo_entry_signal1'))
             offset=0 #offset = int(offset.text_input('Offset (Optional)', value = 0, key = 'uo_entry_offset1'))
             entry_data1 = ta.uo(high = data.High, low = data.Low, close = data.Close, fast = fast, slow = slow, 
                                   medium = medium, offset = offset)
@@ -3495,10 +3495,10 @@ def implement_ultimate_oscillator(num_stream, data, start_date, end_date):
         
         # 3. UO ENTRY DATA 2
 
-        entry_input_2 = entry_condition_inputs.selectbox('INDICATOR', inputs2, key = 'uo_entry_input2')
+        entry_input_2 = 'Number' if inputs2[0]=='Number' else entry_condition_inputs.selectbox('INDICATOR', inputs2, key = 'uo_entry_input2')
 
         if entry_input_2 == 'Number':
-            entry_data2 = entry_condition_inputs.number_input('Specify Input Value', value = 50, min_value = 0, 
+            entry_data2 = entry_condition_inputs.number_input('', value = 50, min_value = 0, 
                                                               max_value = 100, key = 'number1')
         else:
             pass
@@ -3515,9 +3515,9 @@ def implement_ultimate_oscillator(num_stream, data, start_date, end_date):
         if exit_input_1 == 'Ultimate Oscillator':
             slow, fast = exit_condition_inputs.columns(2)
             medium, offset = exit_condition_inputs.columns(2)
-            slow = int(slow.text_input('Slow', value = 28, key = 'uo_exit_fast1'))
-            fast = int(fast.text_input('Fast', value = 7, key = 'uo_exit_slow1'))
-            medium = int(medium.text_input('Medium', value = 14, key = 'uo_exit_signal1'))
+            slow=28 #slow = int(slow.text_input('Slow', value = 28, key = 'uo_exit_fast1'))
+            fast=7 #fast = int(fast.text_input('Fast', value = 7, key = 'uo_exit_slow1'))
+            medium=14 #medium = int(medium.text_input('Medium', value = 14, key = 'uo_exit_signal1'))
             offset=0 #offset = int(offset.text_input('Offset (Optional)', value = 0, key = 'uo_exit_offset1'))
             exit_data1 = ta.uo(high = data.High, low = data.Low, close = data.Close, fast = fast, slow = slow, 
                                   medium = medium, offset = offset)
@@ -3533,10 +3533,10 @@ def implement_ultimate_oscillator(num_stream, data, start_date, end_date):
         
         # 3. UO EXIT DATA 2
 
-        exit_input_2 = exit_condition_inputs.selectbox('INDICATOR', inputs2, key = 'uo_exit_input2')
+        exit_input_2 = 'Number' if inputs2[0]=='Number' else exit_condition_inputs.selectbox('INDICATOR', inputs2, key = 'uo_exit_input2')
 
         if exit_input_2 == 'Number':
-            exit_data2 = exit_condition_inputs.number_input('Specify Input Value', value = 50, min_value = 0, 
+            exit_data2 = exit_condition_inputs.number_input('', value = 50, min_value = 0, 
                                                               max_value = 100, key = 'number1')
         else:
             pass
@@ -3576,10 +3576,10 @@ def implement_aroon_up(num_stream, data, start_date, end_date):
 
         # 3. AROONU ENTRY DATA 2
 
-        entry_input_2 = entry_condition_inputs.selectbox('INDICATOR', inputs2, key = 'aroonu_entry_input2')
+        entry_input_2 = 'Number' if inputs2[0]=='Number' else entry_condition_inputs.selectbox('INDICATOR', inputs2, key = 'aroonu_entry_input2')
         
         if entry_input_2 == 'Number':
-            entry_data2 = entry_condition_inputs.number_input('Specify Input Value', min_value = 0, value = 0, key = 'number1')
+            entry_data2 = entry_condition_inputs.number_input('', min_value = 0, value = 0, key = 'number1')
         elif entry_input_2 == 'Aroon Up':
             period, offset = entry_condition_inputs.columns(2)
             period = int(period.text_input('(X-DAYS)', value = 40, key = 'aroonu_entry_period2'))
@@ -3625,10 +3625,10 @@ def implement_aroon_up(num_stream, data, start_date, end_date):
 
         # 3. AROONU EXIT DATA 2
 
-        exit_input_2 = exit_condition_inputs.selectbox('INDICATOR', inputs2, key = 'aroonu_exit_input2')
+        exit_input_2 = 'Number' if inputs2[0]=='Number' else exit_condition_inputs.selectbox('INDICATOR', inputs2, key = 'aroonu_exit_input2')
         
         if exit_input_2 == 'Number':
-            exit_data2 = exit_condition_inputs.number_input('Specify Input Value', min_value = 0, value = 0, key = 'number2')
+            exit_data2 = exit_condition_inputs.number_input('', min_value = 0, value = 0, key = 'number2')
         elif exit_input_2 == 'Aroon Up':
             period, offset = exit_condition_inputs.columns(2)
             period = int(period.text_input('(X-DAYS)', value = 40, key = 'aroonu_exit_period2'))
@@ -3679,14 +3679,14 @@ def implement_bollinger_bands(num_stream, data, start_date, end_date):
         
         # 3. BB ENTRY DATA 2
 
-        entry_input_2 = entry_condition_inputs.selectbox('INDICATOR', inputs2, key = 'bbands_entry_input2')
+        entry_input_2 = 'Number' if inputs2[0]=='Number' else entry_condition_inputs.selectbox('INDICATOR', inputs2, key = 'bbands_entry_input2')
 
         if entry_input_2 == 'Lower BB':
             period, std = entry_condition_inputs.columns(2)
             matype, offset = entry_condition_inputs.columns(2)
-            period = int(period.text_input('Period', value = 20, key = 'bbands_entry_p1'))
-            std = int(std.text_input('Standard Deviation', value = 2, key = 'bbands_entry_std1'))
-            matype = matype.selectbox('MA Type', mas, key = 'bbands_entry_matype1')
+            period=20 #period = int(period.text_input('Period', value = 20, key = 'bbands_entry_p1'))
+            std=2 #std = int(std.text_input('Standard Deviation', value = 2, key = 'bbands_entry_std1'))
+            matype='sma' #matype = matype.selectbox('MA Type', mas, key = 'bbands_entry_matype1')
             offset=0 #offset = int(offset.text_input('Offset (Optional)', value = 0, key = 'bbands_entry_offset1'))
             entry_data2 = ta.bbands(close = data.Close, period = period, std = std, 
                                     mamode = matype, offset = offset).iloc[:,0]
@@ -3696,9 +3696,9 @@ def implement_bollinger_bands(num_stream, data, start_date, end_date):
         elif entry_input_2 == 'Upper BB':
             period, std = entry_condition_inputs.columns(2)
             matype, offset = entry_condition_inputs.columns(2)
-            period = int(period.text_input('Period', value = 20, key = 'bbands_entry_p1'))
-            std = int(std.text_input('Standard Deviation', value = 2, key = 'bbands_entry_std1'))
-            matype = matype.selectbox('MA Type', mas, key = 'bbands_entry_matype1')
+            period=20 #period = int(period.text_input('Period', value = 20, key = 'bbands_entry_p1'))
+            std=2 #std = int(std.text_input('Standard Deviation', value = 2, key = 'bbands_entry_std1'))
+            matype='sma' #matype = matype.selectbox('MA Type', mas, key = 'bbands_entry_matype1')
             offset=0 #offset = int(offset.text_input('Offset (Optional)', value = 0, key = 'bbands_entry_offset1'))
             entry_data2 = ta.bbands(close = data.Close, period = period, std = std, 
                                     mamode = matype, offset = offset).iloc[:,2]
@@ -3708,9 +3708,9 @@ def implement_bollinger_bands(num_stream, data, start_date, end_date):
         elif entry_input_2 == 'Middle BB':
             period, std = entry_condition_inputs.columns(2)
             matype, offset = entry_condition_inputs.columns(2)
-            period = int(period.text_input('Period', value = 20, key = 'bbands_entry_p1'))
-            std = int(std.text_input('Standard Deviation', value = 2, key = 'bbands_entry_std1'))
-            matype = matype.selectbox('MA Type', mas, key = 'bbands_entry_matype1')
+            period=20 #period = int(period.text_input('Period', value = 20, key = 'bbands_entry_p1'))
+            std=2 #std = int(std.text_input('Standard Deviation', value = 2, key = 'bbands_entry_std1'))
+            matype='sma' #matype = matype.selectbox('MA Type', mas, key = 'bbands_entry_matype1')
             offset=0 #offset = int(offset.text_input('Offset (Optional)', value = 0, key = 'bbands_entry_offset1'))
             entry_data2 = ta.bbands(close = data.Close, period = period, std = std, 
                                     mamode = matype, offset = offset).iloc[:,1]
@@ -3740,14 +3740,14 @@ def implement_bollinger_bands(num_stream, data, start_date, end_date):
         
         # 3. BB EXIT DATA 2
 
-        exit_input_2 = exit_condition_inputs.selectbox('INDICATOR', inputs2, key = 'bbands_exit_input2')
+        exit_input_2 = 'Number' if inputs2[0]=='Number' else exit_condition_inputs.selectbox('INDICATOR', inputs2, key = 'bbands_exit_input2')
 
         if exit_input_2 == 'Lower BB':
             period, std = exit_condition_inputs.columns(2)
             matype, offset = exit_condition_inputs.columns(2)
-            period = int(period.text_input('Period', value = 20, key = 'bbands_exit_p1'))
-            std = int(std.text_input('Standard Deviation', value = 2, key = 'bbands_exit_std1'))
-            matype = matype.selectbox('MA Type', mas, key = 'bbands_exit_matype1')
+            period=20 #period = int(period.text_input('Period', value = 20, key = 'bbands_exit_p1'))
+            std=2 #std = int(std.text_input('Standard Deviation', value = 2, key = 'bbands_exit_std1'))
+            matype='sma' #matype = matype.selectbox('MA Type', mas, key = 'bbands_exit_matype1')
             offset=0 #offset = int(offset.text_input('Offset (Optional)', value = 0, key = 'bbands_exit_offset1'))
             exit_data2 = ta.bbands(close = data.Close, period = period, std = std, 
                                     mamode = matype, offset = offset).iloc[:,0]
@@ -3757,9 +3757,9 @@ def implement_bollinger_bands(num_stream, data, start_date, end_date):
         elif exit_input_2 == 'Upper BB':
             period, std = exit_condition_inputs.columns(2)
             matype, offset = exit_condition_inputs.columns(2)
-            period = int(period.text_input('Period', value = 20, key = 'bbands_exit_p1'))
-            std = int(std.text_input('Standard Deviation', value = 2, key = 'bbands_exit_std1'))
-            matype = matype.selectbox('MA Type', mas, key = 'bbands_exit_matype1')
+            period=20 #period = int(period.text_input('Period', value = 20, key = 'bbands_exit_p1'))
+            std=2 #std = int(std.text_input('Standard Deviation', value = 2, key = 'bbands_exit_std1'))
+            matype='sma' #matype = matype.selectbox('MA Type', mas, key = 'bbands_exit_matype1')
             offset=0 #offset = int(offset.text_input('Offset (Optional)', value = 0, key = 'bbands_exit_offset1'))
             exit_data2 = ta.bbands(close = data.Close, period = period, std = std, 
                                     mamode = matype, offset = offset).iloc[:,2]
@@ -3769,9 +3769,9 @@ def implement_bollinger_bands(num_stream, data, start_date, end_date):
         elif exit_input_2 == 'Middle BB':
             period, std = exit_condition_inputs.columns(2)
             matype, offset = exit_condition_inputs.columns(2)
-            period = int(period.text_input('Period', value = 20, key = 'bbands_exit_p1'))
-            std = int(std.text_input('Standard Deviation', value = 2, key = 'bbands_exit_std1'))
-            matype = matype.selectbox('MA Type', mas, key = 'bbands_exit_matype1')
+            period=20 #period = int(period.text_input('Period', value = 20, key = 'bbands_exit_p1'))
+            std=2 #std = int(std.text_input('Standard Deviation', value = 2, key = 'bbands_exit_std1'))
+            matype='sma' #matype = matype.selectbox('MA Type', mas, key = 'bbands_exit_matype1')
             offset=0 #offset = int(offset.text_input('Offset (Optional)', value = 0, key = 'bbands_exit_offset1'))
             exit_data2 = ta.bbands(close = data.Close, period = period, std = std, 
                                     mamode = matype, offset = offset).iloc[:,1]
@@ -3802,9 +3802,9 @@ def implement_trix(num_stream, data, start_date, end_date):
         if entry_input_1 == 'TRIX':
             period, signal = entry_condition_inputs.columns(2)
             scalar, offset = entry_condition_inputs.columns(2)
-            period = int(period.text_input('Period', value = 30, key = 'trix_entry_p1'))
-            signal = int(signal.text_input('Signal', value = 9, key = 'trix_entry_s1'))
-            scalar = int(scalar.text_input('Scalar (Optional)', value = 100, key = 'trix_entry_sc1'))
+            period=30 #period = int(period.text_input('Period', value = 30, key = 'trix_entry_p1'))
+            signal=9 #signal = int(signal.text_input('Signal', value = 9, key = 'trix_entry_s1'))
+            scalar=100 #scalar = int(scalar.text_input('Scalar (Optional)', value = 100, key = 'trix_entry_sc1'))
             offset=0 #offset = int(offset.text_input('Offset (Optional)', value = 0, key = 'trix_entry_offset1'))
             entry_data1 = (ta.trix(close = data.Close, length = period, signal = signal, 
                                   scalar = scalar, offset = offset)*100).iloc[:,0]
@@ -3820,10 +3820,10 @@ def implement_trix(num_stream, data, start_date, end_date):
         
         # 3. TRIX ENTRY DATA 2
 
-        entry_input_2 = entry_condition_inputs.selectbox('INDICATOR', inputs2, key = 'trix_entry_input2')
+        entry_input_2 = 'Number' if inputs2[0]=='Number' else entry_condition_inputs.selectbox('INDICATOR', inputs2, key = 'trix_entry_input2')
 
         if entry_input_2 == 'Number':
-            entry_data2 = entry_condition_inputs.number_input('Specify Input Value', value = 0, key = 'number1')
+            entry_data2 = entry_condition_inputs.number_input('', value = 0, key = 'number1')
         else:
             pass
         
@@ -3839,9 +3839,9 @@ def implement_trix(num_stream, data, start_date, end_date):
         if exit_input_1 == 'TRIX':
             period, signal = exit_condition_inputs.columns(2)
             scalar, offset = exit_condition_inputs.columns(2)
-            period = int(period.text_input('Period', value = 30, key = 'trix_exit_p1'))
-            signal = int(signal.text_input('Signal', value = 9, key = 'trix_exit_s1'))
-            scalar = int(scalar.text_input('Scalar (Optional)', value = 100, key = 'trix_exit_sc1'))
+            period=30 #period = int(period.text_input('Period', value = 30, key = 'trix_exit_p1'))
+            signal=9 #signal = int(signal.text_input('Signal', value = 9, key = 'trix_exit_s1'))
+            scalar=100 #scalar = int(scalar.text_input('Scalar (Optional)', value = 100, key = 'trix_exit_sc1'))
             offset=0 #offset = int(offset.text_input('Offset (Optional)', value = 0, key = 'trix_exit_offset1'))
             exit_data1 = (ta.trix(close = data.Close, length = period, signal = signal, 
                                   scalar = scalar, offset = offset)*100).iloc[:,0]
@@ -3857,10 +3857,10 @@ def implement_trix(num_stream, data, start_date, end_date):
         
         # 3. TRIX EXIT DATA 2
 
-        exit_input_2 = exit_condition_inputs.selectbox('INDICATOR', inputs2, key = 'trix_exit_input2')
+        exit_input_2 = 'Number' if inputs2[0]=='Number' else exit_condition_inputs.selectbox('INDICATOR', inputs2, key = 'trix_exit_input2')
 
         if exit_input_2 == 'Number':
-            exit_data2 = exit_condition_inputs.number_input('Specify Input Value', value = 0, key = 'number2')
+            exit_data2 = exit_condition_inputs.number_input('', value = 0, key = 'number2')
         else:
             pass
         
@@ -3899,10 +3899,10 @@ def implement_cci(num_stream, data, start_date, end_date):
 
         # 3. CCI ENTRY DATA 2
 
-        entry_input_2 = entry_condition_inputs.selectbox('INDICATOR', inputs2, key = 'cci_entry_input2')
+        entry_input_2 = 'Number' if inputs2[0]=='Number' else entry_condition_inputs.selectbox('INDICATOR', inputs2, key = 'cci_entry_input2')
 
         if entry_input_2 == 'Number':
-            entry_data2 = entry_condition_inputs.number_input('Specify Input Value', value = -100, key = 'number1')
+            entry_data2 = entry_condition_inputs.number_input('', value = -100, key = 'number1')
         else:
             pass
         
@@ -3932,10 +3932,10 @@ def implement_cci(num_stream, data, start_date, end_date):
 
         # 3. CCI EXIT DATA 2
 
-        exit_input_2 = exit_condition_inputs.selectbox('INDICATOR', inputs2, key = 'cci_exit_input2')
+        exit_input_2 = 'Number' if inputs2[0]=='Number' else exit_condition_inputs.selectbox('INDICATOR', inputs2, key = 'cci_exit_input2')
 
         if exit_input_2 == 'Number':
-            exit_data2 = exit_condition_inputs.number_input('Specify Input Value', value = 100, key = 'number2')
+            exit_data2 = exit_condition_inputs.number_input('', value = 100, key = 'number2')
         else:
             pass
         
@@ -3960,9 +3960,9 @@ def implement_macd(num_stream, data, start_date, end_date):
         if entry_input_1 == 'MACD':
             fast_ma, slow_ma = entry_condition_inputs.columns(2)
             signal_period, offset = entry_condition_inputs.columns(2)
-            fast_ma = int(fast_ma.text_input('Fast MA', value = 12, key = 'macdl_entry_fast1'))
-            slow_ma = int(slow_ma.text_input('Slow MA', value = 26, key = 'macdl_entry_slow1'))
-            signal_period = int(signal_period.text_input('Signal Period', value = 9, key = 'macdl_entry_signal1'))
+            fast_ma=12 #fast_ma = int(fast_ma.text_input('Fast MA', value = 12, key = 'macdl_entry_fast1'))
+            slow_ma=26 #slow_ma = int(slow_ma.text_input('Slow MA', value = 26, key = 'macdl_entry_slow1'))
+            signal_period=9 #signal_period = int(signal_period.text_input('Signal Period', value = 9, key = 'macdl_entry_signal1'))
             offset=0 #offset = int(offset.text_input('Offset', value = 0, key = 'macdl_entry_offset1'))
             entry_data1 = ta.macd(high = data.High, low = data.Low, close = data.Close, fast = fast_ma, slow = slow_ma, 
                                   signal = signal_period, offset = offset).iloc[:,0]
@@ -3978,14 +3978,14 @@ def implement_macd(num_stream, data, start_date, end_date):
         
         # 3. MACD ENTRY DATA 2
 
-        entry_input_2 = entry_condition_inputs.selectbox('INDICATOR', inputs2, key = 'macdl_entry_input2')
+        entry_input_2 = 'Number' if inputs2[0]=='Number' else entry_condition_inputs.selectbox('INDICATOR', inputs2, key = 'macdl_entry_input2')
 
         if entry_input_2 == 'MACD Signal':
             fast_ma, slow_ma = entry_condition_inputs.columns(2)
             signal_period, offset = entry_condition_inputs.columns(2)
-            fast_ma = int(fast_ma.text_input('Fast MA', value = 12, key = 'macdl_entry_fast2'))
-            slow_ma = int(slow_ma.text_input('Slow MA', value = 26, key = 'macdl_entry_slow2'))
-            signal_period = int(signal_period.text_input('Signal Period', value = 9, key = 'macdl_entry_signal2'))
+            fast_ma=12 #fast_ma = int(fast_ma.text_input('Fast MA', value = 12, key = 'macdl_entry_fast2'))
+            slow_ma=26 #slow_ma = int(slow_ma.text_input('Slow MA', value = 26, key = 'macdl_entry_slow2'))
+            signal_period=9 #signal_period = int(signal_period.text_input('Signal Period', value = 9, key = 'macdl_entry_signal2'))
             offset=0 #offset = int(offset.text_input('Offset (Optional)', value = 0, key = 'macdl_entry_offset2'))
             entry_data2 = ta.macd(high = data.High, low = data.Low, close = data.Close, fast = fast_ma, slow = slow_ma, 
                                   signal = signal_period, offset = offset).iloc[:,2]
@@ -3995,9 +3995,9 @@ def implement_macd(num_stream, data, start_date, end_date):
         elif entry_input_2 == 'MACD Histogram':
             fast_ma, slow_ma = entry_condition_inputs.columns(2)
             signal_period, offset = entry_condition_inputs.columns(2)
-            fast_ma = int(fast_ma.text_input('Fast MA', value = 12, key = 'macdl_entry_fast2'))
-            slow_ma = int(slow_ma.text_input('Slow MA', value = 26, key = 'macdl_entry_slow2'))
-            signal_period = int(signal_period.text_input('Signal Period', value = 9, key = 'macdl_entry_signal2'))
+            fast_ma=12 #fast_ma = int(fast_ma.text_input('Fast MA', value = 12, key = 'macdl_entry_fast2'))
+            slow_ma=26 #slow_ma = int(slow_ma.text_input('Slow MA', value = 26, key = 'macdl_entry_slow2'))
+            signal_period=9 #signal_period = int(signal_period.text_input('Signal Period', value = 9, key = 'macdl_entry_signal2'))
             offset=0 #offset = int(offset.text_input('Offset (Optional)', value = 0, key = 'macdl_entry_offset2'))
             entry_data2 = ta.macd(high = data.High, low = data.Low, close = data.Close, fast = fast_ma, slow = slow_ma, 
                                   signal = signal_period, offset = offset).iloc[:,1]
@@ -4005,7 +4005,7 @@ def implement_macd(num_stream, data, start_date, end_date):
             entry_data2 = entry_data2[entry_data2.index >= str(start_date)]
             entry_data2.index = pd.to_datetime(entry_data2.index)
         elif entry_input_2 == 'Number':
-            entry_data2 = entry_condition_inputs.number_input('Specify Input Value', value = 0, min_value = 0, key = 'number1')
+            entry_data2 = entry_condition_inputs.number_input('', value = 0, min_value = 0, key = 'number1')
         else:
             pass
         
@@ -4021,9 +4021,9 @@ def implement_macd(num_stream, data, start_date, end_date):
         if exit_input_1 == 'MACD':
             fast_ma, slow_ma = exit_condition_inputs.columns(2)
             signal_period, offset = exit_condition_inputs.columns(2)
-            fast_ma = int(fast_ma.text_input('Fast MA', value = 12, key = 'macdl_exit_fast1'))
-            slow_ma = int(slow_ma.text_input('Slow MA', value = 26, key = 'macdl_exit_slow1'))
-            signal_period = int(signal_period.text_input('Signal Period', value = 9, key = 'macdl_exit_signal1'))
+            fast_ma=12 #fast_ma = int(fast_ma.text_input('Fast MA', value = 12, key = 'macdl_exit_fast1'))
+            slow_ma=26 #slow_ma = int(slow_ma.text_input('Slow MA', value = 26, key = 'macdl_exit_slow1'))
+            signal_period=9 #signal_period = int(signal_period.text_input('Signal Period', value = 9, key = 'macdl_exit_signal1'))
             offset=0 #offset = int(offset.text_input('Offset', value = 0, key = 'macdl_exit_offset1'))
             exit_data1 = ta.macd(high = data.High, low = data.Low, close = data.Close, fast = fast_ma, slow = slow_ma, 
                                   signal = signal_period, offset = offset).iloc[:,0]
@@ -4039,14 +4039,14 @@ def implement_macd(num_stream, data, start_date, end_date):
         
         # 3. MACD EXIT DATA 2
 
-        exit_input_2 = exit_condition_inputs.selectbox('INDICATOR', inputs2, key = 'macdl_exit_input2')
+        exit_input_2 = 'Number' if inputs2[0]=='Number' else exit_condition_inputs.selectbox('INDICATOR', inputs2, key = 'macdl_exit_input2')
 
         if exit_input_2 == 'MACD Signal':
             fast_ma, slow_ma = exit_condition_inputs.columns(2)
             signal_period, offset = exit_condition_inputs.columns(2)
-            fast_ma = int(fast_ma.text_input('Fast MA', value = 12, key = 'macdl_exit_fast2'))
-            slow_ma = int(slow_ma.text_input('Slow MA', value = 26, key = 'macdl_exit_slow2'))
-            signal_period = int(signal_period.text_input('Signal Period', value = 9, key = 'macdl_exit_signal2'))
+            fast_ma=12 #fast_ma = int(fast_ma.text_input('Fast MA', value = 12, key = 'macdl_exit_fast2'))
+            slow_ma=26 #slow_ma = int(slow_ma.text_input('Slow MA', value = 26, key = 'macdl_exit_slow2'))
+            signal_period=9 #signal_period = int(signal_period.text_input('Signal Period', value = 9, key = 'macdl_exit_signal2'))
             offset=0 #offset = int(offset.text_input('Offset (Optional)', value = 0, key = 'macdl_exit_offset2'))
             exit_data2 = ta.macd(high = data.High, low = data.Low, close = data.Close, fast = fast_ma, slow = slow_ma, 
                                   signal = signal_period, offset = offset).iloc[:,2]
@@ -4056,9 +4056,9 @@ def implement_macd(num_stream, data, start_date, end_date):
         elif exit_input_2 == 'MACD Histogram':
             fast_ma, slow_ma = exit_condition_inputs.columns(2)
             signal_period, offset = exit_condition_inputs.columns(2)
-            fast_ma = int(fast_ma.text_input('Fast MA', value = 12, key = 'macdl_exit_fast2'))
-            slow_ma = int(slow_ma.text_input('Slow MA', value = 26, key = 'macdl_exit_slow2'))
-            signal_period = int(signal_period.text_input('Signal Period', value = 9, key = 'macdl_exit_signal2'))
+            fast_ma=12 #fast_ma = int(fast_ma.text_input('Fast MA', value = 12, key = 'macdl_exit_fast2'))
+            slow_ma=26 #slow_ma = int(slow_ma.text_input('Slow MA', value = 26, key = 'macdl_exit_slow2'))
+            signal_period=9 #signal_period = int(signal_period.text_input('Signal Period', value = 9, key = 'macdl_exit_signal2'))
             offset=0 #offset = int(offset.text_input('Offset (Optional)', value = 0, key = 'macdl_exit_offset2'))
             exit_data2 = ta.macd(high = data.High, low = data.Low, close = data.Close, fast = fast_ma, slow = slow_ma, 
                                   signal = signal_period, offset = offset).iloc[:,1]
@@ -4066,7 +4066,7 @@ def implement_macd(num_stream, data, start_date, end_date):
             exit_data2 = exit_data2[exit_data2.index >= str(start_date)]
             exit_data2.index = pd.to_datetime(exit_data2.index)
         elif exit_input_2 == 'Number':
-            exit_data2 = exit_condition_inputs.number_input('Specify Input Value', value = 0, min_value = 0, key = 'number2')
+            exit_data2 = exit_condition_inputs.number_input('', value = 0, min_value = 0, key = 'number2')
         else:
             pass
         
@@ -4091,9 +4091,9 @@ def implement_macd_histogram(num_stream, data, start_date, end_date):
         if entry_input_1 == 'MACD Histogram':
             fast_ma, slow_ma = entry_condition_inputs.columns(2)
             signal_period, offset = entry_condition_inputs.columns(2)
-            fast_ma = int(fast_ma.text_input('Fast MA', value = 12, key = 'macdhist_entry_fast1'))
-            slow_ma = int(slow_ma.text_input('Slow MA', value = 26, key = 'macdhist_entry_slow1'))
-            signal_period = int(signal_period.text_input('Signal Period', value = 9, key = 'macdhist_entry_signal1'))
+            fast_ma=12 #fast_ma = int(fast_ma.text_input('Fast MA', value = 12, key = 'macdhist_entry_fast1'))
+            slow_ma=26 #slow_ma = int(slow_ma.text_input('Slow MA', value = 26, key = 'macdhist_entry_slow1'))
+            signal_period=9 #signal_period = int(signal_period.text_input('Signal Period', value = 9, key = 'macdhist_entry_signal1'))
             offset=0 #offset = int(offset.text_input('Offset', value = 0, key = 'macdhist_entry_offset1'))
             entry_data1 = ta.macd(high = data.High, low = data.Low, close = data.Close, fast = fast_ma, slow = slow_ma, 
                                   signal = signal_period, offset = offset).iloc[:,1]
@@ -4109,10 +4109,10 @@ def implement_macd_histogram(num_stream, data, start_date, end_date):
         
         # 3. MACD HISTOGRAM ENTRY DATA 2
 
-        entry_input_2 = entry_condition_inputs.selectbox('INDICATOR', inputs2, key = 'macdhist_entry_input2')
+        entry_input_2 = 'Number' if inputs2[0]=='Number' else entry_condition_inputs.selectbox('INDICATOR', inputs2, key = 'macdhist_entry_input2')
 
         if entry_input_2 == 'Number':
-            entry_data2 = entry_condition_inputs.number_input('Specify Input Value', value = 0, key = 'number1')
+            entry_data2 = entry_condition_inputs.number_input('', value = 0, key = 'number1')
         else:
             pass
         
@@ -4128,9 +4128,9 @@ def implement_macd_histogram(num_stream, data, start_date, end_date):
         if exit_input_1 == 'MACD Histogram':
             fast_ma, slow_ma = exit_condition_inputs.columns(2)
             signal_period, offset = exit_condition_inputs.columns(2)
-            fast_ma = int(fast_ma.text_input('Fast MA', value = 12, key = 'macdhist_exit_fast1'))
-            slow_ma = int(slow_ma.text_input('Slow MA', value = 26, key = 'macdhist_exit_slow1'))
-            signal_period = int(signal_period.text_input('Signal Period', value = 9, key = 'macdhist_exit_signal1'))
+            fast_ma=12 #fast_ma = int(fast_ma.text_input('Fast MA', value = 12, key = 'macdhist_exit_fast1'))
+            slow_ma=26 #slow_ma = int(slow_ma.text_input('Slow MA', value = 26, key = 'macdhist_exit_slow1'))
+            signal_period=9 #signal_period = int(signal_period.text_input('Signal Period', value = 9, key = 'macdhist_exit_signal1'))
             offset=0 #offset = int(offset.text_input('Offset', value = 0, key = 'macdhist_exit_offset1'))
             exit_data1 = ta.macd(high = data.High, low = data.Low, close = data.Close, fast = fast_ma, slow = slow_ma, 
                                   signal = signal_period, offset = offset).iloc[:,1]
@@ -4146,10 +4146,10 @@ def implement_macd_histogram(num_stream, data, start_date, end_date):
         
         # 3. MACD HISTOGRAM EXIT DATA 2
 
-        exit_input_2 = exit_condition_inputs.selectbox('INDICATOR', inputs2, key = 'macdhist_exit_input2')
+        exit_input_2 = 'Number' if inputs2[0]=='Number' else exit_condition_inputs.selectbox('INDICATOR', inputs2, key = 'macdhist_exit_input2')
 
         if exit_input_2 == 'Number':
-            exit_data2 = exit_condition_inputs.number_input('Specify Input Value', value = 0, key = 'number2')
+            exit_data2 = exit_condition_inputs.number_input('', value = 0, key = 'number2')
         else:
             pass
         
@@ -4189,10 +4189,10 @@ def implement_mfi(num_stream, data, start_date, end_date):
 
         # 3. MFI ENTRY DATA 2
 
-        entry_input_2 = entry_condition_inputs.selectbox('INDICATOR', inputs2, key = 'mfi_entry_input2')
+        entry_input_2 = 'Number' if inputs2[0]=='Number' else entry_condition_inputs.selectbox('INDICATOR', inputs2, key = 'mfi_entry_input2')
 
         if entry_input_2 == 'Number':
-            entry_data2 = entry_condition_inputs.number_input('Specify Input Value', value = 30, min_value = 0, 
+            entry_data2 = entry_condition_inputs.number_input('', value = 30, min_value = 0, 
                                                               max_value = 100, key = 'number1')
         else:
             pass
@@ -4224,10 +4224,10 @@ def implement_mfi(num_stream, data, start_date, end_date):
 
         # 3. MFI EXIT DATA 2
 
-        exit_input_2 = exit_condition_inputs.selectbox('INDICATOR', inputs2, key = 'mfi_exit_input2')
+        exit_input_2 = 'Number' if inputs2[0]=='Number' else exit_condition_inputs.selectbox('INDICATOR', inputs2, key = 'mfi_exit_input2')
 
         if exit_input_2 == 'Number':
-            exit_data2 = exit_condition_inputs.number_input('Specify Input Value', value = 70, min_value = 0, 
+            exit_data2 = exit_condition_inputs.number_input('', value = 70, min_value = 0, 
                                                               max_value = 100, key = 'number2')
         else:
             pass
