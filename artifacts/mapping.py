@@ -144,3 +144,49 @@ implement_mfi= 'Money Flow Index (MFI)'
 
 
 map_tech2fun = {value:key for key, value in map_func2tech.items()}
+
+
+map_fun2shorttech = dict(
+implement_supertrend=['SuperTrend'],
+implement_negative_directional_index=['-DI'],
+implement_normalized_average_true_range=['NATR'],
+implement_average_directional_index=['ADX'],
+implement_stochastic_oscillator_fast=['SOF'],
+implement_stochastic_oscillator_slow=['SOS'],
+implement_weighted_moving_average=['WMA'],
+implement_momentum_indicator=['MOM'],
+implement_vortex_indicator=['+VI', '-VI'],
+implement_chande_momentum_oscillator=['CMO'],
+implement_exponential_moving_average=['EMA'],
+implement_triple_exponential_moving_average=['TEMA'],
+implement_double_exponential_moving_average=['DEMA'],
+implement_simple_moving_average=['SMA'],
+implement_triangular_moving_average=['TRIMA'],
+implement_chande_forecast_oscillator=['CFO'],
+implement_choppiness_index=['Choppiness Index'],
+implement_aroon_down=['Aroon Down'],
+implement_average_true_range=['ATR'],
+implement_williamsr=['Williams %R'],
+implement_parabolic_sar=['Parabolic SAR'],
+implement_coppock_curve=['Coppock Curve'],
+implement_positive_directional_index=['+DI'],
+implement_rsi=['RSI'],
+implement_macd_signal=['MACD Signal'],
+implement_aroon_oscillator=['Aroon Oscillator'],
+implement_stochrsi_fastk=['Stochastic RSI FastK'],
+implement_stochrsi_fastd=['Stochastic RSI FastD'],
+implement_ultimate_oscillator=['Ultimate Oscillator'],
+implement_aroon_up=['Aroon Up'],
+implement_bollinger_bands=['BOLLBA', 'Open', 'High', 'Low'],
+implement_trix=['TRIX'],
+implement_cci=['CCI'],
+implement_macd=['MACD'],
+implement_macd_histogram=['MACD Histogram'],
+implement_mfi=['MFI'],
+)
+
+map_shortech2fun = {value[0]:key for key, value in map_fun2shorttech.items()}
+
+map_shorttech2tech = {key:map_func2tech[value] for key, value in map_shortech2fun.items()}
+
+map_fun2shortech = {value:key for key, value in map_shorttech2tech.items()}

@@ -15,7 +15,7 @@ from artifacts.plan_settings import *
 from datetime import timedelta
 import sys
 
-# sys.argv = ['','FREE']
+# sys.argv=['','PRO']
 logo = Image.open('walnuttradingdash_logo2.png')
 
 st.set_page_config(
@@ -48,15 +48,22 @@ else:
 symbol = st.sidebar.selectbox('Crypto', scripts)
 ticker = map_crypto2code[symbol]
     
-indicator = st.sidebar.selectbox('Technical indicator', list(map_tech2fun.keys()))
+# indicator = st.sidebar.selectbox('Technical indicator', list(map_tech2fun.keys()))
 
 
 data = get_historical_prices(ticker)
 data = data[(data.index>=start_date)&(data.index<=end_date)]
-   
+
+# num_stream.sidebar.markdown('')
+entry_condition_inputs = st.sidebar.expander('Trading strategy', False)
+
+# 1. SMA ENTRY DATA 1
+
+indicator = entry_condition_inputs.selectbox('I want to buy when the indicator', list(map_tech2fun.keys()), key = 'sma_entry_input1')
+# indicator = map_fun2shortech[indicator]   
 
 ta_function = eval(map_tech2fun[indicator])
-entry_comparator, exit_comparator, entry_data1, entry_data2, exit_data1, exit_data2 = ta_function(st, data, start_date, end_date)
+entry_comparator, exit_comparator, entry_data1, entry_data2, exit_data1, exit_data2 = ta_function(st, data, start_date, end_date, entry_condition_inputs)
 
   
 st.sidebar.markdown('')
@@ -73,23 +80,23 @@ if (cf_bt == True) and \
          or \
     ((ticker in free_plan_list['cryptos']) and (indicator in free_plan_list['technicals']))):
     backtestdata = data.copy()
-    if entry_comparator == 'LOWER THAN' and exit_comparator == 'LOWER THAN':
+    if entry_comparator == 'lower than' and exit_comparator == 'lower than':
         buy_price, sell_price, strategy_signals = crossingdown_crossingdown(backtestdata, entry_data1, entry_data2, exit_data1, exit_data2)
-    elif entry_comparator == 'LOWER THAN' and exit_comparator == 'HIGHER THAN':
+    elif entry_comparator == 'lower than' and exit_comparator == 'higher than':
         buy_price, sell_price, strategy_signals = crossingdown_crossingup(backtestdata, entry_data1, entry_data2, exit_data1, exit_data2) 
-    elif entry_comparator == 'LOWER THAN' and exit_comparator == 'EQUAL TO':
+    elif entry_comparator == 'lower than' and exit_comparator == 'equal to':
         buy_price, sell_price, strategy_signals = crossingdown_equalto(backtestdata, entry_data1, entry_data2, exit_data1, exit_data2)
-    elif entry_comparator == 'HIGHER THAN' and exit_comparator == 'LOWER THAN':
+    elif entry_comparator == 'higher than' and exit_comparator == 'lower than':
         buy_price, sell_price, strategy_signals = crossingup_crossingdown(backtestdata, entry_data1, entry_data2, exit_data1, exit_data2)
-    elif entry_comparator == 'HIGHER THAN' and exit_comparator == 'HIGHER THAN':
+    elif entry_comparator == 'higher than' and exit_comparator == 'higher than':
         buy_price, sell_price, strategy_signals = crossingup_crossingup(backtestdata, entry_data1, entry_data2, exit_data1, exit_data2)
-    elif entry_comparator == 'HIGHER THAN' and exit_comparator == 'EQUAL TO':
+    elif entry_comparator == 'higher than' and exit_comparator == 'equal to':
         buy_price, sell_price, strategy_signals = crossingup_equalto(backtestdata, entry_data1, entry_data2, exit_data1, exit_data2)
-    elif entry_comparator == 'EQUAL TO' and exit_comparator == 'HIGHER THAN':
+    elif entry_comparator == 'equal to' and exit_comparator == 'higher than':
         buy_price, sell_price, strategy_signals = equalto_crossingup(backtestdata, entry_data1, entry_data2, exit_data1, exit_data2)
-    elif entry_comparator == 'EQUAL TO' and exit_comparator == 'LOWER THAN':
+    elif entry_comparator == 'equal to' and exit_comparator == 'lower than':
         buy_price, sell_price, strategy_signals = equalto_crossingdown(backtestdata, entry_data1, entry_data2, exit_data1, exit_data2)
-    elif entry_comparator == 'EQUAL TO' and exit_comparator == 'EQUAL TO':
+    elif entry_comparator == 'equal to' and exit_comparator == 'equal to':
         buy_price, sell_price, strategy_signals = equalto_equalto(backtestdata, entry_data1, entry_data2, exit_data1, exit_data2)
     
     def get_plot(n):
