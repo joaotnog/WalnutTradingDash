@@ -14,6 +14,7 @@ from artifacts.mapping import *
 from artifacts.plan_settings import *
 from datetime import timedelta
 import sys
+from utils import *
 
 # sys.argv = ['','FREE']
 logo = Image.open('walnuttradingdash_logo2.png')
@@ -189,6 +190,7 @@ if (cf_bt == True) and \
     drawdown_details = st.expander('DRAWDOWN DETAILS')
     
     dd_details = ffn.core.drawdown_details(strategy)
+    dd_details = proc_dd_details(dd_details, data)
     drawdown_details.table(dd_details)
     
     ratios = st.expander('RATIOS')
