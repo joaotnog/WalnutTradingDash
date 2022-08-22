@@ -15,6 +15,7 @@ from artifacts.plan_settings import *
 from datetime import timedelta
 import sys
 from utils import *
+import altair as alt
 
 # sys.argv = ['','FREE']
 logo = Image.open('walnuttradingdash_logo2.png')
@@ -63,7 +64,7 @@ entry_comparator, exit_comparator, entry_data1, entry_data2, exit_data1, exit_da
 st.sidebar.markdown('')
 cf_bt = st.sidebar.button('Run simulation')
 if cf_bt == False:
-    st.info('Press run to simulate trading and visualise results.')
+    st.info('Press run to simulate trading and visualise results.')    
 if free_plan:
     if (cf_bt == True) and (ticker not in free_plan_list['cryptos']):
         st.info(ticker + ' crypto only available with the PRO plan.')
@@ -118,7 +119,7 @@ if (cf_bt == True) and \
             position[i] = position[i-1]
     
     st.caption(f'BACKTEST  RESULTS  FROM  {start_date}  TO  {end_date}')
-    
+
     st.markdown('')
     
     buy_hold = backtestdata.Close.pct_change().dropna()
@@ -158,7 +159,7 @@ if (cf_bt == True) and \
     pf = pf.metric(label = 'Profit Factor', value = f'{round(profit_factor,2)}')
     
     key_visuals = st.expander('PERFORMANCE COMPARISON')
-    
+        
     # key_visuals.caption('Strategy Equity Curve')
     # key_visuals.area_chart(scr)
     
@@ -179,13 +180,31 @@ if (cf_bt == True) and \
     scr = scr.rename(columns = {'Returns':'Strategy'})
     frames = [bhr, scr]
     bhr_compdf = pd.concat(frames, axis = 1)
-    key_visuals.line_chart(bhr_compdf)    
+    # key_visuals.line_chart(bhr_compdf)   
+    
+    
+    bhr_compdf.columns=[symbol,'Your Strategy']
+    bhr_compdf = pd.melt(bhr_compdf, ignore_index=False)
+    bhr_compdf = bhr_compdf.reset_index()
+    bhr_compdf.columns = ['Date', '$1,000 Portfolio Performance', 'Portfolio Value']
+    bhr_compdf['Portfolio Value'] = bhr_compdf['Portfolio Value']*1000
+    bhr_compdf['Portfolio Value'] = bhr_compdf['Portfolio Value'].astype(int)
+   
+    performance_plot = alt.Chart(bhr_compdf) \
+    .mark_line() \
+    .encode(
+        x=alt.X("Date", axis=alt.Axis(format="%Y/%m")),
+        y='Portfolio Value',
+        color=alt.Color('$1,000 Portfolio Performance', legend=alt.Legend(orient="top")),
+    )     
+    
+    key_visuals.altair_chart(performance_plot, use_container_width=True)  
     
     key_visuals.markdown('')
     key_visuals.markdown('')
     
-    key_visuals.caption('Maximum Drawdown')    
-    key_visuals.line_chart(drawdown)
+    # key_visuals.caption('Maximum Drawdown')    
+    # key_visuals.line_chart(drawdown)
     
     drawdown_details = st.expander('DRAWDOWN DETAILS')
     
