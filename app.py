@@ -17,6 +17,9 @@ import sys
 from utils import *
 import altair as alt
 import matplotlib.pyplot as plt 
+import plotly.figure_factory as ff
+import plotly.graph_objects as go
+import plotly.express as px
 
 # sys.argv = ['','FREE']
 logo = Image.open('walnuttradingdash_logo2.png')
@@ -69,7 +72,7 @@ entry_comparator, exit_comparator, entry_data1, entry_data2, exit_data1, exit_da
 st.sidebar.markdown('')
 cf_bt = st.sidebar.button('Run simulation')
 if cf_bt == False:
-    st.info('Press run to simulate trading and visualise results.') 
+    st.info('Press run to simulate trading and visualise results.')     
 if free_plan:
     if (cf_bt == True) and (ticker not in free_plan_list['cryptos']):
         st.info(ticker + ' crypto only available with the PRO plan.')
@@ -193,25 +196,23 @@ if (cf_bt == True) and \
     scr = scr.rename(columns = {'Returns':'Strategy'})
     frames = [bhr, scr]
     bhr_compdf = pd.concat(frames, axis = 1)
-    # key_visuals.line_chart(bhr_compdf)   
+
+    # df = px.data.stocks()
+    df = pd.concat(frames, axis = 1).reset_index()
+    df.columns = ['date',symbol,'Strategy']
+    df[[symbol,'Strategy']]=df[[symbol,'Strategy']]*1000
+    fig = px.line(df, x="date", y=df.columns,
+                  hover_data={"date": "|%B %d, %Y"},
+                  title='$1,000 Portfolio Performance')
+    fig.update_xaxes(
+        dtick="M1",
+        tickformat="%b\n%Y")    
+    fig.update_xaxes(rangeslider_visible=True) 
+    # fig.write_html('abc.html')
+    st.plotly_chart(fig, use_container_width=True)  
     
     
-    bhr_compdf.columns=[symbol,'Your Strategy']
-    bhr_compdf = pd.melt(bhr_compdf, ignore_index=False)
-    bhr_compdf = bhr_compdf.reset_index()
-    bhr_compdf.columns = ['Date', '$1,000 Portfolio Performance', 'Portfolio Value']
-    bhr_compdf['Portfolio Value'] = bhr_compdf['Portfolio Value']*1000
-    bhr_compdf['Portfolio Value'] = bhr_compdf['Portfolio Value'].astype(int)
-   
-    performance_plot = alt.Chart(bhr_compdf) \
-    .mark_line() \
-    .encode(
-        x=alt.X("Date", axis=alt.Axis(format="%Y/%m")),
-        y='Portfolio Value',
-        color=alt.Color('$1,000 Portfolio Performance', legend=alt.Legend(orient="top")),
-    )     
-    
-    key_visuals.altair_chart(performance_plot, use_container_width=True)  
+        
     
     key_visuals.markdown('')
     key_visuals.markdown('')
@@ -242,18 +243,29 @@ if (cf_bt == True) and \
     data_buysell['Signal3'] = exit_data1.values
     data_buysell['Signal4'] = exit_data2.values
 
-    plt.clf()
-    plt.style.use('dark_background')
-    plt.plot(data_buysell['Close'], alpha = 0.3, label = symbol)
-    plt.plot(data_buysell['Signal1'], alpha = 0.6, label = 'Signal1')
-    plt.plot(data_buysell['Signal2'], alpha = 0.6, label = 'Signal2')
-    plt.plot(data_buysell['Signal3'], alpha = 0.6, label = 'Signal3')
-    plt.plot(data_buysell['Signal4'], alpha = 0.6, label = 'Signal4')
-    plt.scatter(data_buysell.index, data_buysell.BuyPrice, marker = '^', s = 100, color = 'darkblue', label = 'BUY SIGNAL')
-    plt.scatter(data_buysell.index, data_buysell.SellPrice, marker = 'v', s = 100, color = 'crimson', label = 'SELL SIGNAL')
-    plt.legend(loc = 'upper left')
-    plt.title(f'Strategy Signals')
-    st.pyplot(plt)    
+
+    df = backtestdata.merge(data_buysell)
+    fig = go.Figure(data=[go.Candlestick(x=df['Date'],
+                    open=df['Open'], high=df['High'],
+                    low=df['Low'], close=df['Close'],
+                    name=symbol)
+                          ])
+    for s in ['Signal1','Signal2','Signal3','Signal4']:
+        fig.add_trace(go.Scatter(x=df['Date'], y=df[s],
+                            mode='lines',
+                            name=s))    
+    for buy_days in df[['Date','BuyPrice']].dropna().Date.tolist():
+        fig.add_vline(name='Buy signal', x=buy_days, line_width=3, line_dash="dash", line_color="green")
+    for sell_days in df[['Date','SellPrice']].dropna().Date.tolist():
+        fig.add_vline(name='Sell signal', x=sell_days, line_width=3, line_dash="dash", line_color="red")
+
+    fig.update_layout(
+        title='Strategy Signals',
+        yaxis_title=symbol
+        )
+    
+    # fig.write_html('abc.html')  
+    st.plotly_chart(fig, use_container_width=True) 
     
     # ratios = st.expander('RATIOS')
     
