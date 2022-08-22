@@ -16,6 +16,7 @@ from datetime import timedelta
 import sys
 from utils import *
 import altair as alt
+import matplotlib.pyplot as plt 
 
 # sys.argv = ['','FREE']
 logo = Image.open('walnuttradingdash_logo2.png')
@@ -68,7 +69,7 @@ entry_comparator, exit_comparator, entry_data1, entry_data2, exit_data1, exit_da
 st.sidebar.markdown('')
 cf_bt = st.sidebar.button('Run simulation')
 if cf_bt == False:
-    st.info('Press run to simulate trading and visualise results.')    
+    st.info('Press run to simulate trading and visualise results.') 
 if free_plan:
     if (cf_bt == True) and (ticker not in free_plan_list['cryptos']):
         st.info(ticker + ' crypto only available with the PRO plan.')
@@ -215,6 +216,36 @@ if (cf_bt == True) and \
     dd_details = ffn.core.drawdown_details(strategy)
     dd_details = proc_dd_details(dd_details, data)
     drawdown_details.table(dd_details)
+    
+    def NormalizeData(data):
+        return (data - np.nanmin(data)) / (np.nanmax(data) - np.nanmin(data))    
+    data_buysell = backtestdata.copy()[['Close']].reset_index()
+    
+    data_buysell['BuyPrice'] = buy_price
+    sell_price_ = sell_price.copy()
+    try:
+        if strategy_signals.index(-1)<strategy_signals.index(1):
+            sell_price_[strategy_signals.index(-1)] = np.nan
+    except:
+        pass
+    data_buysell['SellPrice'] = sell_price_
+    data_buysell['Signal1'] = entry_data1.values
+    data_buysell['Signal2'] = entry_data2.values
+    data_buysell['Signal3'] = exit_data1.values
+    data_buysell['Signal4'] = exit_data2.values
+
+    plt.clf()
+    plt.style.use('dark_background')
+    plt.plot(data_buysell['Close'], alpha = 0.3, label = symbol)
+    plt.plot(data_buysell['Signal1'], alpha = 0.6, label = 'Signal1')
+    plt.plot(data_buysell['Signal2'], alpha = 0.6, label = 'Signal2')
+    plt.plot(data_buysell['Signal3'], alpha = 0.6, label = 'Signal3')
+    plt.plot(data_buysell['Signal4'], alpha = 0.6, label = 'Signal4')
+    plt.scatter(data_buysell.index, data_buysell.BuyPrice, marker = '^', s = 100, color = 'darkblue', label = 'BUY SIGNAL')
+    plt.scatter(data_buysell.index, data_buysell.SellPrice, marker = 'v', s = 100, color = 'crimson', label = 'SELL SIGNAL')
+    plt.legend(loc = 'upper left')
+    plt.title(f'Strategy Signals')
+    st.pyplot(plt)    
     
     ratios = st.expander('RATIOS')
     
