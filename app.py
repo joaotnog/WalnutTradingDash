@@ -53,7 +53,11 @@ ticker = map_crypto2code[symbol]
 indicator = st.sidebar.selectbox('Technical indicator', list(map_tech2fun.keys()))
 
 
-data = get_historical_prices(ticker)
+# data = get_historical_prices(ticker)
+# data = data[(data.index>=start_date)&(data.index<=end_date)]
+data = pd.read_csv('artifacts/data_sample.csv')
+data['Date'] = data.Date.astype('datetime64[ns]').dt.date
+data = data.set_index('Date')
 data = data[(data.index>=start_date)&(data.index<=end_date)]
    
 
