@@ -129,6 +129,8 @@ if (cf_bt == True) and \
     
     buy_hold = backtestdata.Close.pct_change().dropna()
     strategy = (position[1:] * buy_hold).dropna()
+    port_strat = np.cumproduct(position[1:] * buy_hold+1)
+    port_symbol = np.cumproduct(buy_hold+1)
     strategy_returns_per = np.exp(np.log(strategy+1).sum()) - 1
     bh_returns_per = np.exp(np.log(buy_hold+1).sum()) - 1
     
@@ -139,7 +141,15 @@ if (cf_bt == True) and \
     sell_signals = pd.Series(sell_price).dropna()
     total_signals = len(buy_signals) + len(sell_signals)
     
-    max_drawdown = pas.max_dd(strategy)
+    max_drawdown = ta.max_drawdown(port_strat)
+    sharpe = ta.sharpe_ratio(port_strat)    
+    sortino = ta.sortino_ratio(port_strat)
+    jensen = ta.jensens_alpha(ta.performance.percent_return(port_strat).dropna(), 
+                              ta.performance.percent_return(port_symbol).dropna())
+    # jensens_alpha_metric = ta.jensens_alpha(port_strat)    
+    # variance = ta.statistics.variance(port_strat,port_strat.shape[0]).tail(1).values[0]    
+    # kurtosis = ta.statistics.kurtosis(port_strat,port_strat.shape[0]).tail(1).values[0]    
+
     
     profit = []
     losses = []
@@ -153,15 +163,13 @@ if (cf_bt == True) and \
         
     profit_factor = pd.Series(profit).sum() / (abs(pd.Series(losses)).sum())
     
-    strat_percentage, bh_percentage, annr = st.columns(3)
-    strat_percentage = strat_percentage.metric(label = 'Strategy Profit Percentage', value = f'{round(strategy_returns_per*100,2)}%')
-    bh_percentage = bh_percentage.metric(label = 'Buy/Hold Profit Percentage', value = f'{round(bh_returns_per*100,2)}%')
-    annr = annr.metric(label = 'Annualized Return', value = f'{round(annualized_returns*100,2)}%')
-    
-    nos, md, pf = st.columns(3)
-    nos = nos.metric(label = 'Total No. of Signals', value = f'{total_signals}')
-    md = md.metric(label = 'Max Drawdown', value = f'{round(max_drawdown,2)}%')
-    pf = pf.metric(label = 'Profit Factor', value = f'{round(profit_factor,2)}')
+    strat_percentage, bh_percentage, md, sharpe_ratio, sortino_metric, jensen_metric = st.columns(6)
+    bh_percentage = bh_percentage.metric(label = symbol + ' Performance', value = f'{round(bh_returns_per*100,2)}%')    
+    strat_percentage = strat_percentage.metric(label = 'Strategy Performance', value = f'{round(strategy_returns_per*100,2)}%')
+    sharpe_ratio = sharpe_ratio.metric(label = 'Sharpe Ratio', value = f'{round(sharpe,3)}')
+    md = md.metric(label = 'Drawdown', value = f'{round(max_drawdown,2)}%')
+    sortino_metric = sortino_metric.metric(label = 'Sortino Ratio', value = f'{round(sortino,2)}')
+    jensen_metric = jensen_metric.metric(label = "Jensen's Alpha", value = f'{round(jensen,3)}')
     
     key_visuals = st.expander('PERFORMANCE COMPARISON')
         
@@ -247,56 +255,56 @@ if (cf_bt == True) and \
     plt.title(f'Strategy Signals')
     st.pyplot(plt)    
     
-    ratios = st.expander('RATIOS')
+    # ratios = st.expander('RATIOS')
     
-    ratios.caption('Values Assumed:  Benchmark = Bitcoin,  Risk-Free Rate = 0.01')
+    # ratios.caption('Values Assumed:  Benchmark = Bitcoin,  Risk-Free Rate = 0.01')
     
-    ratios.markdown('')
+    # ratios.markdown('')
     
-    sharpe = pas.sharpe_ratio(strategy, 0.01)
-    calmar = pas.calmar_ratio(strategy, 0.01)
-    sortino = sortino_ratio(strategy, 255, 0.01)
+    # sharpe = pas.sharpe_ratio(strategy, 0.01)    
+    # calmar = pas.calmar_ratio(strategy, 0.01)
+    # sortino = sortino_ratio(strategy, 255, 0.01)
     
-    sharpe_ratio, calmar_ratio, sortino_ratio = ratios.columns(3)
-    sharpe_ratio = sharpe_ratio.metric(label = 'Sharpe Ratio', value = f'{round(sharpe,3)}')
-    calmar_ratio = calmar_ratio.metric(label = 'Calmar Ratio', value = f'{round(calmar,3)}')
-    sortino_ratio = sortino_ratio.metric(label = 'Sortino Ratio', value = f'{round(sortino,3)}')
+    # sharpe_ratio, calmar_ratio, sortino_ratio = ratios.columns(3)
+    # sharpe_ratio = sharpe_ratio.metric(label = 'Sharpe Ratio', value = f'{round(sharpe,3)}')
+    # calmar_ratio = calmar_ratio.metric(label = 'Calmar Ratio', value = f'{round(calmar,3)}')
+    # sortino_ratio = sortino_ratio.metric(label = 'Sortino Ratio', value = f'{round(sortino,3)}')
     
-    benchmark_data = get_historical_prices('BTC')
-    benchmark_data = benchmark_data[(benchmark_data.index>=start_date)&(benchmark_data.index<=end_date)]
-    benchmark = benchmark_data.Close.pct_change().dropna()
+    # benchmark_data = get_historical_prices('BTC')
+    # benchmark_data = benchmark_data[(benchmark_data.index>=start_date)&(benchmark_data.index<=end_date)]
+    # benchmark = benchmark_data.Close.pct_change().dropna()
     
-    treynor = pas.treynor_ratio(strategy, benchmark, 0.01)
-    information = pas.information_ratio(strategy, benchmark)
-    modigliani = pas.modigliani_ratio(strategy, benchmark, 0.01)
+    # treynor = pas.treynor_ratio(strategy, benchmark, 0.01)
+    # information = pas.information_ratio(strategy, benchmark)
+    # modigliani = pas.modigliani_ratio(strategy, benchmark, 0.01)
     
-    treynor_ratio, information_ratio, modigliani_ratio = ratios.columns(3)
-    treynor_ratio = treynor_ratio.metric(label = 'Treynor Ratio', value = f'{round(treynor,3)}')
-    information_ratio = information_ratio.metric(label = 'Information Ratio', value = f'{round(information,3)}')
-    modigliani_ratio = modigliani_ratio.metric(label = 'Modigliani Ratio', value = f'{round(modigliani,3)}')
+    # treynor_ratio, information_ratio, modigliani_ratio = ratios.columns(3)
+    # treynor_ratio = treynor_ratio.metric(label = 'Treynor Ratio', value = f'{round(treynor,3)}')
+    # information_ratio = information_ratio.metric(label = 'Information Ratio', value = f'{round(information,3)}')
+    # modigliani_ratio = modigliani_ratio.metric(label = 'Modigliani Ratio', value = f'{round(modigliani,3)}')
     
-    sterling = pas.sterling_ratio(strategy, 0.01, 5) 
-    burke = pas.burke_ratio(strategy, 0.01, 5)
-    cond_sharpe = pas.conditional_sharpe_ratio(strategy, 0.01, 0.05)
+    # sterling = pas.sterling_ratio(strategy, 0.01, 5) 
+    # burke = pas.burke_ratio(strategy, 0.01, 5)
+    # cond_sharpe = pas.conditional_sharpe_ratio(strategy, 0.01, 0.05)
 
-    sterling_ratio, burke_ratio, cond_sharpe_ratio = ratios.columns(3)
-    sterling_ratio = sterling_ratio.metric(label = 'Sterling Ratio', value = f'{round(sterling,3)}')
-    burke_ratio = burke_ratio.metric(label = 'Burke Ratio', value = f'{round(burke,3)}')
-    cond_sharpe_ratio = cond_sharpe_ratio.metric(label = 'Conditional Sharpe Ratio', value = f'{round(cond_sharpe,3)}')
+    # sterling_ratio, burke_ratio, cond_sharpe_ratio = ratios.columns(3)
+    # sterling_ratio = sterling_ratio.metric(label = 'Sterling Ratio', value = f'{round(sterling,3)}')
+    # burke_ratio = burke_ratio.metric(label = 'Burke Ratio', value = f'{round(burke,3)}')
+    # cond_sharpe_ratio = cond_sharpe_ratio.metric(label = 'Conditional Sharpe Ratio', value = f'{round(cond_sharpe,3)}')
     
-    general_statistics = st.expander('GENERAL STATISTICS')
+    # general_statistics = st.expander('GENERAL STATISTICS')
     
-    strategy_df = pd.DataFrame(strategy).rename(columns = {'Close':'Strategy'})
-    buy_hold_df = pd.DataFrame(buy_hold).rename(columns = {'Close':'Buy/Hold'})
-    benchmark_df = pd.DataFrame(benchmark).rename(columns = {'Close':'Benchmark'})
+    # strategy_df = pd.DataFrame(strategy).rename(columns = {'Close':'Strategy'})
+    # buy_hold_df = pd.DataFrame(buy_hold).rename(columns = {'Close':'Buy/Hold'})
+    # benchmark_df = pd.DataFrame(benchmark).rename(columns = {'Close':'Benchmark'})
     
-    frames = [strategy_df, buy_hold_df, benchmark_df]
-    stats_df = pd.concat(frames, axis = 1)
+    # frames = [strategy_df, buy_hold_df, benchmark_df]
+    # stats_df = pd.concat(frames, axis = 1)
     
-    general_stats = pat.stats_table(stats_df, manager_col = 0, other_cols = [1,2])
-    general_statistics.table(general_stats)
+    # general_stats = pat.stats_table(stats_df, manager_col = 0, other_cols = [1,2])
+    # general_statistics.table(general_stats)
     
-    advanced_statistics = st.expander('ADVANCED STATISTICS')
+    # advanced_statistics = st.expander('ADVANCED STATISTICS')
     
-    advanced_stats = pat.create_downside_table(stats_df, [0,1,2])
-    advanced_statistics.table(advanced_stats)
+    # advanced_stats = pat.create_downside_table(stats_df, [0,1,2])
+    # advanced_statistics.table(advanced_stats)
