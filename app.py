@@ -174,7 +174,7 @@ if (cf_bt == True) and \
     sortino_metric = sortino_metric.metric(label = 'Sortino Ratio', value = f'{round(sortino,2)}')
     jensen_metric = jensen_metric.metric(label = "Jensen's Alpha", value = f'{round(jensen,3)}')
     
-    key_visuals = st.expander('PERFORMANCE COMPARISON')
+    key_visuals = st
         
     # key_visuals.caption('Strategy Equity Curve')
     # key_visuals.area_chart(scr)
@@ -220,7 +220,7 @@ if (cf_bt == True) and \
     # key_visuals.caption('Maximum Drawdown')    
     # key_visuals.line_chart(drawdown)
     
-    drawdown_details = st.expander('DRAWDOWN DETAILS')
+    drawdown_details = st
     
     dd_details = ffn.core.drawdown_details(strategy)
     dd_details = proc_dd_details(dd_details, data)
