@@ -79,10 +79,9 @@ ta_function = eval(map_tech2fun[indicator])
 entry_comparator, exit_comparator, entry_data1, entry_data2, exit_data1, exit_data2 = ta_function(st, data, start_date, end_date)
 
   
-st.sidebar.markdown('')
 
-if cf_bt == False:
-    st.info('Press run to simulate trading and visualise results.')     
+
+    
 if free_plan:
     if (cf_bt == True) and (ticker not in free_plan_list['cryptos']):
         st.info(ticker + ' crypto only available with the PRO plan.')
@@ -135,10 +134,9 @@ if (cf_bt == True) and \
             position[i] = 0
         else:
             position[i] = position[i-1]
-    
-    st.caption(f'BACKTEST  RESULTS  FROM  {start_date}  TO  {end_date}')
 
-    st.markdown('')
+
+    key_visuals = st
     
     buy_hold = backtestdata.Close.pct_change().dropna()
     strategy = (position[1:] * buy_hold).dropna()
@@ -156,13 +154,20 @@ if (cf_bt == True) and \
     
     max_drawdown = ta.max_drawdown(port_strat)
     sharpe = ta.sharpe_ratio(port_strat)    
+    bh_sharpe = ta.sharpe_ratio(port_symbol)
     sortino = ta.sortino_ratio(port_strat)
+    bh_sortino = ta.sortino_ratio(port_symbol)
     jensen = ta.jensens_alpha(ta.performance.percent_return(port_strat).dropna(), 
                               ta.performance.percent_return(port_symbol).dropna())
     # jensens_alpha_metric = ta.jensens_alpha(port_strat)    
-    # variance = ta.statistics.variance(port_strat,port_strat.shape[0]).tail(1).values[0]    
+    variance = np.var(port_strat)
+    bh_variance = np.var(port_symbol)
     # kurtosis = ta.statistics.kurtosis(port_strat,port_strat.shape[0]).tail(1).values[0]    
-
+    
+    strat_percentage_delta = strategy_returns_per-bh_returns_per
+    variance_delta = variance-bh_variance
+    sharpe_delta = sharpe-bh_sharpe
+    sortino_delta = sortino-bh_sortino
     
     profit = []
     losses = []
@@ -176,15 +181,17 @@ if (cf_bt == True) and \
         
     profit_factor = pd.Series(profit).sum() / (abs(pd.Series(losses)).sum())
     
-    strat_percentage, bh_percentage, md, sharpe_ratio, sortino_metric, jensen_metric = st.columns(6)
-    bh_percentage = bh_percentage.metric(label = symbol + ' Performance', value = f'{round(bh_returns_per*100,2)}%')    
-    strat_percentage = strat_percentage.metric(label = 'Strategy Performance', value = f'{round(strategy_returns_per*100,2)}%')
-    sharpe_ratio = sharpe_ratio.metric(label = 'Sharpe Ratio', value = f'{round(sharpe,3)}')
-    md = md.metric(label = 'Drawdown', value = f'{round(max_drawdown,2)}%')
-    sortino_metric = sortino_metric.metric(label = 'Sortino Ratio', value = f'{round(sortino,2)}')
-    jensen_metric = jensen_metric.metric(label = "Jensen's Alpha", value = f'{round(jensen,3)}')
+    key_visuals.title('Backtesting performance results')
     
-    key_visuals = st
+    strat_percentage, bh_percentage, variance_metric, sharpe_ratio, sortino_metric = st.columns(5)
+    bh_percentage = bh_percentage.metric(label = symbol + ' Performance', value = f'{round(bh_returns_per*100,1)}%', delta = '0%')    
+    strat_percentage = strat_percentage.metric(label = 'Strategy Performance', value = f'{round(strategy_returns_per*100,1)}%', delta=f'{round(strat_percentage_delta*100,1)}%')
+    sharpe_ratio = sharpe_ratio.metric(label = 'Sharpe Ratio', value = f'{round(sharpe,2)}', delta=f'{round(sharpe_delta,2)}')
+    # md = md.metric(label = 'Maximum Drawdown', value = f'{round(max_drawdown,2)}%')
+    sortino_metric = sortino_metric.metric(label = 'Sortino Ratio', value = f'{round(sortino,2)}', delta=f'{round(sortino_delta,2)}')
+    # jensen_metric = jensen_metric.metric(label = "Jensen's Alpha", value = f'{round(jensen,3)}')
+    variance_metric = variance_metric.metric(label = "Variance", value = f'{round(100*variance,2)}%', delta=f'{round(variance_delta*100,1)}%', delta_color='inverse')
+    
         
     # key_visuals.caption('Strategy Equity Curve')
     # key_visuals.area_chart(scr)
@@ -197,35 +204,6 @@ if (cf_bt == True) and \
     frames = [strategy_drawdown, bh_drawdown]
     drawdown = pd.concat(frames, axis = 1)    
     
-    key_visuals.markdown('')
-    key_visuals.markdown('')
-    
-    key_visuals.caption('Buy/Hold Returns Comparison')
-    bhr = pd.DataFrame((1+buy_hold).cumprod()).rename(columns = {'Close':'Buy/Hold'})
-    bhr.index = strategy.index
-    scr = scr.rename(columns = {'Returns':'Strategy'})
-    frames = [bhr, scr]
-    bhr_compdf = pd.concat(frames, axis = 1)
-
-    # df = px.data.stocks()
-    df = pd.concat(frames, axis = 1).reset_index()
-    df.columns = ['date',symbol,'Strategy']
-    df[[symbol,'Strategy']]=df[[symbol,'Strategy']]*1000
-    fig = px.line(df, x="date", y=df.columns,
-                  hover_data={"date": "|%B %d, %Y"},
-                  title='$1,000 Portfolio Performance')
-    fig.update_xaxes(
-        dtick="M1",
-        tickformat="%b\n%Y")    
-    fig.update_xaxes(rangeslider_visible=True) 
-    # fig.write_html('abc.html')
-    st.plotly_chart(fig, use_container_width=True)  
-    
-    
-        
-    
-    key_visuals.markdown('')
-    key_visuals.markdown('')
     
     # key_visuals.caption('Maximum Drawdown')    
     # key_visuals.line_chart(drawdown)
@@ -234,7 +212,7 @@ if (cf_bt == True) and \
     
     dd_details = ffn.core.drawdown_details(strategy)
     dd_details = proc_dd_details(dd_details, data)
-    drawdown_details.table(dd_details)
+    
     
     def NormalizeData(data):
         return (data - np.nanmin(data)) / (np.nanmax(data) - np.nanmin(data))    
@@ -273,8 +251,35 @@ if (cf_bt == True) and \
         title='Strategy Signals',
         yaxis_title=symbol
         )
+
+    key_visuals.title('Trading signals')
     
     # fig.write_html('abc.html')  
+    st.plotly_chart(fig, use_container_width=True) 
+        
+    
+    key_visuals.title('Buy sell events')
+    drawdown_details.table(dd_details)
+    
+    key_visuals.title('Buy&Hold vs strategy portfolio')
+    bhr = pd.DataFrame((1+buy_hold).cumprod()).rename(columns = {'Close':'Buy/Hold'})
+    bhr.index = strategy.index
+    scr = scr.rename(columns = {'Returns':'Strategy'})
+    frames = [bhr, scr]
+    bhr_compdf = pd.concat(frames, axis = 1)
+
+    # df = px.data.stocks()
+    df = pd.concat(frames, axis = 1).reset_index()
+    df.columns = ['date',symbol,'Strategy']
+    df[[symbol,'Strategy']]=df[[symbol,'Strategy']]*1000
+    fig = px.line(df, x="date", y=df.columns,
+                  hover_data={"date": "|%B %d, %Y"},
+                  title='$1,000 Portfolio Performance')
+    fig.update_xaxes(
+        dtick="M1",
+        tickformat="%b\n%Y")    
+    fig.update_xaxes(rangeslider_visible=True) 
+    # fig.write_html('abc.html')
     st.plotly_chart(fig, use_container_width=True) 
     
     # ratios = st.expander('RATIOS')
