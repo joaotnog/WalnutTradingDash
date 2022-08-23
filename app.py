@@ -30,9 +30,15 @@ st.set_page_config(
     layout = 'wide'
 )
 
-st.sidebar.title('WalnutTradingDash')
-st.sidebar.markdown('Backtest cryptocurrency trading strategies')
-st.sidebar.markdown('')
+
+                                    
+st.sidebar.title('WalnutTradingDash :chart_with_upwards_trend:')
+st.sidebar.caption('v 1.2.0')
+st.sidebar.caption(' ')
+
+cf_bt = st.sidebar.button('Run backtest', help='Simulate with the parameters belows')
+
+st.sidebar.caption(' ')
 
 if sys.argv[1]=='PRO':
     free_plan = False
@@ -42,19 +48,23 @@ if sys.argv[1]=='FREE':
 scripts = list(map_crypto2code.keys())
 indicators = import_indicators()
 
-backtest_timeframe = st.sidebar.expander('Time interval')
+backtest_timeframe = st.sidebar
 
-if free_plan: 
-    start_date = backtest_timeframe.date_input('Starting Date', value = free_plan_list['date_min'], min_value = free_plan_list['date_min'], max_value = free_plan_list['date_max'])
-    end_date = backtest_timeframe.date_input('Ending Date', value = free_plan_list['date_max'], min_value = free_plan_list['date_min'], max_value = free_plan_list['date_max'])
-else:
-    start_date = backtest_timeframe.date_input('Starting Date', value = dt(2017,1,1), min_value = dt(2011,1,1), max_value = datetime.today() - timedelta(days = 1))
-    end_date = backtest_timeframe.date_input('Ending Date', value = datetime.today() - timedelta(days = 1), min_value = dt(2011,1,1), max_value = datetime.today() - timedelta(days = 1))
-    
-symbol = st.sidebar.selectbox('Crypto', scripts)
+
+st.sidebar.header('I want to trade')     
+symbol = st.sidebar.selectbox('', scripts)
 ticker = map_crypto2code[symbol]
-    
-indicator = st.sidebar.selectbox('Technical indicator', list(map_tech2fun.keys()))
+
+st.sidebar.header('Using the technical indicator')    
+indicator = st.sidebar.selectbox('', list(map_tech2fun.keys()))
+
+st.sidebar.header('During the time interval')
+if free_plan: 
+    start_date = backtest_timeframe.date_input('Begin date', value = free_plan_list['date_min'], min_value = free_plan_list['date_min'], max_value = free_plan_list['date_max'])
+    end_date = backtest_timeframe.date_input('End date', value = free_plan_list['date_max'], min_value = free_plan_list['date_min'], max_value = free_plan_list['date_max'])
+else:
+    start_date = backtest_timeframe.date_input('Begin date', value = dt(2017,1,1), min_value = dt(2011,1,1), max_value = datetime.today() - timedelta(days = 1))
+    end_date = backtest_timeframe.date_input('End date', value = datetime.today() - timedelta(days = 1), min_value = dt(2011,1,1), max_value = datetime.today() - timedelta(days = 1))
 
 
 # data = get_historical_prices(ticker)
@@ -70,7 +80,7 @@ entry_comparator, exit_comparator, entry_data1, entry_data2, exit_data1, exit_da
 
   
 st.sidebar.markdown('')
-cf_bt = st.sidebar.button('Run simulation')
+
 if cf_bt == False:
     st.info('Press run to simulate trading and visualise results.')     
 if free_plan:
@@ -83,23 +93,23 @@ if (cf_bt == True) and \
          or \
     ((ticker in free_plan_list['cryptos']) and (indicator in free_plan_list['technicals']))):
     backtestdata = data.copy()
-    if entry_comparator == 'LOWER THAN' and exit_comparator == 'LOWER THAN':
+    if entry_comparator == 'is lower than' and exit_comparator == 'is lower than':
         buy_price, sell_price, strategy_signals = crossingdown_crossingdown(backtestdata, entry_data1, entry_data2, exit_data1, exit_data2)
-    elif entry_comparator == 'LOWER THAN' and exit_comparator == 'HIGHER THAN':
+    elif entry_comparator == 'is lower than' and exit_comparator == 'is higher than':
         buy_price, sell_price, strategy_signals = crossingdown_crossingup(backtestdata, entry_data1, entry_data2, exit_data1, exit_data2) 
-    elif entry_comparator == 'LOWER THAN' and exit_comparator == 'EQUAL TO':
+    elif entry_comparator == 'is lower than' and exit_comparator == 'is equal to':
         buy_price, sell_price, strategy_signals = crossingdown_equalto(backtestdata, entry_data1, entry_data2, exit_data1, exit_data2)
-    elif entry_comparator == 'HIGHER THAN' and exit_comparator == 'LOWER THAN':
+    elif entry_comparator == 'is higher than' and exit_comparator == 'is lower than':
         buy_price, sell_price, strategy_signals = crossingup_crossingdown(backtestdata, entry_data1, entry_data2, exit_data1, exit_data2)
-    elif entry_comparator == 'HIGHER THAN' and exit_comparator == 'HIGHER THAN':
+    elif entry_comparator == 'is higher than' and exit_comparator == 'is higher than':
         buy_price, sell_price, strategy_signals = crossingup_crossingup(backtestdata, entry_data1, entry_data2, exit_data1, exit_data2)
-    elif entry_comparator == 'HIGHER THAN' and exit_comparator == 'EQUAL TO':
+    elif entry_comparator == 'is higher than' and exit_comparator == 'is equal to':
         buy_price, sell_price, strategy_signals = crossingup_equalto(backtestdata, entry_data1, entry_data2, exit_data1, exit_data2)
-    elif entry_comparator == 'EQUAL TO' and exit_comparator == 'HIGHER THAN':
+    elif entry_comparator == 'is equal to' and exit_comparator == 'is higher than':
         buy_price, sell_price, strategy_signals = equalto_crossingup(backtestdata, entry_data1, entry_data2, exit_data1, exit_data2)
-    elif entry_comparator == 'EQUAL TO' and exit_comparator == 'LOWER THAN':
+    elif entry_comparator == 'is equal to' and exit_comparator == 'is lower than':
         buy_price, sell_price, strategy_signals = equalto_crossingdown(backtestdata, entry_data1, entry_data2, exit_data1, exit_data2)
-    elif entry_comparator == 'EQUAL TO' and exit_comparator == 'EQUAL TO':
+    elif entry_comparator == 'is equal to' and exit_comparator == 'is equal to':
         buy_price, sell_price, strategy_signals = equalto_equalto(backtestdata, entry_data1, entry_data2, exit_data1, exit_data2)
     
     def get_plot(n):

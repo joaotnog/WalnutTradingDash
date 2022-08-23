@@ -20,9 +20,19 @@ replace_dict["num_stream.sidebar.markdown('')"]="#num_stream.sidebar.markdown(''
 replace_dict["exit_condition_inputs = num_stream.sidebar.expander('EXIT CONDITION', False)"]="exit_condition_inputs=entry_condition_inputs #exit_condition_inputs = num_stream.sidebar.expander('EXIT CONDITION', False)"
 replace_dict["ENTRY CONDITION"]="TRADING STRATEGY"
 replace_dict["'Specify Input Value'"]="''"
-replace_dict["entry_input_2 = entry_condition_inputs.selectbox('INDICATOR', inputs2"]="entry_input_2 = 'Number' if inputs2[0]=='Number' else entry_condition_inputs.selectbox('INDICATOR', inputs2"
-replace_dict["exit_input_2 = exit_condition_inputs.selectbox('INDICATOR', inputs2"]="exit_input_2 = 'Number' if inputs2[0]=='Number' else exit_condition_inputs.selectbox('INDICATOR', inputs2"
+replace_dict["entry_input_2 = entry_condition_inputs.selectbox('INDICATOR', inputs2"]="entry_input_2 = inputs2[0] #entry_input_2 = entry_condition_inputs.selectbox('INDICATOR', inputs2"
+replace_dict["exit_input_2 = exit_condition_inputs.selectbox('INDICATOR', inputs2"]="exit_input_2 = inputs2[0] #exit_input_2 = exit_condition_inputs.selectbox('INDICATOR', inputs2"
 replace_dict["matype = matype.selectbox('MA Type', mas"]="matype='sma' #matype = matype.selectbox('MA Type', mas"
+replace_dict["entry_condition_inputs = num_stream.sidebar.expander('TRADING STRATEGY', False)"]="entry_condition_inputs = num_stream.sidebar; entry_condition_inputs.header('With the strategy')"
+replace_dict["entry_input_1 = entry_condition_inputs.selectbox('BUY WHEN', inputs1"]="entry_condition_inputs.text('BUY when the '); entry_input_1 = inputs1[0] #entry_input_1 = entry_condition_inputs.selectbox('BUY WHEN', inputs1"
+replace_dict["exit_input_1 = exit_condition_inputs.selectbox('AND SELL WHEN', inputs1"]="exit_condition_inputs.text('and SELL when the '); exit_input_1 = inputs1[0] #exit_input_1 = exit_condition_inputs.selectbox('AND SELL WHEN', inputs1"
+replace_dict["exit_comparator = exit_condition_inputs.selectbox('IS', exit_conditions"]="exit_comparator = exit_condition_inputs.selectbox('', exit_conditions"
+replace_dict["entry_comparator = entry_condition_inputs.selectbox('IS', entry_conditions"]="entry_comparator = entry_condition_inputs.selectbox('', entry_conditions"
+replace_dict["HIGHER THAN"]="is higher than"
+replace_dict["LOWER THAN"]="is lower than"
+replace_dict["EQUAL TO"]="is equal to"
+
+
 
 
 replace_dict["d_period = int(d_period.text_input('D Period', value = 3, "]="d_period=3 #d_period = int(d_period.text_input('D Period', value = 3, "
@@ -63,7 +73,7 @@ replace_dict["multiplier = int(multiplier.text_input('SuperTrend Multiplier', va
 
 
 for shortech in map_shortech2fun.keys():
-    replace_dict["period.text_input('{} Period'".format(shortech)]="period.text_input('(X-DAYS)'"
+    replace_dict["period.text_input('{} Period'".format(shortech)]="period.slider('x days indicator'"
 
 
 for key, value in replace_dict.items():
