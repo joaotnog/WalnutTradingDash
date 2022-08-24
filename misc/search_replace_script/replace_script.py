@@ -31,6 +31,7 @@ replace_dict["entry_comparator = entry_condition_inputs.selectbox('IS', entry_co
 replace_dict["HIGHER THAN"]="is higher than"
 replace_dict["LOWER THAN"]="is lower than"
 replace_dict["EQUAL TO"]="is equal to"
+replace_dict[", 'is equal to'"] = " "
 
 
 

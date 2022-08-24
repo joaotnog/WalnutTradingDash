@@ -167,8 +167,8 @@ def implement_supertrend(num_stream, data, start_date, end_date):
     
     inputs1 = ['SuperTrend']
     inputs2 = ['Close', 'Open', 'High', 'Low', 'SuperTrend', 'Number']
-    entry_conditions = ['is lower than', 'is higher than', 'is equal to']
-    exit_conditions = ['is higher than', 'is lower than', 'is equal to']
+    entry_conditions = ['is lower than', 'is higher than' ]
+    exit_conditions = ['is higher than', 'is lower than' ]
     
     ######### SUPERTREND TRADING STRATEGY #########
    
@@ -264,8 +264,8 @@ def implement_negative_directional_index(num_stream, data, start_date, end_date)
     
         inputs1 = ['-DI, Negative Directional Index']
         inputs2 = ['+DI, Positive Directional Index', 'Average Directional Index (ADX)', '-DI, Negative Directional Index', 'Number']
-        entry_conditions = ['is lower than', 'is higher than', 'is equal to']
-        exit_conditions = ['is higher than', 'is lower than', 'is equal to']
+        entry_conditions = ['is lower than', 'is higher than' ]
+        exit_conditions = ['is higher than', 'is lower than' ]
 
         ######### -DI TRADING STRATEGY #########
 
@@ -394,8 +394,8 @@ def implement_normalized_average_true_range(num_stream, data, start_date, end_da
 
         inputs1 = ['Normalized Average True Range (NATR)']
         inputs2 = ['Normalized Average True Range (NATR)', 'TR', 'Average True Range (ATR)', 'Number']
-        entry_conditions = ['is higher than', 'is lower than', 'is equal to']
-        exit_conditions = ['is lower than', 'is higher than', 'is equal to']
+        entry_conditions = ['is higher than', 'is lower than' ]
+        exit_conditions = ['is lower than', 'is higher than' ]
 
         ######### NATR TRADING STRATEGY #########
 
@@ -515,8 +515,8 @@ def implement_average_directional_index(num_stream, data, start_date, end_date):
     
         inputs1 = ['Average Directional Index (ADX)']
         inputs2 = ['+DI, Positive Directional Index', '-DI, Negative Directional Index', 'Average Directional Index (ADX)', 'Number']
-        entry_conditions = ['is lower than', 'is higher than', 'is equal to']
-        exit_conditions = ['is higher than', 'is lower than', 'is equal to']
+        entry_conditions = ['is lower than', 'is higher than' ]
+        exit_conditions = ['is higher than', 'is lower than' ]
 
         ######### ADX TRADING STRATEGY #########
 
@@ -646,8 +646,8 @@ def implement_stochastic_oscillator_fast(num_stream, data, start_date, end_date)
     
         inputs1 = ['Stochastic Oscillator Fast (SOF)']
         inputs2 = ['Number']
-        entry_conditions = ['is lower than', 'is higher than', 'is equal to']
-        exit_conditions = ['is higher than', 'is lower than', 'is equal to']
+        entry_conditions = ['is lower than', 'is higher than' ]
+        exit_conditions = ['is higher than', 'is lower than' ]
 
         ######### SOF TRADING STRATEGY #########
 
@@ -721,8 +721,8 @@ def implement_stochastic_oscillator_slow(num_stream, data, start_date, end_date)
     
         inputs1 = ['Stochastic Oscillator Slow (SOS)']
         inputs2 = ['Number']
-        entry_conditions = ['is lower than', 'is higher than', 'is equal to']
-        exit_conditions = ['is higher than', 'is lower than', 'is equal to']
+        entry_conditions = ['is lower than', 'is higher than' ]
+        exit_conditions = ['is higher than', 'is lower than' ]
 
         ######### sos TRADING STRATEGY #########
 
@@ -796,8 +796,8 @@ def implement_weighted_moving_average(num_stream, data, start_date, end_date):
     
         inputs1 = ['Weighted Moving Average (WMA)']
         inputs2 = ['Close', 'Exponential Moving Average (EMA)', 'Simple Moving Average (SMA)', 'Triangular Moving Average (TRIMA)', 'Triple Exponential Moving Average (TEMA)', 'Double Exponential Moving Average (DEMA)', 'Weighted Moving Average (WMA)', 'Open', 'High', 'Low', 'Number']
-        entry_conditions = ['is lower than', 'is higher than', 'is equal to']
-        exit_conditions = ['is higher than', 'is lower than', 'is equal to']
+        entry_conditions = ['is lower than', 'is higher than' ]
+        exit_conditions = ['is higher than', 'is lower than' ]
 
         ######### WMA TRADING STRATEGY #########
 
@@ -973,8 +973,8 @@ def implement_momentum_indicator(num_stream, data, start_date, end_date):
     
         inputs1 = ['Momentum Indicator (MOM)']
         inputs2 = ['Number', 'Momentum Indicator (MOM)']
-        entry_conditions = ['is lower than', 'is higher than', 'is equal to']
-        exit_conditions = ['is higher than', 'is lower than', 'is equal to']
+        entry_conditions = ['is lower than', 'is higher than' ]
+        exit_conditions = ['is higher than', 'is lower than' ]
 
         ######### MOM TRADING STRATEGY #########
 
@@ -1064,8 +1064,8 @@ def implement_vortex_indicator(num_stream, data, start_date, end_date):
     
         inputs1 = ['Vortex Indicator (VI)', '-VI']
         inputs2 = ['-VI', 'Vortex Indicator (VI)', 'Number']
-        entry_conditions = ['is higher than', 'is lower than', 'is equal to']
-        exit_conditions = ['is lower than', 'is higher than', 'is equal to']
+        entry_conditions = ['is higher than', 'is lower than' ]
+        exit_conditions = ['is lower than', 'is higher than' ]
 
         ######### VI TRADING STRATEGY #########
 
@@ -1187,8 +1187,8 @@ def implement_chande_momentum_oscillator(num_stream, data, start_date, end_date)
 
         inputs1 = ['Chande Momentum Oscillator (CMO)']
         inputs2 = ['Number', 'Chande Momentum Oscillator (CMO)']
-        entry_conditions = ['is lower than', 'is higher than', 'is equal to']
-        exit_conditions = ['is higher than', 'is lower than', 'is equal to']
+        entry_conditions = ['is lower than', 'is higher than' ]
+        exit_conditions = ['is higher than', 'is lower than' ]
 
         ######### CMO TRADING STRATEGY #########
 
@@ -1278,8 +1278,8 @@ def implement_exponential_moving_average(num_stream, data, start_date, end_date)
 
         inputs1 = ['Exponential Moving Average (EMA)']
         inputs2 = ['Exponential Moving Average (EMA)', 'Simple Moving Average (SMA)', 'Triangular Moving Average (TRIMA)', 'Triple Exponential Moving Average (TEMA)', 'Double Exponential Moving Average (DEMA)', 'Weighted Moving Average (WMA)', 'Open', 'High', 'Low', 'Close', 'Number']
-        entry_conditions = ['is higher than', 'is lower than', 'is equal to']
-        exit_conditions = ['is lower than', 'is higher than', 'is equal to']
+        entry_conditions = ['is higher than', 'is lower than' ]
+        exit_conditions = ['is lower than', 'is higher than' ]
 
         ######### EMA TRADING STRATEGY #########
 
@@ -1455,8 +1455,8 @@ def implement_triple_exponential_moving_average(num_stream, data, start_date, en
 
         inputs1 = ['Triple Exponential Moving Average (TEMA)']
         inputs2 = ['Triple Exponential Moving Average (TEMA)', 'Simple Moving Average (SMA)', 'Triangular Moving Average (TRIMA)', 'Exponential Moving Average (EMA)', 'Double Exponential Moving Average (DEMA)', 'Weighted Moving Average (WMA)', 'Open', 'High', 'Low', 'Close', 'Number']
-        entry_conditions = ['is higher than', 'is lower than', 'is equal to']
-        exit_conditions = ['is lower than', 'is higher than', 'is equal to']
+        entry_conditions = ['is higher than', 'is lower than' ]
+        exit_conditions = ['is lower than', 'is higher than' ]
 
         ######### TEMA TRADING STRATEGY #########
 
@@ -1632,8 +1632,8 @@ def implement_double_exponential_moving_average(num_stream, data, start_date, en
 
         inputs1 = ['Double Exponential Moving Average (DEMA)']
         inputs2 = ['Double Exponential Moving Average (DEMA)', 'High', 'Low', 'Open', 'Close', 'Number', 'Triple Exponential Moving Average (TEMA)', 'Simple Moving Average (SMA)', 'Triangular Moving Average (TRIMA)', 'Exponential Moving Average (EMA)', 'Weighted Moving Average (WMA)']
-        entry_conditions = ['is higher than', 'is lower than', 'is equal to']
-        exit_conditions = ['is lower than', 'is higher than', 'is equal to']
+        entry_conditions = ['is higher than', 'is lower than' ]
+        exit_conditions = ['is lower than', 'is higher than' ]
 
         ######### DEMA TRADING STRATEGY #########
 
@@ -1809,8 +1809,8 @@ def implement_simple_moving_average(num_stream, data, start_date, end_date):
 
         inputs1 = ['Simple Moving Average (SMA)']
         inputs2 = ['Simple Moving Average (SMA)', 'Exponential Moving Average (EMA)', 'Triangular Moving Average (TRIMA)', 'Triple Exponential Moving Average (TEMA)', 'Double Exponential Moving Average (DEMA)', 'Weighted Moving Average (WMA)', 'Open', 'High', 'Low', 'Close', 'Number']
-        entry_conditions = ['is higher than', 'is lower than', 'is equal to']
-        exit_conditions = ['is lower than', 'is higher than', 'is equal to']
+        entry_conditions = ['is higher than', 'is lower than' ]
+        exit_conditions = ['is lower than', 'is higher than' ]
 
         ######### SMA TRADING STRATEGY #########
 
@@ -1986,8 +1986,8 @@ def implement_triangular_moving_average(num_stream, data, start_date, end_date):
 
         inputs1 = ['Triangular Moving Average (TRIMA)']
         inputs2 = ['Triangular Moving Average (TRIMA)', 'Exponential Moving Average (EMA)', 'Simple Moving Average (SMA)', 'Triple Exponential Moving Average (TEMA)', 'Double Exponential Moving Average (DEMA)', 'Weighted Moving Average (WMA)', 'Open', 'High', 'Low', 'Close', 'Number']
-        entry_conditions = ['is higher than', 'is lower than', 'is equal to']
-        exit_conditions = ['is lower than', 'is higher than', 'is equal to']
+        entry_conditions = ['is higher than', 'is lower than' ]
+        exit_conditions = ['is lower than', 'is higher than' ]
 
         ######### TRIMA TRADING STRATEGY #########
 
@@ -2163,8 +2163,8 @@ def implement_chande_forecast_oscillator(num_stream, data, start_date, end_date)
 
         inputs1 = ['Chande Forecast Oscillator (CFO)']
         inputs2 = ['Number', 'Chande Forecast Oscillator (CFO)']
-        entry_conditions = ['is higher than', 'is lower than', 'is equal to']
-        exit_conditions = ['is lower than', 'is higher than', 'is equal to']
+        entry_conditions = ['is higher than', 'is lower than' ]
+        exit_conditions = ['is lower than', 'is higher than' ]
 
         ######### CFO TRADING STRATEGY #########
 
@@ -2254,8 +2254,8 @@ def implement_choppiness_index(num_stream, data, start_date, end_date):
 
         inputs1 = ['Choppiness Index']
         inputs2 = ['Number', 'Choppiness Index']
-        entry_conditions = ['is lower than', 'is higher than', 'is equal to']
-        exit_conditions = ['is higher than', 'is lower than', 'is equal to']
+        entry_conditions = ['is lower than', 'is higher than' ]
+        exit_conditions = ['is higher than', 'is lower than' ]
 
         ######### CHOP TRADING STRATEGY #########
 
@@ -2345,8 +2345,8 @@ def implement_aroon_down(num_stream, data, start_date, end_date):
 
         inputs1 = ['Aroon Down']
         inputs2 = ['Aroon Up', 'Aroon Down', 'Number']
-        entry_conditions = ['is lower than', 'is higher than', 'is equal to']
-        exit_conditions = ['is higher than', 'is lower than', 'is equal to']
+        entry_conditions = ['is lower than', 'is higher than' ]
+        exit_conditions = ['is higher than', 'is lower than' ]
 
         ######### AROOND TRADING STRATEGY #########
 
@@ -2452,8 +2452,8 @@ def implement_average_true_range(num_stream, data, start_date, end_date):
 
         inputs1 = ['Average True Range (ATR)']
         inputs2 = ['Average True Range (ATR)', 'TR', 'Normalized Average True Range (NATR)', 'Number']
-        entry_conditions = ['is higher than', 'is lower than', 'is equal to']
-        exit_conditions = ['is lower than', 'is higher than', 'is equal to']
+        entry_conditions = ['is higher than', 'is lower than' ]
+        exit_conditions = ['is lower than', 'is higher than' ]
 
         ######### atr TRADING STRATEGY #########
 
@@ -2573,8 +2573,8 @@ def implement_williamsr(num_stream, data, start_date, end_date):
 
         inputs1 = ['Williams %R']
         inputs2 = ['Number']
-        entry_conditions = ['is lower than', 'is lower than', 'is equal to']
-        exit_conditions = ['is higher than', 'is higher than', 'is equal to']
+        entry_conditions = ['is lower than', 'is lower than' ]
+        exit_conditions = ['is higher than', 'is higher than' ]
 
         ######### WR TRADING STRATEGY #########
 
@@ -2650,8 +2650,8 @@ def implement_parabolic_sar(num_stream, data, start_date, end_date):
 
         inputs1 = ['Parabolic SAR']
         inputs2 = ['Close', 'High', 'Low', 'Open', 'Number']
-        entry_conditions = ['is lower than', 'is higher than', 'is equal to']
-        exit_conditions = ['is higher than', 'is lower than', 'is equal to']
+        entry_conditions = ['is lower than', 'is higher than' ]
+        exit_conditions = ['is higher than', 'is lower than' ]
 
         ######### PSAR TRADING STRATEGY #########
 
@@ -2747,8 +2747,8 @@ def implement_coppock_curve(num_stream, data, start_date, end_date):
 
         inputs1 = ['Coppock Curve']
         inputs2 = ['Number', 'Coppock Curve']
-        entry_conditions = ['is higher than', 'is lower than', 'is equal to']
-        exit_conditions = ['is lower than', 'is higher than', 'is equal to']
+        entry_conditions = ['is higher than', 'is lower than' ]
+        exit_conditions = ['is lower than', 'is higher than' ]
 
         ######### CC TRADING STRATEGY #########
 
@@ -2850,8 +2850,8 @@ def implement_positive_directional_index(num_stream, data, start_date, end_date)
     
         inputs1 = ['+DI, Positive Directional Index']
         inputs2 = ['-DI, Negative Directional Index', 'Average Directional Index (ADX)', '+DI, Positive Directional Index', 'Number']
-        entry_conditions = ['is higher than', 'is lower than', 'is equal to']
-        exit_conditions = ['is lower than', 'is higher than', 'is equal to']
+        entry_conditions = ['is higher than', 'is lower than' ]
+        exit_conditions = ['is lower than', 'is higher than' ]
 
         ######### +DI TRADING STRATEGY #########
 
@@ -2977,8 +2977,8 @@ def implement_rsi(num_stream, data, start_date, end_date):
 
         inputs1 = ['Relative Strength Index (RSI)']
         inputs2 = ['Number']
-        entry_conditions = ['is lower than', 'is lower than', 'is equal to']
-        exit_conditions = ['is higher than', 'is higher than', 'is equal to']
+        entry_conditions = ['is lower than', 'is lower than' ]
+        exit_conditions = ['is higher than', 'is higher than' ]
 
         ######### RSI TRADING STRATEGY #########
 
@@ -3054,8 +3054,8 @@ def implement_macd_signal(num_stream, data, start_date, end_date):
 
         inputs1 = ['MACD Signal']
         inputs2 = ['MACD', 'MACD Histogram', 'Number']
-        entry_conditions = ['is lower than', 'is higher than', 'is equal to']
-        exit_conditions = ['is higher than', 'is lower than', 'is equal to']
+        entry_conditions = ['is lower than', 'is higher than' ]
+        exit_conditions = ['is higher than', 'is lower than' ]
 
         ######### MACD SIGNAL TRADING STRATEGY #########
 
@@ -3185,8 +3185,8 @@ def implement_aroon_oscillator(num_stream, data, start_date, end_date):
 
         inputs1 = ['Aroon Oscillator']
         inputs2 = ['Number', 'Aroon Down', 'Aroon Up']
-        entry_conditions = ['is higher than', 'is lower than', 'is equal to']
-        exit_conditions = ['is lower than', 'is higher than', 'is equal to']
+        entry_conditions = ['is higher than', 'is lower than' ]
+        exit_conditions = ['is lower than', 'is higher than' ]
 
         ######### AROON OSC TRADING STRATEGY #########
 
@@ -3294,8 +3294,8 @@ def implement_stochrsi_fastk(num_stream, data, start_date, end_date):
         inputs2 = ['Number']
         mas = ['sma', 'ema', 'fwma', 'hma', 'linreg', 'midpoint', 'pwma', 'rma', 'sinwma', 
                'dema', 'swma', 't3', 'tema', 'trima', 'vidya', 'wma', 'zlma']
-        entry_conditions = ['is lower than', 'is higher than', 'is equal to']
-        exit_conditions = ['is higher than', 'is lower than', 'is equal to']
+        entry_conditions = ['is lower than', 'is higher than' ]
+        exit_conditions = ['is higher than', 'is lower than' ]
 
         ######### STOCH RSI FASTK TRADING STRATEGY #########
 
@@ -3379,8 +3379,8 @@ def implement_stochrsi_fastd(num_stream, data, start_date, end_date):
         inputs2 = ['Number']
         mas = ['sma', 'ema', 'fwma', 'hma', 'linreg', 'midpoint', 'pwma', 'rma', 'sinwma', 
                'dema', 'swma', 't3', 'tema', 'trima', 'vidya', 'wma', 'zlma']
-        entry_conditions = ['is lower than', 'is higher than', 'is equal to']
-        exit_conditions = ['is higher than', 'is lower than', 'is equal to']
+        entry_conditions = ['is lower than', 'is higher than' ]
+        exit_conditions = ['is higher than', 'is lower than' ]
 
         ######### STOCH RSI FASTD TRADING STRATEGY #########
 
@@ -3462,8 +3462,8 @@ def implement_ultimate_oscillator(num_stream, data, start_date, end_date):
 
         inputs1 = ['Ultimate Oscillator']
         inputs2 = ['Number']
-        entry_conditions = ['is higher than', 'is lower than', 'is equal to']
-        exit_conditions = ['is lower than', 'is higher than', 'is equal to']
+        entry_conditions = ['is higher than', 'is lower than' ]
+        exit_conditions = ['is lower than', 'is higher than' ]
 
         ######### UO TRADING STRATEGY #########
 
@@ -3547,8 +3547,8 @@ def implement_aroon_up(num_stream, data, start_date, end_date):
 
         inputs1 = ['Aroon Up']
         inputs2 = ['Aroon Down', 'Aroon Up', 'Number']
-        entry_conditions = ['is higher than', 'is lower than', 'is equal to']
-        exit_conditions = ['is lower than', 'is higher than', 'is equal to']
+        entry_conditions = ['is higher than', 'is lower than' ]
+        exit_conditions = ['is lower than', 'is higher than' ]
 
         ######### AROONU TRADING STRATEGY #########
 
@@ -3656,8 +3656,8 @@ def implement_bollinger_bands(num_stream, data, start_date, end_date):
         inputs2 = ['Lower BB', 'Upper BB', 'Middle BB']
         mas = ['sma', 'ema', 'fwma', 'hma', 'linreg', 'midpoint', 'pwma', 'rma', 'sinwma', 
                'dema', 'swma', 't3', 'tema', 'trima', 'vidya', 'wma', 'zlma']
-        entry_conditions = ['is lower than', 'is higher than', 'is equal to']
-        exit_conditions = ['is higher than', 'is lower than', 'is equal to']
+        entry_conditions = ['is lower than', 'is higher than' ]
+        exit_conditions = ['is higher than', 'is lower than' ]
 
         ######### BB TRADING STRATEGY #########
 
@@ -3787,8 +3787,8 @@ def implement_trix(num_stream, data, start_date, end_date):
 
         inputs1 = ['TRIX']
         inputs2 = ['Number']
-        entry_conditions = ['is higher than', 'is lower than', 'is equal to']
-        exit_conditions = ['is lower than', 'is higher than', 'is equal to']
+        entry_conditions = ['is higher than', 'is lower than' ]
+        exit_conditions = ['is lower than', 'is higher than' ]
 
         ######### TRIX TRADING STRATEGY #########
 
@@ -3870,8 +3870,8 @@ def implement_cci(num_stream, data, start_date, end_date):
 
         inputs1 = ['Commodity Channel Index (CCI)']
         inputs2 = ['Number']
-        entry_conditions = ['is lower than', 'is higher than', 'is equal to']
-        exit_conditions = ['is higher than', 'is lower than', 'is equal to']
+        entry_conditions = ['is lower than', 'is higher than' ]
+        exit_conditions = ['is higher than', 'is lower than' ]
 
         ######### CCI TRADING STRATEGY #########
 
@@ -3945,8 +3945,8 @@ def implement_macd(num_stream, data, start_date, end_date):
 
         inputs1 = ['MACD']
         inputs2 = ['MACD Signal', 'MACD Histogram', 'Number']
-        entry_conditions = ['is higher than', 'is lower than', 'is equal to']
-        exit_conditions = ['is lower than', 'is higher than', 'is equal to']
+        entry_conditions = ['is higher than', 'is lower than' ]
+        exit_conditions = ['is lower than', 'is higher than' ]
 
         ######### MACD TRADING STRATEGY #########
 
@@ -4076,8 +4076,8 @@ def implement_macd_histogram(num_stream, data, start_date, end_date):
 
         inputs1 = ['MACD Histogram']
         inputs2 = ['Number']
-        entry_conditions = ['is higher than', 'is lower than', 'is equal to']
-        exit_conditions = ['is lower than', 'is higher than', 'is equal to']
+        entry_conditions = ['is higher than', 'is lower than' ]
+        exit_conditions = ['is lower than', 'is higher than' ]
 
         ######### MACD HISTOGRAM TRADING STRATEGY #########
 
@@ -4159,8 +4159,8 @@ def implement_mfi(num_stream, data, start_date, end_date):
 
         inputs1 = ['Money Flow Index (MFI)']
         inputs2 = ['Number']
-        entry_conditions = ['is lower than', 'is lower than', 'is equal to']
-        exit_conditions = ['is higher than', 'is higher than', 'is equal to']
+        entry_conditions = ['is lower than', 'is lower than' ]
+        exit_conditions = ['is higher than', 'is higher than' ]
 
         ######### MFI TRADING STRATEGY #########
 
