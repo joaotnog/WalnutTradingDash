@@ -55,23 +55,7 @@ st.sidebar.header('I want to trade')
 symbol = st.sidebar.selectbox('', scripts)
 ticker = map_crypto2code[symbol]
 
-st.sidebar.header('Using the technical indicator') 
-tech_available = ['MOM (Momentum Indicator)',
-              # 'SMA (Simple Moving Average)',
-              'STOCH (Stochastic Oscillator)',
-              'EMA (Exponential Moving Average)',
-              'CMO (Chande Momentum Oscillator)',
-              'ADX (Average Directional Movement Index)',
-              'ATR (Average True Range)',
-              'AROON (Aroon Oscillator)',
-              # 'PSAR (Parabolic Stop and Reverse)',
-              'RSI (Relative Strength Index)',
-              'MACD (Moving Average Convergence Divergence)',
-              # 'BBANDS (Bollinger Bands)',
-              'TRIX (Triple Exponential)',
-              'MFI (Money Flow Index)']
-tech_available.sort()
-tech_available = ['SMA (Simple Moving Average)'] + tech_available   
+st.sidebar.header('Using the technical indicator')  
 indicator = st.sidebar.selectbox('', tech_available)
 
 st.sidebar.header('During the time interval')
