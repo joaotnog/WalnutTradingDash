@@ -63,7 +63,7 @@ if free_plan:
     start_date = backtest_timeframe.date_input('Begin date', value = free_plan_list['date_min'], min_value = free_plan_list['date_min'], max_value = free_plan_list['date_max'])
     end_date = backtest_timeframe.date_input('End date', value = free_plan_list['date_max'], min_value = free_plan_list['date_min'], max_value = free_plan_list['date_max'])
 else:
-    start_date = backtest_timeframe.date_input('Begin date', value = dt(2017,1,1), min_value = dt(2011,1,1), max_value = datetime.today() - timedelta(days = 1))
+    start_date = backtest_timeframe.date_input('Begin date', value = dt(2021,1,1), min_value = dt(2011,1,1), max_value = datetime.today() - timedelta(days = 1))
     end_date = backtest_timeframe.date_input('End date', value = datetime.today() - timedelta(days = 1), min_value = dt(2011,1,1), max_value = datetime.today() - timedelta(days = 1))
 
 
