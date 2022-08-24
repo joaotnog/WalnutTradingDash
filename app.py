@@ -67,12 +67,12 @@ else:
     end_date = backtest_timeframe.date_input('End date', value = datetime.today() - timedelta(days = 1), min_value = dt(2011,1,1), max_value = datetime.today() - timedelta(days = 1))
 
 
-# data = get_historical_prices(ticker)
-# data = data[(data.index>=start_date)&(data.index<=end_date)]
-data = pd.read_csv('artifacts/data_sample.csv')
-data['Date'] = data.Date.astype('datetime64[ns]').dt.date
-data = data.set_index('Date')
+data = get_historical_prices(ticker)
 data = data[(data.index>=start_date)&(data.index<=end_date)]
+# data = pd.read_csv('artifacts/data_sample.csv')
+# data['Date'] = data.Date.astype('datetime64[ns]').dt.date
+# data = data.set_index('Date')
+# data = data[(data.index>=start_date)&(data.index<=end_date)]
    
 
 ta_function = eval(map_tech2fun[indicator])
@@ -91,8 +91,8 @@ if (cf_bt == True) and \
     ((free_plan==False) \
          or \
     ((ticker in free_plan_list['cryptos']) and (indicator in free_plan_list['technicals']))):
-    backtestdata = get_historical_prices(ticker)
-    backtestdata = backtestdata[(backtestdata.index>=start_date)&(backtestdata.index<=end_date)]    
+    backtestdata = data.copy()
+   
     if entry_comparator == 'is lower than' and exit_comparator == 'is lower than':
         buy_price, sell_price, strategy_signals = crossingdown_crossingdown(backtestdata, entry_data1, entry_data2, exit_data1, exit_data2)
     elif entry_comparator == 'is lower than' and exit_comparator == 'is higher than':
