@@ -142,22 +142,7 @@ map_crypto2code = {value:key for key, value in map_code2crypto.items()}
 # implement_mfi= 'Money Flow Index (MFI)'    
 # )
 
-tech_available = ['MOM (Momentum Indicator)',
-              # 'SMA (Simple Moving Average)',
-              'STOCH (Stochastic Oscillator)',
-              'EMA (Exponential Moving Average)',
-              'CMO (Chande Momentum Oscillator)',
-              'ADX (Average Directional Movement Index)',
-              'ATR (Average True Range)',
-              'AROON (Aroon Oscillator)',
-              'PSAR (Parabolic Stop and Reverse)',
-              'RSI (Relative Strength Index)',
-              'MACD (Moving Average Convergence Divergence)',
-              'BBANDS (Bollinger Bands)',
-              'TRIX (Triple Exponential)',
-              'MFI (Money Flow Index)']
-tech_available.sort()
-tech_available = ['SMA (Simple Moving Average)'] + tech_available
+
 
 map_func2tech = dict(
 implement_simple_moving_average= 'SMA (Simple Moving Average)',    

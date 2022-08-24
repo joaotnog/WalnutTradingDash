@@ -3009,7 +3009,7 @@ def implement_rsi(num_stream, data, start_date, end_date):
         entry_input_2 = inputs2[0] #entry_input_2 = entry_condition_inputs.selectbox('INDICATOR', inputs2, key = 'rsi_entry_input2')
 
         if entry_input_2 == 'Number':
-            entry_data2 = entry_condition_inputs.number_input('', value = 15, min_value = 0, 
+            entry_data2 = entry_condition_inputs.number_input('', value = 35, min_value = 0, 
                                                               max_value = 100, key = 'number1')
         else:
             pass
@@ -3329,7 +3329,7 @@ def implement_stochrsi_fastk(num_stream, data, start_date, end_date):
         entry_input_2 = inputs2[0] #entry_input_2 = entry_condition_inputs.selectbox('INDICATOR', inputs2, key = 'stochrsifk_entry_input2')
 
         if entry_input_2 == 'Number':
-            entry_data2 = entry_condition_inputs.number_input('', value = 15, min_value = 0, 
+            entry_data2 = entry_condition_inputs.number_input('', value = 30, min_value = 0, 
                                                               max_value = 100, key = 'number1')
         else:
             pass
