@@ -91,7 +91,8 @@ if (cf_bt == True) and \
     ((free_plan==False) \
          or \
     ((ticker in free_plan_list['cryptos']) and (indicator in free_plan_list['technicals']))):
-    backtestdata = data.copy()
+    backtestdata = get_historical_prices(ticker)
+    backtestdata = backtestdata[(backtestdata.index>=start_date)&(backtestdata.index<=end_date)]    
     if entry_comparator == 'is lower than' and exit_comparator == 'is lower than':
         buy_price, sell_price, strategy_signals = crossingdown_crossingdown(backtestdata, entry_data1, entry_data2, exit_data1, exit_data2)
     elif entry_comparator == 'is lower than' and exit_comparator == 'is higher than':
