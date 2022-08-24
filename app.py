@@ -36,6 +36,7 @@ st.set_page_config(
                                     
 st.sidebar.title('WalnutTradingDash :chart_with_upwards_trend:')
 st.sidebar.caption('v 1.2.0')
+st.sidebar.caption(sys.argv[1]+' version')
 st.sidebar.caption(' ')
 
 cf_bt = st.sidebar.button('Run backtest', help='Simulate with the parameters belows')
