@@ -21,6 +21,8 @@ import plotly.figure_factory as ff
 import plotly.graph_objects as go
 import plotly.express as px
 
+sys.tracebacklimit = 0
+
 # sys.argv = ['','FREE']
 logo = Image.open('walnuttradingdash_logo2.png')
 
@@ -73,7 +75,7 @@ data = data[(data.index>=start_date)&(data.index<=end_date)]
 # data['Date'] = data.Date.astype('datetime64[ns]').dt.date
 # data = data.set_index('Date')
 # data = data[(data.index>=start_date)&(data.index<=end_date)]
-   
+data = data[data.Close!=0]   
 
 ta_function = eval(map_tech2fun[indicator])
 entry_comparator, exit_comparator, entry_data1, entry_data2, exit_data1, exit_data2 = ta_function(st, data, start_date, end_date)
@@ -237,9 +239,10 @@ if (cf_bt == True) and \
             else:
                 signal_values = [signal]*data_buysell.shape[0]
             data_buysell['Signal{}'.format(i+1)] = signal_values
+        data_buysell = data_buysell[['Date', 'BuyPrice', 'SellPrice', 'Signal1', 'Signal2', 'Signal3', 'Signal4']]
     
     
-        df = backtestdata.merge(data_buysell)        
+        df = backtestdata.reset_index().merge(data_buysell)        
         fig = go.Figure(data=[go.Candlestick(x=df['Date'],
                         open=df['Open'], high=df['High'],
                         low=df['Low'], close=df['Close'],
