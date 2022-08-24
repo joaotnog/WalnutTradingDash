@@ -56,7 +56,7 @@ symbol = st.sidebar.selectbox('', scripts)
 ticker = map_crypto2code[symbol]
 
 st.sidebar.header('Using the technical indicator')    
-indicator = st.sidebar.selectbox('', list(map_tech2fun.keys()))
+indicator = st.sidebar.selectbox('', tech_available)
 
 st.sidebar.header('During the time interval')
 if free_plan: 
@@ -184,7 +184,7 @@ if (cf_bt == True) and \
     key_visuals.title('Backtesting performance results')
     
     strat_percentage, bh_percentage, variance_metric, sharpe_ratio, sortino_metric = st.columns(5)
-    bh_percentage = bh_percentage.metric(label = symbol + ' Performance', value = f'{round(bh_returns_per*100,1)}%', delta = '0%')    
+    bh_percentage = bh_percentage.metric(label = symbol + ' Performance', value = f'{round(bh_returns_per*100,1)}%')    
     strat_percentage = strat_percentage.metric(label = 'Strategy Performance', value = f'{round(strategy_returns_per*100,1)}%', delta=f'{round(strat_percentage_delta*100,1)}%')
     sharpe_ratio = sharpe_ratio.metric(label = 'Sharpe Ratio', value = f'{round(sharpe,2)}', delta=f'{round(sharpe_delta,2)}')
     # md = md.metric(label = 'Maximum Drawdown', value = f'{round(max_drawdown,2)}%')

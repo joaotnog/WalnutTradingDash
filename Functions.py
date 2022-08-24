@@ -514,7 +514,7 @@ def implement_normalized_average_true_range(num_stream, data, start_date, end_da
 def implement_average_directional_index(num_stream, data, start_date, end_date):
     
         inputs1 = ['Average Directional Index (ADX)']
-        inputs2 = ['+DI, Positive Directional Index', '-DI, Negative Directional Index', 'Average Directional Index (ADX)', 'Number']
+        inputs2 = ['Average Directional Index (ADX)', '+DI, Positive Directional Index', '-DI, Negative Directional Index', 'Number']
         entry_conditions = ['is lower than', 'is higher than' ]
         exit_conditions = ['is higher than', 'is lower than' ]
 
@@ -529,7 +529,7 @@ def implement_average_directional_index(num_stream, data, start_date, end_date):
 
         if entry_input_1 == 'Average Directional Index (ADX)':
             period, offset = entry_condition_inputs.columns(2) 
-            period = int(period.slider('x days indicator', value = 14, key = 'adx_entry_period1'))
+            period = int(period.slider('x days indicator', value = 7, key = 'adx_entry_period1'))
             offset=0 #offset = int(offset.text_input('Offset (Optional)', value = 0, key = 'adx_entry_offset1'))
             entry_data1 = ta.adx(high = data.High, low = data.Low, close = data.Close, 
                                  length = period, offset = offset).iloc[:,0]
@@ -567,7 +567,7 @@ def implement_average_directional_index(num_stream, data, start_date, end_date):
             entry_data2.index = pd.to_datetime(entry_data1.index)
         elif entry_input_2 == 'Average Directional Index (ADX)':
             period, offset = entry_condition_inputs.columns(2) 
-            period = int(period.slider('x days indicator', value = 14, key = 'adx_entry_period2'))
+            period = int(period.slider('x days indicator', value = 21, key = 'adx_entry_period2'))
             offset=0 #offset = int(offset.text_input('Offset (Optional)', value = 0, key = 'adx_entry_offset2'))
             entry_data2 = ta.adx(high = data.High, low = data.Low, close = data.Close, 
                                  length = period, offset = offset).iloc[:,0]
@@ -590,7 +590,7 @@ def implement_average_directional_index(num_stream, data, start_date, end_date):
 
         if exit_input_1 == 'Average Directional Index (ADX)':
             period, offset = exit_condition_inputs.columns(2) 
-            period = int(period.slider('x days indicator', value = 14, key = 'adx_exit_period1'))
+            period = int(period.slider('x days indicator', value = 12, key = 'adx_exit_period1'))
             offset=0 #offset = int(offset.text_input('Offset (Optional)', value = 0, key = 'adx_exit_offset1'))
             exit_data1 = ta.adx(high = data.High, low = data.Low, close = data.Close, 
                                  length = period, offset = offset).iloc[:,0]
@@ -628,7 +628,7 @@ def implement_average_directional_index(num_stream, data, start_date, end_date):
             exit_data2.index = pd.to_datetime(exit_data1.index)
         elif exit_input_2 == 'Average Directional Index (ADX)':
             period, offset = exit_condition_inputs.columns(2) 
-            period = int(period.slider('x days indicator', value = 14, key = 'adx_exit_period2'))
+            period = int(period.slider('x days indicator', value = 24, key = 'adx_exit_period2'))
             offset=0 #offset = int(offset.text_input('Offset (Optional)', value = 0, key = 'adx_exit_offset2'))
             exit_data2 = ta.adx(high = data.High, low = data.Low, close = data.Close, 
                                  length = period, offset = offset).iloc[:,0]
@@ -972,7 +972,7 @@ def implement_weighted_moving_average(num_stream, data, start_date, end_date):
 def implement_momentum_indicator(num_stream, data, start_date, end_date):
     
         inputs1 = ['Momentum Indicator (MOM)']
-        inputs2 = ['Number', 'Momentum Indicator (MOM)']
+        inputs2 = ['Momentum Indicator (MOM)', 'Number']
         entry_conditions = ['is lower than', 'is higher than' ]
         exit_conditions = ['is higher than', 'is lower than' ]
 
@@ -987,7 +987,7 @@ def implement_momentum_indicator(num_stream, data, start_date, end_date):
 
         if entry_input_1 == 'Momentum Indicator (MOM)':
             period, offset = entry_condition_inputs.columns(2)
-            period = int(period.slider('x days indicator', value = 14, key = 'mom_entry_period1'))
+            period = int(period.slider('x days indicator', value = 7, key = 'mom_entry_period1'))
             offset=0 #offset = int(offset.text_input('Offset (Optional)', value = 0, key = 'mom_entry_offset1'))
             entry_data1 = ta.mom(data.Close, length = period, offset = offset)
             entry_data1.index = entry_data1.index.astype(str)
@@ -1006,7 +1006,7 @@ def implement_momentum_indicator(num_stream, data, start_date, end_date):
 
         if entry_input_2 == 'Momentum Indicator (MOM)':
             period, offset = entry_condition_inputs.columns(2)
-            period = int(period.slider('x days indicator', value = 14, key = 'mom_entry_period2'))
+            period = int(period.slider('x days indicator', value = 21, key = 'mom_entry_period2'))
             offset=0 #offset = int(offset.text_input('Offset (Optional)', value = 0, key = 'mom_entry_offset2'))
             entry_data2 = ta.mom(data.Close, length = period, offset = offset)
             entry_data2.index = entry_data2.index.astype(str)
@@ -1028,7 +1028,7 @@ def implement_momentum_indicator(num_stream, data, start_date, end_date):
 
         if exit_input_1 == 'Momentum Indicator (MOM)':
             period, offset = exit_condition_inputs.columns(2)
-            period = int(period.slider('x days indicator', value = 14, key = 'mom_exit_period1'))
+            period = int(period.slider('x days indicator', value = 20, key = 'mom_exit_period1'))
             offset=0 #offset = int(offset.text_input('Offset (Optional)', value = 0, key = 'mom_exit_offset1'))
             exit_data1 = ta.mom(data.Close, length = period, offset = offset)
             exit_data1.index = exit_data1.index.astype(str)
@@ -1047,7 +1047,7 @@ def implement_momentum_indicator(num_stream, data, start_date, end_date):
 
         if exit_input_2 == 'Momentum Indicator (MOM)':
             period, offset = exit_condition_inputs.columns(2)
-            period = int(period.slider('x days indicator', value = 14, key = 'mom_exit_period2'))
+            period = int(period.slider('x days indicator', value = 30, key = 'mom_exit_period2'))
             offset=0 #offset = int(offset.text_input('Offset (Optional)', value = 0, key = 'mom_exit_offset'))
             exit_data2 = ta.mom(data.Close, length = period, offset = offset)
             exit_data2.index = exit_data2.index.astype(str)
@@ -1186,7 +1186,7 @@ def implement_vortex_indicator(num_stream, data, start_date, end_date):
 def implement_chande_momentum_oscillator(num_stream, data, start_date, end_date):
 
         inputs1 = ['Chande Momentum Oscillator (CMO)']
-        inputs2 = ['Number', 'Chande Momentum Oscillator (CMO)']
+        inputs2 = ['Chande Momentum Oscillator (CMO)', 'Number']
         entry_conditions = ['is lower than', 'is higher than' ]
         exit_conditions = ['is higher than', 'is lower than' ]
 
@@ -1201,7 +1201,7 @@ def implement_chande_momentum_oscillator(num_stream, data, start_date, end_date)
 
         if entry_input_1 == 'Chande Momentum Oscillator (CMO)':
             period, offset = entry_condition_inputs.columns(2)
-            period = int(period.slider('x days indicator', value = 9, key = 'cmo_entry_period1'))
+            period = int(period.slider('x days indicator', value = 7, key = 'cmo_entry_period1'))
             offset=0 #offset = int(offset.text_input('Offset (Optional)', value = 0, key = 'cmo_entry_offset1'))
             entry_data1 = ta.cmo(data.Close, length = period, offset = offset)
             entry_data1.index = entry_data1.index.astype(str)
@@ -1220,7 +1220,7 @@ def implement_chande_momentum_oscillator(num_stream, data, start_date, end_date)
 
         if entry_input_2 == 'Chande Momentum Oscillator (CMO)':
             period, offset = entry_condition_inputs.columns(2)
-            period = int(period.slider('x days indicator', value = 9, key = 'cmo_entry_period2'))
+            period = int(period.slider('x days indicator', value = 14, key = 'cmo_entry_period2'))
             offset=0 #offset = int(offset.text_input('Offset (Optional)', value = 0, key = 'cmo_entry_offset2'))
             entry_data2 = ta.cmo(data.Close, length = period, offset = offset)
             entry_data2.index = entry_data2.index.astype(str)
@@ -1242,7 +1242,7 @@ def implement_chande_momentum_oscillator(num_stream, data, start_date, end_date)
 
         if exit_input_1 == 'Chande Momentum Oscillator (CMO)':
             period, offset = exit_condition_inputs.columns(2)
-            period = int(period.slider('x days indicator', value = 9, key = 'cmo_exit_period1'))
+            period = int(period.slider('x days indicator', value = 20, key = 'cmo_exit_period1'))
             offset=0 #offset = int(offset.text_input('Offset (Optional)', value = 0, key = 'cmo_exit_offset1'))
             exit_data1 = ta.cmo(data.Close, length = period, offset = offset)
             exit_data1.index = exit_data1.index.astype(str)
@@ -1261,7 +1261,7 @@ def implement_chande_momentum_oscillator(num_stream, data, start_date, end_date)
 
         if exit_input_2 == 'Chande Momentum Oscillator (CMO)':
             period, offset = exit_condition_inputs.columns(2)
-            period = int(period.slider('x days indicator', value = 9, key = 'cmo_exit_period2'))
+            period = int(period.slider('x days indicator', value = 30, key = 'cmo_exit_period2'))
             offset=0 #offset = int(offset.text_input('Offset (Optional)', value = 0, key = 'cmo_exit_offset'))
             exit_data2 = ta.cmo(data.Close, length = period, offset = offset)
             exit_data2.index = exit_data2.index.astype(str)
@@ -1292,7 +1292,7 @@ def implement_exponential_moving_average(num_stream, data, start_date, end_date)
 
         if entry_input_1 == 'Exponential Moving Average (EMA)':
             period, offset = entry_condition_inputs.columns(2)
-            period = int(period.slider('x days indicator', value = 21, key = 'ema_entry_period1'))
+            period = int(period.slider('x days indicator', value = 7, key = 'ema_entry_period1'))
             offset=0 #offset = int(offset.text_input('Offset (Optional)', value = 0, key = 'offset0'))
             entry_data1 = ta.ema(data.Close, length = period, offset = offset)
             entry_data1.index = entry_data1.index.astype(str)
@@ -1311,7 +1311,7 @@ def implement_exponential_moving_average(num_stream, data, start_date, end_date)
 
         if entry_input_2 == 'Exponential Moving Average (EMA)':
             period, offset = entry_condition_inputs.columns(2)
-            period = int(period.slider('x days indicator', value = 50, key = 'ema_entry_period2'))
+            period = int(period.slider('x days indicator', value = 14, key = 'ema_entry_period2'))
             offset=0 #offset = int(offset.text_input('Offset (Optional)', value = 0, key = 'offset1'))
             entry_data2 = ta.ema(data.Close, length = period, offset = offset)
             entry_data2.index = entry_data2.index.astype(str)
@@ -1376,7 +1376,7 @@ def implement_exponential_moving_average(num_stream, data, start_date, end_date)
 
         if exit_input_1 == 'Exponential Moving Average (EMA)':
             period, offset = exit_condition_inputs.columns(2)
-            period = int(period.slider('x days indicator', value = 21, key = 'ema_exit_period1'))
+            period = int(period.slider('x days indicator', value = 14, key = 'ema_exit_period1'))
             offset=0 #offset = int(offset.text_input('Offset (Optional)', value = 0, key = 'exit_offset'))
             exit_data1 = ta.ema(data.Close, length = period, offset = offset)
             exit_data1.index = exit_data1.index.astype(str)
@@ -1395,7 +1395,7 @@ def implement_exponential_moving_average(num_stream, data, start_date, end_date)
 
         if exit_input_2 == 'Exponential Moving Average (EMA)':
             period, offset = exit_condition_inputs.columns(2)
-            period = int(period.slider('x days indicator', value = 50, key = 'ema_exit_period2'))
+            period = int(period.slider('x days indicator', value = 21, key = 'ema_exit_period2'))
             offset=0 #offset = int(offset.text_input('Offset (Optional)', value = 0, key = 'offset2'))
             exit_data2 = ta.ema(data.Close, length = period, offset = offset)
             exit_data2.index = exit_data2.index.astype(str)
@@ -1823,7 +1823,7 @@ def implement_simple_moving_average(num_stream, data, start_date, end_date):
 
         if entry_input_1 == 'Simple Moving Average (SMA)':
             period, offset = entry_condition_inputs.columns(2)
-            period = int(period.slider('x days indicator', value = 12, key = 'sma_entry_period1'))
+            period = int(period.slider('x days indicator', value = 10, key = 'sma_entry_period1'))
             offset=0 #offset = int(offset.text_input('Offset (Optional)', value = 0, key = 'offset0'))
             entry_data1 = ta.sma(data.Close, length = period, offset = offset)
             entry_data1.index = entry_data1.index.astype(str)
@@ -1842,7 +1842,7 @@ def implement_simple_moving_average(num_stream, data, start_date, end_date):
 
         if entry_input_2 == 'Simple Moving Average (SMA)':
             period, offset = entry_condition_inputs.columns(2)
-            period = int(period.slider('x days indicator', value = 26, key = 'sma_entry_period2'))
+            period = int(period.slider('x days indicator', value = 17, key = 'sma_entry_period2'))
             offset=0 #offset = int(offset.text_input('Offset (Optional)', value = 0, key = 'offset1'))
             entry_data2 = ta.sma(data.Close, length = period, offset = offset)
             entry_data2.index = entry_data2.index.astype(str)
@@ -1907,7 +1907,7 @@ def implement_simple_moving_average(num_stream, data, start_date, end_date):
 
         if exit_input_1 == 'Simple Moving Average (SMA)':
             period, offset = exit_condition_inputs.columns(2)
-            period = int(period.slider('x days indicator', value = 12, key = 'sma_exit_period1'))
+            period = int(period.slider('x days indicator', value = 20, key = 'sma_exit_period1'))
             offset=0 #offset = int(offset.text_input('Offset (Optional)', value = 0, key = 'exit_offset'))
             exit_data1 = ta.sma(data.Close, length = period)
             exit_data1.index = exit_data1.index.astype(str)
@@ -1926,7 +1926,7 @@ def implement_simple_moving_average(num_stream, data, start_date, end_date):
 
         if exit_input_2 == 'Simple Moving Average (SMA)':
             period, offset = exit_condition_inputs.columns(2)
-            period = int(period.slider('x days indicator', value = 26, key = 'sma_exit_period2'))
+            period = int(period.slider('x days indicator', value = 30, key = 'sma_exit_period2'))
             offset=0 #offset = int(offset.text_input('Offset (Optional)', value = 0, key = 'offset2'))
             exit_data2 = ta.sma(data.Close, length = period, offset = offset)
             exit_data2.index = exit_data2.index.astype(str)
@@ -2466,7 +2466,7 @@ def implement_average_true_range(num_stream, data, start_date, end_date):
 
         if entry_input_1 == 'Average True Range (ATR)':
             period, offset = entry_condition_inputs.columns(2)
-            period = int(period.slider('x days indicator', value = 14, key = 'atr_entry_period1'))
+            period = int(period.slider('x days indicator', value = 7, key = 'atr_entry_period1'))
             offset=0 #offset = int(offset.text_input('Offset (Optional)', value = 0, key = 'atr_entry_offset1'))
             entry_data1 = ta.atr(high = data.High, low = data.Low, close = data.Close, length = period, offset = offset)
             entry_data1.index = entry_data1.index.astype(str)
@@ -2485,7 +2485,7 @@ def implement_average_true_range(num_stream, data, start_date, end_date):
 
         if entry_input_2 == 'Average True Range (ATR)':
             period, offset = entry_condition_inputs.columns(2)
-            period = int(period.slider('x days indicator', value = 25, key = 'atr_entry_period2'))
+            period = int(period.slider('x days indicator', value = 14, key = 'atr_entry_period2'))
             offset=0 #offset = int(offset.text_input('Offset (Optional)', value = 0, key = 'atr_entry_offset2'))
             entry_data2 = ta.atr(high = data.High, low = data.Low, close = data.Close, length = period, offset = offset)
             entry_data2.index = entry_data2.index.astype(str)
@@ -2522,7 +2522,7 @@ def implement_average_true_range(num_stream, data, start_date, end_date):
 
         if exit_input_1 == 'Average True Range (ATR)':
             period, offset = exit_condition_inputs.columns(2)
-            period = int(period.slider('x days indicator', value = 14, key = 'atr_exit_period1'))
+            period = int(period.slider('x days indicator', value = 20, key = 'atr_exit_period1'))
             offset=0 #offset = int(offset.text_input('Offset (Optional)', value = 0, key = 'atr_exit_offset1'))
             exit_data1 = ta.atr(high = data.High, low = data.Low, close = data.Close, length = period, offset = offset)
             exit_data1.index = exit_data1.index.astype(str)
@@ -2541,7 +2541,7 @@ def implement_average_true_range(num_stream, data, start_date, end_date):
 
         if exit_input_2 == 'Average True Range (ATR)':
             period, offset = exit_condition_inputs.columns(2)
-            period = int(period.slider('x days indicator', value = 25, key = 'atr_exit_period2'))
+            period = int(period.slider('x days indicator', value = 30, key = 'atr_exit_period2'))
             offset=0 #offset = int(offset.text_input('Offset (Optional)', value = 0, key = 'atr_exit_offset2'))
             exit_data2 = ta.atr(high = data.High, low = data.Low, close = data.Close, length = period, offset = offset)
             exit_data2.index = exit_data2.index.astype(str)
@@ -2664,8 +2664,8 @@ def implement_parabolic_sar(num_stream, data, start_date, end_date):
 
         if entry_input_1 == 'Parabolic SAR':
             min_af, max_af = entry_condition_inputs.columns(2)
-            min_af=0.02 #min_af = float(min_af.text_input('Min AF', value = 0.02, key = 'psar_entry_af1'))
-            max_af=0.2 #max_af = float(max_af.text_input('Max AF', value = 0.2, key = 'psar_entry_maxaf1'))
+            min_af=0.1 #min_af = float(min_af.text_input('Min AF', value = 0.02, key = 'psar_entry_af1'))
+            max_af=0.3 #max_af = float(max_af.text_input('Max AF', value = 0.2, key = 'psar_entry_maxaf1'))
             entry_data1 = get_psar(high = data.High, low = data.Low, close = data.Close, af = min_af, max_af = max_af)
             entry_data1.index = entry_data1.index.astype(str)
             entry_data1 = entry_data1[entry_data1.index >= str(start_date)]
@@ -2683,8 +2683,8 @@ def implement_parabolic_sar(num_stream, data, start_date, end_date):
 
         if entry_input_2 == 'Parabolic SAR':
             min_af, max_af = entry_condition_inputs.columns(2)
-            min_af='0.02' #min_af = float(min_af.text_input('Min AF', value = '0.02', key = 'psar_entry_af2'))
-            max_af='0.2' #max_af = float(max_af.text_input('Max AF', value = '0.2', key = 'psar_entry_maxaf2'))
+            min_af='0.1' #min_af = float(min_af.text_input('Min AF', value = '0.02', key = 'psar_entry_af2'))
+            max_af='0.5' #max_af = float(max_af.text_input('Max AF', value = '0.2', key = 'psar_entry_maxaf2'))
             entry_data2 = get_psar(high = data.High, low = data.Low, close = data.Close, af = min_af, max_af = max_af)
             entry_data2.index = entry_data2.index.astype(str)
             entry_data2 = entry_data2[entry_data2.index >= str(start_date)]
@@ -2708,8 +2708,8 @@ def implement_parabolic_sar(num_stream, data, start_date, end_date):
 
         if exit_input_1 == 'Parabolic SAR':
             min_af, max_af = exit_condition_inputs.columns(2)
-            min_af=0.02 #min_af = float(min_af.text_input('Min AF', value = 0.02, key = 'psar_exit_af1'))
-            max_af=0.2 #max_af = float(max_af.text_input('Max AF', value = 0.2, key = 'psar_exit_maxaf1'))
+            min_af=0.1 #min_af = float(min_af.text_input('Min AF', value = 0.02, key = 'psar_exit_af1'))
+            max_af=0.5 #max_af = float(max_af.text_input('Max AF', value = 0.2, key = 'psar_exit_maxaf1'))
             exit_data1 = get_psar(high = data.High, low = data.Low, close = data.Close, af = min_af, max_af = max_af)
             exit_data1.index = exit_data1.index.astype(str)
             exit_data1 = exit_data1[exit_data1.index >= str(start_date)]
@@ -2727,8 +2727,8 @@ def implement_parabolic_sar(num_stream, data, start_date, end_date):
 
         if exit_input_2 == 'Parabolic SAR':
             min_af, max_af = exit_condition_inputs.columns(2)
-            min_af=0.02 #min_af = float(min_af.text_input('Min AF', value = 0.02, key = 'psar_exit_af2'))
-            max_af=0.2 #max_af = float(max_af.text_input('Max AF', value = 0.2, key = 'psar_exit_maxaf2'))
+            min_af=0.1 #min_af = float(min_af.text_input('Min AF', value = 0.02, key = 'psar_exit_af2'))
+            max_af=0.5 #max_af = float(max_af.text_input('Max AF', value = 0.2, key = 'psar_exit_maxaf2'))
             exit_data2 = get_psar(high = data.High, low = data.Low, close = data.Close, af = min_af, max_af = max_af)
             exit_data2.index = exit_data2.index.astype(str)
             exit_data2 = exit_data2[exit_data2.index >= str(start_date)]
@@ -2991,7 +2991,7 @@ def implement_rsi(num_stream, data, start_date, end_date):
 
         if entry_input_1 == 'Relative Strength Index (RSI)':
             period, offset = entry_condition_inputs.columns(2)
-            period = int(period.slider('x days indicator', value = 14, key = 'rsi_entry_period1'))
+            period = int(period.slider('x days indicator', value = 7, key = 'rsi_entry_period1'))
             offset=0 #offset = int(offset.text_input('Offset (Optional)', value = 0, key = 'rsi_entry_offset1'))
             entry_data1 = ta.rsi(high = data.High, low = data.Low, close = data.Close, length = period, offset = offset)
             entry_data1.index = entry_data1.index.astype(str)
@@ -3009,7 +3009,7 @@ def implement_rsi(num_stream, data, start_date, end_date):
         entry_input_2 = inputs2[0] #entry_input_2 = entry_condition_inputs.selectbox('INDICATOR', inputs2, key = 'rsi_entry_input2')
 
         if entry_input_2 == 'Number':
-            entry_data2 = entry_condition_inputs.number_input('', value = 30, min_value = 0, 
+            entry_data2 = entry_condition_inputs.number_input('', value = 15, min_value = 0, 
                                                               max_value = 100, key = 'number1')
         else:
             pass
@@ -3025,7 +3025,7 @@ def implement_rsi(num_stream, data, start_date, end_date):
 
         if exit_input_1 == 'Relative Strength Index (RSI)':
             period, offset = exit_condition_inputs.columns(2)
-            period = int(period.slider('x days indicator', value = 14, key = 'rsi_exit_period1'))
+            period = int(period.slider('x days indicator', value = 21, key = 'rsi_exit_period1'))
             offset=0 #offset = int(offset.text_input('Offset (Optional)', value = 0, key = 'rsi_exit_offset1'))
             exit_data1 = ta.rsi(high = data.High, low = data.Low, close = data.Close, length = period, offset = offset)
             exit_data1.index = exit_data1.index.astype(str)
@@ -3043,7 +3043,7 @@ def implement_rsi(num_stream, data, start_date, end_date):
         exit_input_2 = inputs2[0] #exit_input_2 = exit_condition_inputs.selectbox('INDICATOR', inputs2, key = 'rsi_exit_input2')
 
         if exit_input_2 == 'Number':
-            exit_data2 = exit_condition_inputs.number_input('', value = 70, min_value = 0, 
+            exit_data2 = exit_condition_inputs.number_input('', value = 30, min_value = 0, 
                                                               max_value = 100, key = 'number2')
         else:
             pass
@@ -3309,7 +3309,7 @@ def implement_stochrsi_fastk(num_stream, data, start_date, end_date):
         if entry_input_1 == 'Stochastic RSI FastK':
             rsi_period, k_period = entry_condition_inputs.columns(2)
             matype, offset = entry_condition_inputs.columns(2)
-            rsi_period = int(rsi_period.slider('x days indicator', value = 14, key = 'stochrsifk_entry_rp1'))
+            rsi_period = int(rsi_period.slider('x days indicator', value = 7, key = 'stochrsifk_entry_rp1'))
             k_period=3 #k_period = int(k_period.text_input('K Period', value = 3, key = 'stochrsifk_entry_kp1'))
             matype='sma' #matype = matype.selectbox('MA Type', mas, key = 'stochrsifk_entry_matype1')
             offset=0 #offset = int(offset.text_input('Offset (Optional)', value = 0, key = 'stochrsifk_entry_offset1'))
@@ -3329,7 +3329,7 @@ def implement_stochrsi_fastk(num_stream, data, start_date, end_date):
         entry_input_2 = inputs2[0] #entry_input_2 = entry_condition_inputs.selectbox('INDICATOR', inputs2, key = 'stochrsifk_entry_input2')
 
         if entry_input_2 == 'Number':
-            entry_data2 = entry_condition_inputs.number_input('', value = 30, min_value = 0, 
+            entry_data2 = entry_condition_inputs.number_input('', value = 15, min_value = 0, 
                                                               max_value = 100, key = 'number1')
         else:
             pass
@@ -3346,7 +3346,7 @@ def implement_stochrsi_fastk(num_stream, data, start_date, end_date):
         if exit_input_1 == 'Stochastic RSI FastK':
             rsi_period, k_period = exit_condition_inputs.columns(2)
             matype, offset = exit_condition_inputs.columns(2)
-            rsi_period = int(rsi_period.slider('x days indicator', value = 14, key = 'stochrsifk_exit_rp1'))
+            rsi_period = int(rsi_period.slider('x days indicator', value = 20, key = 'stochrsifk_exit_rp1'))
             k_period=3 #k_period = int(k_period.text_input('K Period', value = 3, key = 'stochrsifk_exit_kp1'))
             matype='sma' #matype = matype.selectbox('MA Type', mas, key = 'stochrsifk_exit_matype1')
             offset=0 #offset = int(offset.text_input('Offset (Optional)', value = 0, key = 'stochrsifk_exit_offset1'))
@@ -3366,7 +3366,7 @@ def implement_stochrsi_fastk(num_stream, data, start_date, end_date):
         exit_input_2 = inputs2[0] #exit_input_2 = exit_condition_inputs.selectbox('INDICATOR', inputs2, key = 'stochrsifk_exit_input2')
 
         if exit_input_2 == 'Number':
-            exit_data2 = exit_condition_inputs.number_input('', value = 70, min_value = 0, 
+            exit_data2 = exit_condition_inputs.number_input('', value = 30, min_value = 0, 
                                                               max_value = 100, key = 'number2')
         else:
             pass
@@ -3546,7 +3546,7 @@ def implement_ultimate_oscillator(num_stream, data, start_date, end_date):
 def implement_aroon_up(num_stream, data, start_date, end_date):
 
         inputs1 = ['Aroon Up']
-        inputs2 = ['Aroon Down', 'Aroon Up', 'Number']
+        inputs2 = ['Aroon Up', 'Aroon Down', 'Number']
         entry_conditions = ['is higher than', 'is lower than' ]
         exit_conditions = ['is lower than', 'is higher than' ]
 
@@ -3561,7 +3561,7 @@ def implement_aroon_up(num_stream, data, start_date, end_date):
 
         if entry_input_1 == 'Aroon Up':
             period, offset = entry_condition_inputs.columns(2)
-            period = int(period.slider('x days indicator', value = 40, key = 'aroonu_entry_period1'))
+            period = int(period.slider('x days indicator', value = 7, key = 'aroonu_entry_period1'))
             offset=0 #offset = int(offset.text_input('Offset (Optional)', value = 0, key = 'aroonu_entry_offset1'))
             entry_data1 = ta.aroon(data.High, data.Low, length = period, offset = offset).iloc[:,1]
             entry_data1.index = entry_data1.index.astype(str)
@@ -3582,7 +3582,7 @@ def implement_aroon_up(num_stream, data, start_date, end_date):
             entry_data2 = entry_condition_inputs.number_input('', min_value = 0, value = 0, key = 'number1')
         elif entry_input_2 == 'Aroon Up':
             period, offset = entry_condition_inputs.columns(2)
-            period = int(period.slider('x days indicator', value = 40, key = 'aroonu_entry_period2'))
+            period = int(period.slider('x days indicator', value = 16, key = 'aroonu_entry_period2'))
             offset=0 #offset = int(offset.text_input('Offset (Optional)', value = 0, key = 'aroonu_entry_offset2'))
             entry_data2 = ta.aroon(data.High, data.Low, length = period, offset = offset).iloc[:,1]
             entry_data2.index = entry_data2.index.astype(str)
@@ -3610,7 +3610,7 @@ def implement_aroon_up(num_stream, data, start_date, end_date):
 
         if exit_input_1 == 'Aroon Up':
             period, offset = exit_condition_inputs.columns(2)
-            period = int(period.slider('x days indicator', value = 40, key = 'aroonu_exit_period1'))
+            period = int(period.slider('x days indicator', value = 14, key = 'aroonu_exit_period1'))
             offset=0 #offset = int(offset.text_input('Offset (Optional)', value = 0, key = 'aroonu_exit_offset1'))
             exit_data1 = ta.aroon(data.High, data.Low, length = period, offset = offset).iloc[:,1]
             exit_data1.index = exit_data1.index.astype(str)
@@ -3631,7 +3631,7 @@ def implement_aroon_up(num_stream, data, start_date, end_date):
             exit_data2 = exit_condition_inputs.number_input('', min_value = 0, value = 0, key = 'number2')
         elif exit_input_2 == 'Aroon Up':
             period, offset = exit_condition_inputs.columns(2)
-            period = int(period.slider('x days indicator', value = 40, key = 'aroonu_exit_period2'))
+            period = int(period.slider('x days indicator', value = 21, key = 'aroonu_exit_period2'))
             offset=0 #offset = int(offset.text_input('Offset (Optional)', value = 0, key = 'aroonu_exit_offset2'))
             exit_data2 = ta.aroon(data.High, data.Low, length = period, offset = offset).iloc[:,1]
             exit_data2.index = exit_data2.index.astype(str)
@@ -3802,8 +3802,8 @@ def implement_trix(num_stream, data, start_date, end_date):
         if entry_input_1 == 'TRIX':
             period, signal = entry_condition_inputs.columns(2)
             scalar, offset = entry_condition_inputs.columns(2)
-            period=30 #period = int(period.text_input('Period', value = 30, key = 'trix_entry_p1'))
-            signal=9 #signal = int(signal.text_input('Signal', value = 9, key = 'trix_entry_s1'))
+            period=7 #period = int(period.text_input('Period', value = 30, key = 'trix_entry_p1'))
+            signal=10 #signal = int(signal.text_input('Signal', value = 9, key = 'trix_entry_s1'))
             scalar=100 #scalar = int(scalar.text_input('Scalar (Optional)', value = 100, key = 'trix_entry_sc1'))
             offset=0 #offset = int(offset.text_input('Offset (Optional)', value = 0, key = 'trix_entry_offset1'))
             entry_data1 = (ta.trix(close = data.Close, length = period, signal = signal, 
@@ -3823,7 +3823,7 @@ def implement_trix(num_stream, data, start_date, end_date):
         entry_input_2 = inputs2[0] #entry_input_2 = entry_condition_inputs.selectbox('INDICATOR', inputs2, key = 'trix_entry_input2')
 
         if entry_input_2 == 'Number':
-            entry_data2 = entry_condition_inputs.number_input('', value = 0, key = 'number1')
+            entry_data2 = entry_condition_inputs.number_input('', value = 15, key = 'number1')
         else:
             pass
         
@@ -3839,8 +3839,8 @@ def implement_trix(num_stream, data, start_date, end_date):
         if exit_input_1 == 'TRIX':
             period, signal = exit_condition_inputs.columns(2)
             scalar, offset = exit_condition_inputs.columns(2)
-            period=30 #period = int(period.text_input('Period', value = 30, key = 'trix_exit_p1'))
-            signal=9 #signal = int(signal.text_input('Signal', value = 9, key = 'trix_exit_s1'))
+            period=14 #period = int(period.text_input('Period', value = 30, key = 'trix_exit_p1'))
+            signal=8 #signal = int(signal.text_input('Signal', value = 9, key = 'trix_exit_s1'))
             scalar=100 #scalar = int(scalar.text_input('Scalar (Optional)', value = 100, key = 'trix_exit_sc1'))
             offset=0 #offset = int(offset.text_input('Offset (Optional)', value = 0, key = 'trix_exit_offset1'))
             exit_data1 = (ta.trix(close = data.Close, length = period, signal = signal, 
@@ -3860,7 +3860,7 @@ def implement_trix(num_stream, data, start_date, end_date):
         exit_input_2 = inputs2[0] #exit_input_2 = exit_condition_inputs.selectbox('INDICATOR', inputs2, key = 'trix_exit_input2')
 
         if exit_input_2 == 'Number':
-            exit_data2 = exit_condition_inputs.number_input('', value = 0, key = 'number2')
+            exit_data2 = exit_condition_inputs.number_input('', value = 30, key = 'number2')
         else:
             pass
         
@@ -3960,9 +3960,9 @@ def implement_macd(num_stream, data, start_date, end_date):
         if entry_input_1 == 'MACD':
             fast_ma, slow_ma = entry_condition_inputs.columns(2)
             signal_period, offset = entry_condition_inputs.columns(2)
-            fast_ma=12 #fast_ma = int(fast_ma.text_input('Fast MA', value = 12, key = 'macdl_entry_fast1'))
-            slow_ma=26 #slow_ma = int(slow_ma.text_input('Slow MA', value = 26, key = 'macdl_entry_slow1'))
-            signal_period=9 #signal_period = int(signal_period.text_input('Signal Period', value = 9, key = 'macdl_entry_signal1'))
+            fast_ma=7 #fast_ma = int(fast_ma.text_input('Fast MA', value = 12, key = 'macdl_entry_fast1'))
+            slow_ma=14 #slow_ma = int(slow_ma.text_input('Slow MA', value = 26, key = 'macdl_entry_slow1'))
+            signal_period=8 #signal_period = int(signal_period.text_input('Signal Period', value = 9, key = 'macdl_entry_signal1'))
             offset=0 #offset = int(offset.text_input('Offset', value = 0, key = 'macdl_entry_offset1'))
             entry_data1 = ta.macd(high = data.High, low = data.Low, close = data.Close, fast = fast_ma, slow = slow_ma, 
                                   signal = signal_period, offset = offset).iloc[:,0]
@@ -3983,9 +3983,9 @@ def implement_macd(num_stream, data, start_date, end_date):
         if entry_input_2 == 'MACD Signal':
             fast_ma, slow_ma = entry_condition_inputs.columns(2)
             signal_period, offset = entry_condition_inputs.columns(2)
-            fast_ma=12 #fast_ma = int(fast_ma.text_input('Fast MA', value = 12, key = 'macdl_entry_fast2'))
-            slow_ma=26 #slow_ma = int(slow_ma.text_input('Slow MA', value = 26, key = 'macdl_entry_slow2'))
-            signal_period=9 #signal_period = int(signal_period.text_input('Signal Period', value = 9, key = 'macdl_entry_signal2'))
+            fast_ma=14 #fast_ma = int(fast_ma.text_input('Fast MA', value = 12, key = 'macdl_entry_fast2'))
+            slow_ma=21 #slow_ma = int(slow_ma.text_input('Slow MA', value = 26, key = 'macdl_entry_slow2'))
+            signal_period=8 #signal_period = int(signal_period.text_input('Signal Period', value = 9, key = 'macdl_entry_signal2'))
             offset=0 #offset = int(offset.text_input('Offset (Optional)', value = 0, key = 'macdl_entry_offset2'))
             entry_data2 = ta.macd(high = data.High, low = data.Low, close = data.Close, fast = fast_ma, slow = slow_ma, 
                                   signal = signal_period, offset = offset).iloc[:,2]
@@ -4044,9 +4044,9 @@ def implement_macd(num_stream, data, start_date, end_date):
         if exit_input_2 == 'MACD Signal':
             fast_ma, slow_ma = exit_condition_inputs.columns(2)
             signal_period, offset = exit_condition_inputs.columns(2)
-            fast_ma=12 #fast_ma = int(fast_ma.text_input('Fast MA', value = 12, key = 'macdl_exit_fast2'))
-            slow_ma=26 #slow_ma = int(slow_ma.text_input('Slow MA', value = 26, key = 'macdl_exit_slow2'))
-            signal_period=9 #signal_period = int(signal_period.text_input('Signal Period', value = 9, key = 'macdl_exit_signal2'))
+            fast_ma=14 #fast_ma = int(fast_ma.text_input('Fast MA', value = 12, key = 'macdl_exit_fast2'))
+            slow_ma=28 #slow_ma = int(slow_ma.text_input('Slow MA', value = 26, key = 'macdl_exit_slow2'))
+            signal_period=8 #signal_period = int(signal_period.text_input('Signal Period', value = 9, key = 'macdl_exit_signal2'))
             offset=0 #offset = int(offset.text_input('Offset (Optional)', value = 0, key = 'macdl_exit_offset2'))
             exit_data2 = ta.macd(high = data.High, low = data.Low, close = data.Close, fast = fast_ma, slow = slow_ma, 
                                   signal = signal_period, offset = offset).iloc[:,2]
@@ -4173,7 +4173,7 @@ def implement_mfi(num_stream, data, start_date, end_date):
 
         if entry_input_1 == 'Money Flow Index (MFI)':
             period, offset = entry_condition_inputs.columns(2)
-            period = int(period.slider('x days indicator', value = 14, key = 'mfi_entry_period1'))
+            period = int(period.slider('x days indicator', value = 7, key = 'mfi_entry_period1'))
             offset=0 #offset = int(offset.text_input('Offset (Optional)', value = 0, key = 'mfi_entry_offset1'))
             entry_data1 = ta.mfi(high = data.High, low = data.Low, close = data.Close, 
                                  volume = data.Volume, length = period, offset = offset)
@@ -4192,7 +4192,7 @@ def implement_mfi(num_stream, data, start_date, end_date):
         entry_input_2 = inputs2[0] #entry_input_2 = entry_condition_inputs.selectbox('INDICATOR', inputs2, key = 'mfi_entry_input2')
 
         if entry_input_2 == 'Number':
-            entry_data2 = entry_condition_inputs.number_input('', value = 30, min_value = 0, 
+            entry_data2 = entry_condition_inputs.number_input('', value = 25, min_value = 0, 
                                                               max_value = 100, key = 'number1')
         else:
             pass
@@ -4208,7 +4208,7 @@ def implement_mfi(num_stream, data, start_date, end_date):
 
         if exit_input_1 == 'Money Flow Index (MFI)':
             period, offset = exit_condition_inputs.columns(2)
-            period = int(period.slider('x days indicator', value = 14, key = 'mfi_exit_period1'))
+            period = int(period.slider('x days indicator', value = 20, key = 'mfi_exit_period1'))
             offset=0 #offset = int(offset.text_input('Offset (Optional)', value = 0, key = 'mfi_exit_offset1'))
             exit_data1 = ta.mfi(high = data.High, low = data.Low, close = data.Close, 
                                  volume = data.Volume, length = period, offset = offset)
@@ -4227,7 +4227,7 @@ def implement_mfi(num_stream, data, start_date, end_date):
         exit_input_2 = inputs2[0] #exit_input_2 = exit_condition_inputs.selectbox('INDICATOR', inputs2, key = 'mfi_exit_input2')
 
         if exit_input_2 == 'Number':
-            exit_data2 = exit_condition_inputs.number_input('', value = 70, min_value = 0, 
+            exit_data2 = exit_condition_inputs.number_input('', value = 45, min_value = 0, 
                                                               max_value = 100, key = 'number2')
         else:
             pass
