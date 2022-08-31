@@ -6,6 +6,8 @@ import performanceanalytics.statistics as pas
 from scipy import stats
 import requests
 from datetime import datetime, date, timedelta
+import yfinance as yf
+
 
    
 
@@ -35,8 +37,11 @@ def prep_cryptocompare_data(raw_json):
   df = df.set_index('Date')
   return(df)
 
-def get_historical_prices(ticker):
-    df = prep_cryptocompare_data(get_cryptocompare_data([ticker], True, 0))  
+def get_historical_prices(ticker,asset_class):
+    if asset_class=='Crypto':
+        df = prep_cryptocompare_data(get_cryptocompare_data([ticker], True, 0))
+    if asset_class in ['Forex','Stocks']:
+        df = yf.download(ticker)
     return df
 
 def import_scripts():

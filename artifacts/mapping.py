@@ -1,3 +1,5 @@
+import pandas as pd
+
 map_code2crypto = dict(
 BTC='Bitcoin',
 ETH='Ethereum',
@@ -101,6 +103,16 @@ STORJ='Storj',
 )
 
 map_crypto2code = {value:key for key, value in map_code2crypto.items()}
+
+forex_yf_symbols = pd.read_csv('artifacts/forex_yf_symbols.csv',delimiter=';')
+map_fxsymbol2fxname = forex_yf_symbols.set_index('Symbol').T.to_dict('records')[0]
+map_fxname2fxsymbol = {value:key for key,value in map_fxsymbol2fxname.items()}
+
+stocks_yf_symbols = pd.read_csv('artifacts/stocks_yf_symbols.csv',delimiter=';').iloc[:50]
+map_stsymbol2stname = stocks_yf_symbols.set_index('Symbol').T.to_dict('records')[0]
+map_stsymbol2stname = {key:'{} ({})'.format(key,value) for key,value in map_stsymbol2stname.items()}
+map_stname2stsymbol = {value:key for key,value in map_stsymbol2stname.items()}
+
 
 
 # map_func2tech = dict(

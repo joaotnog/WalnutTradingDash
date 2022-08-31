@@ -27,7 +27,7 @@ sys.tracebacklimit = 0
 logo = Image.open('walnuttradingdash_logo2.png')
 
 st.set_page_config(
-    page_title = 'Backtest cryptocurrency trading strategies',
+    page_title = 'Backtest trading strategies',
     page_icon = logo,
     layout = 'wide'
 )
@@ -48,15 +48,27 @@ if sys.argv[1]=='PRO':
 if sys.argv[1]=='FREE':
     free_plan = True    
 
-scripts = list(map_crypto2code.keys())
+
 indicators = import_indicators()
+scripts_dict = dict(Crypto=list(map_crypto2code.keys()),
+                     Stocks=list(map_stname2stsymbol.keys()),
+                     Forex=list(map_fxname2fxsymbol.keys()))
 
 backtest_timeframe = st.sidebar
+
+st.sidebar.header('Asset class')     
+asset_class = st.sidebar.selectbox('', ['Crypto','Forex','Stocks'])
+scripts = scripts_dict[asset_class]
 
 
 st.sidebar.header('I want to trade')     
 symbol = st.sidebar.selectbox('', scripts)
-ticker = map_crypto2code[symbol]
+if asset_class=='Crypto':
+    ticker = map_crypto2code[symbol]
+if asset_class=='Forex':
+    ticker = map_fxname2fxsymbol[symbol]
+if asset_class=='Stocks':
+    ticker = map_stname2stsymbol[symbol]    
 
 st.sidebar.header('Using the technical indicator')  
 indicator = st.sidebar.selectbox('', tech_available)
@@ -70,8 +82,11 @@ else:
     end_date = backtest_timeframe.date_input('End date', value = datetime.today() - timedelta(days = 1), min_value = dt(2011,1,1), max_value = datetime.today() - timedelta(days = 1))
 
 
-data = get_historical_prices(ticker)
-data = data[(data.index>=start_date)&(data.index<=end_date)]
+data = get_historical_prices(ticker,asset_class)
+try:
+    data = data[(data.index>=start_date)&(data.index<=end_date)]
+except:
+    data = data[(data.index>=str(start_date))&(data.index<=str(end_date))]    
 # data = pd.read_csv('artifacts/data_sample.csv')
 # data['Date'] = data.Date.astype('datetime64[ns]').dt.date
 # data = data.set_index('Date')
@@ -86,14 +101,14 @@ entry_comparator, exit_comparator, entry_data1, entry_data2, exit_data1, exit_da
 
     
 if free_plan:
-    if (cf_bt == True) and (ticker not in free_plan_list['cryptos']):
-        st.info(ticker + ' crypto only available with the PRO plan.')
+    if (cf_bt == True) and (ticker not in free_plan_list['tickers']):
+        st.info(ticker + ' only available with the PRO plan.')
     if (cf_bt == True) and (indicator not in free_plan_list['technicals']):
         st.info(indicator + ' indicator only available with the PRO plan.')    
 if (cf_bt == True) and \
     ((free_plan==False) \
          or \
-    ((ticker in free_plan_list['cryptos']) and (indicator in free_plan_list['technicals']))):
+    ((ticker in free_plan_list['tickers']) and (indicator in free_plan_list['technicals']))):
     backtestdata = data.copy()
    
     if entry_comparator == 'is lower than' and exit_comparator == 'is lower than':
