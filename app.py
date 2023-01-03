@@ -24,6 +24,10 @@ import plotly.express as px
 sys.tracebacklimit = 0
 
 # sys.argv = ['','FREE']
+if sys.argv[1]=='PRO':
+    free_plan = False
+if sys.argv[1]=='FREE':
+    free_plan = True  
 logo = Image.open('walnuttradingdash_logo2.png')
 
 st.set_page_config(
@@ -37,16 +41,16 @@ st.set_page_config(
 st.sidebar.title('WalnutTradingDash :chart_with_upwards_trend:')
 st.sidebar.caption('v 1.2.0')
 st.sidebar.caption(sys.argv[1]+' version')
+if free_plan:
+    st.sidebar.caption('PRO version available at https://rapidapi.com/WRT/api/walnuttradingdash/pricing')
+st.sidebar.caption('Leave us a feedback at https://walnuthillai.com/contact/')
 st.sidebar.caption(' ')
 
 cf_bt = st.sidebar.button('Run backtest', help='Simulate with the parameters belows')
 
 st.sidebar.caption(' ')
 
-if sys.argv[1]=='PRO':
-    free_plan = False
-if sys.argv[1]=='FREE':
-    free_plan = True    
+  
 
 
 indicators = import_indicators()
@@ -103,6 +107,7 @@ entry_comparator, exit_comparator, entry_data1, entry_data2, exit_data1, exit_da
 if free_plan:
     if (cf_bt == True) and (ticker not in free_plan_list['tickers']):
         st.info(ticker + ' only available with the PRO plan.')
+        st.info('Try it out for unlimited access to assets, strategies and time ranges at https://rapidapi.com/WRT/api/walnuttradingdash/pricing')
     if (cf_bt == True) and (indicator not in free_plan_list['technicals']):
         st.info(indicator + ' indicator only available with the PRO plan.')    
 if (cf_bt == True) and \
